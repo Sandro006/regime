@@ -15,6 +15,3 @@ INSERT INTO activites_sportives (nom_activite, description, calories_brulees, ni
 ('HIIT', 'Intervalles intensifs courts pour bruler un max.', 500, 'difficile'),
 ('Cycling', 'Velo stationnaire ou exterieur, effort continu.', 320, 'moyen'),
 ('Marche rapide', 'Marche soutenue pour activer la depense calorique.', 200, 'facile');
-
-INSERT INTO `admins` (`nom`, `email`, `password`) VALUES 
-('admin', 'admin@test.com', '$2y$10$bR4P2LWGL2Nt.N7XR8JLnuIYqjoiw0Fsr5mtJ54G/l1pzmVCZHO1S');

@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
+use App\Models\ActiviteSportiveModel;
 
 class Home extends BaseController
 {
-    protected $userModel;
+    protected $activiteModel;
 
     public function __construct()
     {
-        $this->userModel = new UserModel();
+        $this->activiteModel = new ActiviteSportiveModel();
     }
 
     public function index(): string
@@ -19,21 +19,13 @@ class Home extends BaseController
         $session = session();
         $isLoggedIn = $session->has('estConnecte') && $session->get('estConnecte');
         
-        $userData = null;
-        if ($isLoggedIn) {
-            $userData = $session->get('user');
-            
-            // Calculer l'IMC s'il existe une taille et un poids
-            if ($userData && isset($userData['taille']) && isset($userData['poids'])) {
-                $imc = $this->userModel->calculateIMC($userData['poids'], $userData['taille']);
-                $userData['bmi'] = $imc['valeur'];
-                $userData['bmi_categorie'] = $imc['categorie'];
-            }
-        }
+        // Récupérer les activités sportives
+        $activites = $this->activiteModel->getAllActivites();
         
         return view('accueil/index', [
             'isLoggedIn' => $isLoggedIn,
-            'user' => $userData
+            'user' => $isLoggedIn ? $session->get('user') : null,
+            'activites' => $activites
         ]);
     }
 }
