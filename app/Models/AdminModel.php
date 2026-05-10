@@ -19,7 +19,6 @@ class AdminModel extends Model
     // Dates
     protected $useTimestamps = false;
 
-
     // Validation
     protected $validationRules = [
         'nom' => 'required|min_length[2]|max_length[100]',
@@ -65,6 +64,28 @@ class AdminModel extends Model
     }
 
     /**
+     * Compat: certaines installations utilisent la colonne 'password'
+     * au lieu de 'motdepasse' dans la table admins.
+     */
+    public function getPasswordHashField(): string
+    {
+        try {
+            $columns = $this->db->getFieldNames($this->table);
+            // getFieldNames retourne un tableau indexé des noms de colonnes
+            if (in_array('password', $columns, true)) {
+                return 'password';
+            }
+            if (in_array('motdepasse', $columns, true)) {
+                return 'motdepasse';
+            }
+        } catch (\Throwable $e) {
+            // ignore
+        }
+
+        return 'password'; // Défaut: utiliser 'password'
+    }
+
+    /**
      * UPDATE - Modifier un admin
      */
     public function updateAdmin($id, $data)
@@ -80,3 +101,4 @@ class AdminModel extends Model
         return $this->delete($id);
     }
 }
+

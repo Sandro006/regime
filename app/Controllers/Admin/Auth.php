@@ -20,9 +20,9 @@ class Auth extends BaseController
      */
     public function login()
     {
-        // Vue admin attendue (si absente: chargement échouera, c’est normal pour le moment)
-        return view('admin/login');
+        return view('admin/auth/BackOffice/login');
     }
+
 
     /**
      * Vérification (POST) - authentification admin.
@@ -32,12 +32,17 @@ class Auth extends BaseController
         $email = (string) $this->request->getPost('email');
         $motdepasse = (string) $this->request->getPost('motdepasse');
 
-        // Compatibilité si le champ s'appelle password côté formulaire
+        // Certains formulaires utilisent 'password' (compat)
         if ($motdepasse === '') {
             $motdepasse = (string) $this->request->getPost('password');
         }
 
+        // Nettoyage éventuel (espaces)
+        $email = trim($email);
+        $motdepasse = trim($motdepasse);
+
         if ($email === '' || $motdepasse === '') {
+
             return redirect()->back()->with('error', 'Email et mot de passe requis');
         }
 
@@ -51,11 +56,17 @@ class Auth extends BaseController
             return redirect()->back()->with('error', 'Identifiants admin incorrects');
         }
 
-        // IMPORTANT: le champ admins.motdepasse doit contenir un hash password_hash()
-        $hash = $admin['motdepasse'] ?? '';
+        // IMPORTANT: selon la structure, le hash est dans 'motdepasse' ou 'password'
+        $hashField = $this->adminModel->getPasswordHashField();
+        $hash = $admin[$hashField] ?? '';
+
+        // Vérifier le mot de passe
         if ($hash === '' || !password_verify($motdepasse, $hash)) {
             return redirect()->back()->with('error', 'Identifiants admin incorrects');
         }
+
+
+
 
         // Démarre/régénère la session (si supporté)
         $session = session();
@@ -72,7 +83,8 @@ class Auth extends BaseController
             ],
         ]);
 
-        return redirect()->to('/admin')->with('success', 'Connexion admin réussie');
+        return redirect()->to('/admin/authenticate')->with('success', 'Connexion admin réussie');
+
     }
 
     /**
