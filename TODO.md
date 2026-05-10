@@ -678,13 +678,14 @@
   - **Dépendance:** 10.1 complétés
   - **Validation:** Contrôleur chargeable
 
-- [ ] **10.4** — Créer vue login admin
+- [x] **10.4** — Créer vue login admin
   - **Responsable:** Bidy
-  - **Fichier:** `app/Views/admin/auth/login.php`
+  - **Fichier:** `app/Views/admin/auth/BackOffice/login.php`
   - **Formulaire:** Email + Mot de passe
   - **Comment:** Design simple mais professionnel
   - **Dépendance:** 10.3 complété
   - **Validation:** Vue affichable
+
 
 - [ ] **10.5** — Implémenter authentification admin
   - **Responsable:** Bidy
