@@ -65,11 +65,15 @@ class Activite extends BaseController
         $objectif = strtolower($objectifName);
 
         if (strpos($objectif, 'perdre') !== false) {
-            return $this->findByKeywords(['Cardio', 'HIIT', 'Jogging']);
+            return $this->findByKeywords(['Cardio', 'HIIT']);
         }
 
         if (strpos($objectif, 'gagner') !== false) {
-            return $this->findByKeywords(['Muscu', 'Musculation', 'Force']);
+            return $this->findByKeywords(['Muscu', 'Musculation']);
+        }
+
+        if (strpos($objectif, 'imc') !== false) {
+            return $this->findByKeywords(['Cardio', 'HIIT', 'Jogging', 'Yoga', 'Muscu', 'Musculation']);
         }
 
         return $this->activiteModel->getAllActivites();
@@ -83,8 +87,10 @@ class Activite extends BaseController
         foreach ($keywords as $index => $keyword) {
             if ($index === 0) {
                 $builder->like('nom', $keyword);
+                $builder->orLike('nom_activite', $keyword);
             } else {
                 $builder->orLike('nom', $keyword);
+                $builder->orLike('nom_activite', $keyword);
             }
         }
 
