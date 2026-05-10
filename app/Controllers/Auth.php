@@ -61,12 +61,28 @@ class Auth extends BaseController
 
         // Enregistrer l'utilisateur
         try {
-            $this->userModel->insert($data);
+            $userId = $this->userModel->insert($data);
+            
+            // Récupérer l'utilisateur nouvellement créé
+            $user = $this->userModel->find($userId);
+            
+            // Stocker l'utilisateur en session
+            $session = session();
+            $session->set([
+                'estConnecte' => true,
+                'user' => [
+                    'id' => $user['id'],
+                    'username' => $user['username'],
+                    'email' => $user['email'],
+                    'gender' => $user['gender']
+                ]
+            ]);
             
             return $this->response->setStatusCode(201)->setJSON([
                 'success' => true,
                 'message' => 'Inscription réussie! Bienvenue sur VitalFit.',
-                'userId' => $this->userModel->getInsertID()
+                'userId' => $userId,
+                'redirect' => '/'
             ]);
         } catch (\Exception $e) {
             return $this->response->setStatusCode(500)->setJSON([

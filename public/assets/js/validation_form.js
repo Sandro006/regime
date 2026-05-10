@@ -320,7 +320,13 @@
                     if (data.success) {
                         console.log('✅ Inscription réussie!', data);
                         showSuccess(data.message);
-                        setTimeout(resetForm, 3000);
+                        setTimeout(() => {
+                            if (data.redirect) {
+                                window.location.href = data.redirect;
+                            } else {
+                                resetForm();
+                            }
+                        }, 3000);
                     } else {
                         showError(getErrorMessage(data.message));
                     }
