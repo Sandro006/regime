@@ -397,6 +397,9 @@
                 </div>
 
                 <footer class="mt-xl text-center">
+                    <p class="mt-lg text-center font-body-md text-on-surface-variant"> Déja un compte ? <a class="text-[#131b2e] font-bold bg-[#10b981] hover:bg-[#0e9a6e] hover:shadow-lg active:scale-95 transition-all no-underline px-4 py-2 rounded-lg inline-block" href="/login">Se Connecter</a>
+                    </p>
+                    <br>
                     <p class="font-label-sm text-label-sm text-on-surface-variant max-w-[280px] mx-auto">
                         By signing up, you agree to VitalFit's
                         <a class="underline" href="#">Terms of Service</a> and

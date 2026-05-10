@@ -93,4 +93,24 @@ class UserModel extends Model
     {
         return $this->delete($id);
     }
+
+    /**
+     * LOGIN - Authentifier un utilisateur avec email et mot de passe
+     */
+    public function login($email, $password)
+    {
+        // Chercher l'utilisateur par email
+        $user = $this->getUserByEmail($email);
+        
+        if (!$user) {
+            return null; // Email non trouvé
+        }
+        
+        // Vérifier le mot de passe
+        if (!password_verify($password, $user['password'])) {
+            return null; // Mot de passe incorrect
+        }
+        
+        return $user; // Authentification réussie
+    }
 }
