@@ -14,3 +14,7 @@ $routes->get('/login', 'Auth::login');
 $routes->post('/login', 'Auth::doLogin');
 $routes->get('/logout', 'Auth::logout');
 
+// Routes objectifs
+$routes->get('/objectif/list', 'Objectif::list');
+$routes->post('/objectif/save', 'Objectif::save');
+
