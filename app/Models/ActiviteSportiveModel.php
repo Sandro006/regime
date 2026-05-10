@@ -13,16 +13,16 @@ class ActiviteSportiveModel extends Model
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        'nom', 'description', 'calories', 'niveau'
+        'nom_activite', 'description', 'calories_brulees', 'niveau_difficulte'
     ];
 
     protected $useTimestamps = false;
 
     protected $validationRules = [
-        'nom' => 'required|max_length[255]',
+        'nom_activite' => 'required|max_length[255]',
         'description' => 'permit_empty',
-        'calories' => 'required|integer',
-        'niveau' => 'required|in_list[Facile,Moyen,Difficile]'
+        'calories_brulees' => 'required|integer',
+        'niveau_difficulte' => 'required|in_list[facile,moyen,difficile]'
     ];
 
     protected $validationMessages = [];
