@@ -13,13 +13,13 @@ class ObjectifModel extends Model
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        'nom', 'description'
+        'objectif', 'description'
     ];
 
     protected $useTimestamps = false;
 
     protected $validationRules = [
-        'nom' => 'required|max_length[255]',
+        'objectif' => 'required|max_length[255]',
         'description' => 'permit_empty'
     ];
 

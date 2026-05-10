@@ -214,3 +214,9 @@ CREATE TABLE IF NOT EXISTS `parametres` (
 
     PRIMARY KEY (`id`)
 );
+
+
+INSERT INTO objectifs (objectif, description) VALUES
+('Perdre du poids', 'Objectif pour reduire le poids de facon progressive et durable.'),
+('Gagner du poid', 'Objectif pour augmenter le poids avec un plan adapte.'),
+('Atteindre l IMC ideal', 'Objectif pour stabiliser l IMC dans la plage optimale.');
