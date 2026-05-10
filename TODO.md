@@ -406,7 +406,7 @@
 
 ### ✅ Gestion du Portefeuille
 
-- [ ] **6.1** — Créer modèle CodePortefeuille
+- [X] **6.1** — Créer modèle CodePortefeuille
   - **Responsable:** Sandro
   - **Fichier:** `app/Models/CodePortefeuilleModel.php`
   - **Champs:**
@@ -420,7 +420,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** Modèle chargeable
 
-- [ ] **6.2** — Créer modèle Transaction
+- [X] **6.2** — Créer modèle Transaction
   - **Responsable:** Sandro
   - **Fichier:** `app/Models/TransactionModel.php`
   - **Champs:**
