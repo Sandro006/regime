@@ -226,72 +226,146 @@
                 <button class="mt-md w-full py-base bg-white/20 hover:bg-white/30 rounded-lg font-label-caps transition-colors">AJOUTER DES FONDS</button>
             </div>
         </section>
-        <!-- Active Régimes Section (Bento Layout) -->
+        <!-- Active Régimes Section (Carousel) -->
         <section class="space-y-md">
             <div class="flex justify-between items-end">
-                <h2 class="font-display-md text-display-md text-on-surface">Active Régimes</h2>
-                <a class="text-primary font-label-caps hover:underline" href="#">VOIR TOUS LES PLANS</a>
+                <h2 class="font-display-md text-display-md text-on-surface">Nos Régimes</h2>
+                <a class="text-primary font-label-caps hover:underline" href="/regime/list">VOIR TOUS LES PLANS</a>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
-                <!-- Plan Keto Card (Wide) -->
-                <div class="lg:col-span-2 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col md:flex-row">
-                    <div class="md:w-1/2 h-48 md:h-full relative">
-                        <img alt="Healthy keto meal" class="absolute inset-0 w-full h-full object-cover" data-alt="A beautifully plated ketogenic meal featuring a grilled salmon fillet, fresh sliced avocado, sautéed green asparagus, and a side of mixed greens. The lighting is bright and airy, highlighting the textures of the fresh ingredients. The image has a clean, minimalist food photography style with subtle shadows on a soft gray surface to match the VitalFit design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3I_fEknSqoISZTyXKTlpmiH0-1Qc0jq4Z0WQcdp2FGCeka_7oK6txeP5ILXwTM0eTUjik7AZWvGIhkFiO1oUOsON2WZXFDTtgwPfUpyjDfowrAdV9lLqgVCgAtQ1DH7zOFWvfYglIXrGsI8L4jt9rp7cK4Wqmech1asfUD_x4LMw_aVVbjmYgDDyoG-6kyHdpHfMJ2JCmvd6NQCwtcvetubBM0VfH0o8QN1ufT_yU-fO7hGKGvnL9YvwClJxiykmPXY9D5Uo6EhMh" />
-                        <div class="absolute top-md left-md bg-primary-container text-on-primary-container font-label-caps px-sm py-base rounded-lg text-[10px] shadow-sm">PLAN ACTIF</div>
-                    </div>
-                    <div class="md:w-1/2 p-lg flex flex-col justify-between">
-                        <div>
-                            <h3 class="font-display-md text-display-md text-on-surface mb-xs">Plan Keto</h3>
-                            <p class="text-on-surface-variant font-body-md mb-lg leading-relaxed">High-fat, adequate-protein, low-carbohydrate diet designed to burn fats rather than carbohydrates.</p>
-                            <div class="space-y-sm">
-                                <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant">
-                                    <span>PROGRESSION</span>
-                                    <span>SEMAINE 3 SUR 12</span>
+            
+            <?php if (isset($regimes) && !empty($regimes)): ?>
+            <div class="relative">
+                <!-- Carousel Container -->
+                <div class="overflow-hidden rounded-xl">
+                    <div id="regimesCarousel" class="flex transition-transform duration-500 ease-out">
+                        <?php foreach ($regimes as $index => $regime): ?>
+                        <!-- Regime Card -->
+                        <div class="min-w-full lg:min-w-[calc(50%-8px)] flex-shrink-0 lg:mr-4 last:lg:mr-0">
+                            <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col md:flex-row h-full">
+                                <div class="md:w-1/2 h-48 md:h-full relative bg-gradient-to-br from-primary/10 to-primary/5">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-primary text-[80px] opacity-20">restaurant</span>
+                                    </div>
+                                    <div class="absolute top-md left-md bg-primary-container text-on-primary-container font-label-caps px-sm py-base rounded-lg text-[10px] shadow-sm">RÉGIME</div>
+                                    <div class="absolute bottom-md left-md bg-secondary text-on-secondary font-label-caps px-md py-base rounded-lg text-[12px] font-bold"><?php echo number_format($regime['prix'], 0); ?> Ar</div>
                                 </div>
-                                <div class="w-full bg-surface-container rounded-full h-3">
-                                    <div class="bg-primary-container h-3 rounded-full" style="width: 25%"></div>
+                                <div class="md:w-1/2 p-lg flex flex-col justify-between">
+                                    <div>
+                                        <h3 class="font-display-md text-display-md text-on-surface mb-xs"><?php echo htmlspecialchars($regime['nom_regime']); ?></h3>
+                                        <p class="text-on-surface-variant font-body-md mb-lg leading-relaxed line-clamp-2"><?php echo htmlspecialchars($regime['description']); ?></p>
+                                        <div class="space-y-sm">
+                                            <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant">
+                                                <span>DURÉE</span>
+                                                <span><?php echo $regime['duree']; ?> JOURS</span>
+                                            </div>
+                                            <div class="w-full bg-surface-container rounded-full h-2">
+                                                <div class="bg-primary-container h-2 rounded-full" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-xl grid grid-cols-3 gap-md pt-lg border-t border-surface-container">
+                                        <div>
+                                            <div class="font-label-caps text-[10px] text-on-surface-variant">VARIATION</div>
+                                            <div class="font-body-lg text-primary font-bold"><?php echo ($regime['variation_poids'] > 0 ? '+' : ''); ?><?php echo $regime['variation_poids']; ?>kg</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-label-caps text-[10px] text-on-surface-variant">VIANDE</div>
+                                            <div class="font-body-lg text-on-surface font-bold"><?php echo $regime['pourcentage_viande']; ?>%</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-label-caps text-[10px] text-on-surface-variant">POISSON</div>
+                                            <div class="font-body-lg text-on-surface font-bold"><?php echo $regime['pourcentage_poisson']; ?>%</div>
+                                        </div>
+                                    </div>
+                                    <a href="/regime/detail/<?php echo $regime['id']; ?>" class="mt-md w-full py-md bg-primary text-on-primary rounded-xl font-label-caps shadow-md active:scale-95 transition-all hover:shadow-lg">
+                                        VOIR DÉTAILS
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-xl grid grid-cols-2 gap-md pt-lg border-t border-surface-container">
-                            <div>
-                                <div class="font-label-caps text-[10px] text-on-surface-variant uppercase">Date de début</div>
-                                <div class="font-body-lg text-on-surface">Oct 12, 2023</div>
-                            </div>
-                            <div>
-                                <div class="font-label-caps text-[10px] text-on-surface-variant uppercase">Variation</div>
-                                <div class="font-body-lg text-primary font-bold">-3.2kg</div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-                <!-- Daily Summary/Prochain repas -->
-                <div class="bg-surface-container-high p-lg rounded-xl flex flex-col justify-between border border-outline-variant/30">
-                    <div>
-                        <div class="flex items-center gap-sm mb-lg">
-                            <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
-                            <span class="font-headline-sm text-headline-sm">Prochain repas</span>
-                        </div>
-                        <div class="space-y-md">
-                            <div class="bg-surface-container-lowest p-md rounded-lg shadow-sm border border-surface-container">
-                                <div class="font-label-caps text-secondary mb-base">DÉJEUNER • 13:00</div>
-                                <div class="font-display-md text-on-surface text-lg">Zucchini Noodles with Pesto</div>
-                                <div class="mt-sm flex gap-md font-label-caps text-[10px] text-on-surface-variant">
-                                    <span>420 KCAL</span>
-                                    <span>12G CARBS</span>
-                                </div>
-                            </div>
-                            <button class="w-full py-md border-2 border-dashed border-outline text-outline font-label-caps rounded-xl hover:bg-surface-container-highest transition-colors">
-                                + + AJOUTER UNE COLLATION
-                            </button>
-                        </div>
-                    </div>
-                    <button class="w-full py-md bg-secondary text-on-secondary rounded-xl font-label-caps shadow-md active:scale-95 transition-all mt-xl">
-                        VOIR LE PLAN REPAS
-                    </button>
+
+                <!-- Navigation Buttons -->
+                <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 md:translate-x-0 md:left-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 md:translate-x-0 md:right-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+
+                <!-- Progress Indicators -->
+                <div id="carouselIndicators" class="flex justify-center gap-2 mt-lg">
+                    <?php foreach ($regimes as $i => $regime): ?>
+                    <button class="carousel-indicator w-2 h-2 rounded-full transition-all <?php echo $i === 0 ? 'bg-primary w-8' : 'bg-surface-variant'; ?>" data-index="<?php echo $i; ?>"></button>
+                    <?php endforeach; ?>
                 </div>
             </div>
-        </section>
+
+            <script>
+                let currentIndex = 0;
+                const carousel = document.getElementById('regimesCarousel');
+                const indicators = document.querySelectorAll('.carousel-indicator');
+                const totalItems = <?php echo count($regimes); ?>;
+                const itemsPerView = window.innerWidth >= 1024 ? 2 : 1;
+                let autoplayInterval;
+
+                function updateCarousel() {
+                    const offset = -currentIndex * (100 / itemsPerView);
+                    carousel.style.transform = `translateX(${offset}%)`;
+                    
+                    indicators.forEach((indicator, index) => {
+                        if (index === currentIndex) {
+                            indicator.classList.add('bg-primary', 'w-8');
+                            indicator.classList.remove('bg-surface-variant');
+                        } else {
+                            indicator.classList.remove('bg-primary', 'w-8');
+                            indicator.classList.add('bg-surface-variant');
+                        }
+                    });
+                }
+
+                function nextSlide() {
+                    currentIndex = (currentIndex + 1) % totalItems;
+                    updateCarousel();
+                    resetAutoplay();
+                }
+
+                function prevSlide() {
+                    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                    updateCarousel();
+                    resetAutoplay();
+                }
+
+                function autoplay() {
+                    autoplayInterval = setInterval(nextSlide, 5000);
+                }
+
+                function resetAutoplay() {
+                    clearInterval(autoplayInterval);
+                    autoplay();
+                }
+
+                document.getElementById('nextBtn').addEventListener('click', nextSlide);
+                document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+                indicators.forEach(indicator => {
+                    indicator.addEventListener('click', (e) => {
+                        currentIndex = parseInt(e.target.dataset.index);
+                        updateCarousel();
+                        resetAutoplay();
+                    });
+                });
+
+                // Start autoplay on load
+                autoplay();
+            </script>
+            <?php else: ?>
+            <div class="text-center py-lg text-on-surface-variant bg-surface-container-lowest rounded-xl border border-surface-variant">
+                Aucun régime disponible pour le moment.
+            </div>
+            <?php endif; ?>
         <!-- Recommended Activités Section -->
         <section class="space-y-md">
             <div class="flex justify-between items-end">
