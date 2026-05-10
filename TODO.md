@@ -229,7 +229,7 @@
 
 ### ✅ Gestion des Objectifs
 
-- [ ] **3.1** — Créer modèle Objectif
+- [x] **3.1** — Créer modèle Objectif
   - **Responsable:** Elisa
   - **Fichier:** `app/Models/ObjectifModel.php`
   - **Champs:**
@@ -240,7 +240,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** 3 objectifs en BD
 
-- [ ] **3.2** — Créer modèle UtilisateurObjectif
+- [x] **3.2** — Créer modèle UtilisateurObjectif
   - **Responsable:** Elisa
   - **Fichier:** `app/Models/UtilisateurObjectifModel.php`
   - **Champs:**

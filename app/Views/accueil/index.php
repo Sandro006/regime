@@ -166,6 +166,11 @@
                             <span class="material-symbols-outlined">logout</span>
                         </a>
                     </button>
+                    <span class="text-on-surface font-medium"><?= htmlspecialchars($user['username']) ?></span>
+                    <a href="/logout" class="active:scale-95 transition-transform text-on-surface-variant hover:text-error flex items-center gap-1 px-sm py-xs rounded-lg hover:bg-error/10">
+                        <span class="material-symbols-outlined">logout</span>
+                        <span class="text-sm font-medium hidden sm:inline">Déconnexion</span>
+                    </a>
                 <?php } ?>
 
                 <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container">
@@ -182,8 +187,16 @@
                     <span class="font-label-caps text-label-caps text-on-surface-variant">CURRENT BMI</span>
                     <span class="text-primary material-symbols-outlined">speed</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl text-primary">22.4</div>
-                <div class="mt-xs inline-flex px-sm py-base rounded-full bg-primary-container/20 text-on-primary-container font-label-caps text-[10px]">NORMAL</div>
+                <?php 
+                    $bmi = $user['poids'] / ($user['taille'] * $user['taille']);
+                    $bmiCategory = 'NORMAL';
+                    if ($bmi < 18.5) $bmiCategory = 'UNDERWEIGHT';
+                    elseif ($bmi < 25) $bmiCategory = 'NORMAL';
+                    elseif ($bmi < 30) $bmiCategory = 'OVERWEIGHT';
+                    else $bmiCategory = 'OBESE';
+                ?>
+                <div class="font-metric-xl text-metric-xl text-primary"><?= number_format($bmi, 1) ?></div>
+                <div class="mt-xs inline-flex px-sm py-base rounded-full bg-primary-container/20 text-on-primary-container font-label-caps text-[10px]"><?= $bmiCategory ?></div>
             </div>
             <!-- Weight Card -->
             <div class="bg-surface-container-lowest p-lg rounded-xl shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container transition-all hover:-translate-y-1">
@@ -191,7 +204,7 @@
                     <span class="font-label-caps text-label-caps text-on-surface-variant">CURRENT WEIGHT</span>
                     <span class="text-secondary material-symbols-outlined">monitor_weight</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl text-on-surface">75<span class="text-body-lg ml-1 text-on-surface-variant">kg</span></div>
+                <div class="font-metric-xl text-metric-xl text-on-surface"><?= number_format($user['poids'], 1) ?><span class="text-body-lg ml-1 text-on-surface-variant">kg</span></div>
                 <div class="mt-xs flex items-center gap-1 text-on-surface-variant font-body-md italic">
                     <span class="material-symbols-outlined text-[16px]">trending_down</span> -0.5kg this week
                 </div>
@@ -214,7 +227,7 @@
                     <span class="font-label-caps text-label-caps opacity-80">WALLET BALANCE</span>
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl">50.00€</div>
+                <div class="font-metric-xl text-metric-xl"><?= number_format($user['solde'], 2) ?>€</div>
                 <button class="mt-md w-full py-base bg-white/20 hover:bg-white/30 rounded-lg font-label-caps transition-colors">ADD FUNDS</button>
             </div>
         </section>
@@ -368,7 +381,7 @@
             <span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
             <span class="font-label-caps text-label-caps mt-1">Profile</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/logout">
             <span class="material-symbols-outlined" data-icon="logout">logout</span>
             <span class="font-label-caps text-label-caps mt-1">Logout</span>
         </a>
