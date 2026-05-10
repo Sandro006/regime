@@ -66,7 +66,7 @@
 							<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 								<?php foreach ($objectifs as $objectif) : ?>
 									<?php $objectifId = esc($objectif['id']); ?>
-									<?php $objectifNom = esc($objectif['nom']); ?>
+									<?php $objectifNom = esc($objectif['objectif']); ?>
 									<?php $objectifDescription = trim($objectif['description'] ?? ''); ?>
 
 									<div class="col">
