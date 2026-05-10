@@ -200,7 +200,7 @@
                 <!-- Footer Link -->
                 <p class="mt-lg text-center font-body-md text-on-surface-variant">
                     Don't have an account?
-                    <a class="text-secondary font-bold hover:text-secondary-fixed-dim transition-colors" href="#">Sign up</a>
+                    <a class="text-secondary font-bold hover:text-secondary-fixed-dim transition-colors" href="/register">Sign up</a>
                 </p>
             </div>
         </section>
