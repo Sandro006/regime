@@ -62,7 +62,7 @@
 
 ### ✅ Inscription & Connexion
 
-- [ ] **1.1** — Créer le modèle User
+- [x] **1.1** — Créer le modèle User
   - **Responsable:** Bidy
   - **Fichier:** `app/Models/UserModel.php`
   - **Comment:**
@@ -82,7 +82,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** Modèle chargeable sans erreur
 
-- [ ] **1.2** — Créer le contrôleur Auth
+- [x] **1.2** — Créer le contrôleur Auth
   - **Responsable:** Sandro
   - **Fichier:** `app/Controllers/Auth.php`
   - **Méthodes:**
@@ -96,7 +96,7 @@
   - **Dépendance:** 1.1 complété
   - **Validation:** Contrôleur chargeable sans erreur
 
-- [ ] **1.3a** — Créer vue inscription étape 1
+- [x] **1.3a** — Créer vue inscription étape 1
   - **Responsable:** Elisa
   - **Fichier:** `app/Views/auth/register_step1.php`
   - **Champs:**
@@ -108,7 +108,7 @@
   - **Dépendance:** 1.2 complété
   - **Validation:** Formulaire affichable
 
-- [ ] **1.3b** — Créer vue inscription étape 2
+- [x] **1.3b** — Créer vue inscription étape 2
   - **Responsable:** Elisa
   - **Fichier:** `app/Views/auth/register_step2.php`
   - **Champs:**
@@ -128,7 +128,7 @@
   - **Dépendance:** 1.2 complété
   - **Validation:** Formulaire affichable
 
-- [ ] **1.5** — Implémenter validation inscription
+- [x] **1.5** — Implémenter validation inscription
   - **Responsable:** Sandro
   - **Comment:**
     - Vérifier email unique (SELECT COUNT(*) FROM utilisateurs WHERE email = ?)

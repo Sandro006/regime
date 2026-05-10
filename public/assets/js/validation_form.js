@@ -6,9 +6,6 @@
         const step2Content = document.getElementById('step2Content');
         const nextStep2Btn = document.getElementById('nextStep2Btn');
         const backToStep1Btn = document.getElementById('backToStep1Btn');
-        const stepIndicator = document.getElementById('stepIndicator');
-        const step1Indicator = document.getElementById('step1Indicator');
-        const step2Indicator = document.getElementById('step2Indicator');
         const imageStep1 = document.getElementById('imageStep1');
         const imageStep2 = document.getElementById('imageStep2');
         const formTitle = document.getElementById('formTitle');
@@ -17,6 +14,7 @@
         const step1Social = document.getElementById('step1Social');
         const step1SocialButtons = document.getElementById('step1SocialButtons');
         const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
         const weightInput = document.getElementById('weight');
         const heightInput = document.getElementById('height');
         const bmiValue = document.getElementById('bmiValue');
@@ -28,92 +26,121 @@
         // VALIDATION
         // ============================================
 
-        // Fonctions de validation utilitaires
         function isValidEmail(email) {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return regex.test(email);
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
 
         function isValidPassword(password) {
             return password.length >= 8;
         }
 
-        // Validation d'un champ
         function validateField(field) {
             const fieldName = field.name;
             const value = field.value.trim();
             const errorElement = document.querySelector(`.error-message[data-field="${fieldName}"]`);
             let isValid = true;
-            let errorMessage = '';
+            let errorText = '';
 
-            // Validation commune: champs requis
             if (field.hasAttribute('required') && !value) {
                 isValid = false;
-                errorMessage = 'Ce champ est requis';
-            }
-
-            // Validations spécifiques
-            if (isValid && value) {
+                errorText = 'Ce champ est requis';
+            } else if (isValid && value) {
                 switch (fieldName) {
                     case 'full_name':
                         if (value.length < 2) {
                             isValid = false;
-                            errorMessage = 'Minimum 2 caractères requis';
+                            errorText = 'Minimum 2 caractères requis';
                         }
                         break;
-
                     case 'email':
                         if (!isValidEmail(value)) {
                             isValid = false;
-                            errorMessage = 'Adresse email invalide';
+                            errorText = 'Adresse email invalide';
                         }
                         break;
-
                     case 'password':
                         if (!isValidPassword(value)) {
                             isValid = false;
-                            errorMessage = 'Minimum 8 caractères requis';
+                            errorText = 'Minimum 8 caractères requis';
                         }
                         break;
-
                     case 'weight':
                     case 'height':
                         if (parseFloat(value) <= 0) {
                             isValid = false;
-                            errorMessage = 'Doit être un nombre positif';
+                            errorText = 'Doit être un nombre positif';
                         }
                         break;
                 }
             }
 
             // Mise à jour visuelle
-            const inputElement = field;
             if (isValid && value) {
-                inputElement.classList.remove('border-red-500', 'bg-red-50');
-                inputElement.classList.add('border-green-500', 'bg-green-50');
-                if (errorElement) {
-                    errorElement.classList.add('hidden');
-                }
+                field.classList.remove('border-red-500', 'bg-red-50');
+                field.classList.add('border-green-500', 'bg-green-50');
+                if (errorElement) errorElement.classList.add('hidden');
             } else if (!isValid) {
-                inputElement.classList.remove('border-green-500', 'bg-green-50');
-                inputElement.classList.add('border-red-500', 'bg-red-50');
+                field.classList.remove('border-green-500', 'bg-green-50');
+                field.classList.add('border-red-500', 'bg-red-50');
                 if (errorElement) {
-                    errorElement.textContent = errorMessage;
+                    errorElement.textContent = errorText;
                     errorElement.classList.remove('hidden');
                 }
             } else {
-                inputElement.classList.remove('border-red-500', 'border-green-500', 'bg-red-50', 'bg-green-50');
-                if (errorElement) {
-                    errorElement.classList.add('hidden');
-                }
+                field.classList.remove('border-red-500', 'border-green-500', 'bg-red-50', 'bg-green-50');
+                if (errorElement) errorElement.classList.add('hidden');
             }
 
             return isValid;
         }
 
         // ============================================
-        // IMC CALCULATION
+        // GESTION DES MESSAGES
         // ============================================
+
+        function getErrorMessage(serverMessage) {
+            const errorMap = {
+                'email': appMessages?.error?.email_exists,
+                'invalides': appMessages?.error?.invalid_data,
+                'l\'enregistrement': appMessages?.error?.insert_failed
+            };
+
+            for (const [key, customMsg] of Object.entries(errorMap)) {
+                if (serverMessage.includes(key)) return customMsg || serverMessage;
+            }
+            return serverMessage;
+        }
+
+        function showError(message) {
+            document.getElementById('errorText').textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function showSuccess(serverMsg) {
+            const successMsg = appMessages?.success || {
+                title: 'Bienvenue sur VitalFit! 🎉',
+                message: 'Inscription réussie! Votre compte a été créé avec succès.'
+            };
+            
+            document.getElementById('successTitle').textContent = successMsg.title;
+            document.getElementById('successText').textContent = serverMsg || successMsg.message;
+            successMessage.classList.remove('hidden');
+        }
+
+        function resetForm() {
+            form.reset();
+            document.querySelectorAll('input, select').forEach(input => {
+                input.classList.remove('border-red-500', 'border-green-500', 'bg-red-50', 'bg-green-50');
+            });
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.classList.add('hidden');
+            });
+            bmiValue.textContent = '--';
+            bmiCategory.textContent = 'Entrez poids et taille pour calculer';
+            bmiCategory.className = 'font-label-sm text-label-sm text-on-surface-variant';
+            successMessage.classList.add('hidden');
+            transitionToStep1();
+        }
 
         function calculateBMI() {
             const weight = parseFloat(weightInput.value);
@@ -156,8 +183,6 @@
 
         function transitionToStep2() {
             currentStep = 2;
-
-            // Transition du contenu avec glissement
             step1Content.style.opacity = '0';
             step1Content.style.transform = 'translateX(-30px)';
             step1Content.style.pointerEvents = 'none';
@@ -171,18 +196,12 @@
                 step2Content.style.pointerEvents = 'auto';
             }, 150);
 
-            // Transition de l'image
             imageStep1.style.opacity = '0';
             imageStep2.style.opacity = '1';
 
-            // Transition des textes
             setTimeout(() => {
                 formTitle.textContent = 'Complétez votre profil de santé';
                 formSubtitle.textContent = 'Dites-nous vos métriques de santé actuelles et vos objectifs.';
-                stepIndicator.textContent = 'Étape 2 de 2';
-                step2Indicator.classList.remove('bg-surface-container-highest');
-                step2Indicator.classList.add('bg-primary');
-
                 step1Footer.classList.add('hidden');
                 step1Social.classList.add('hidden');
                 step1SocialButtons.classList.add('hidden');
@@ -191,8 +210,6 @@
 
         function transitionToStep1() {
             currentStep = 1;
-
-            // Transition du contenu avec glissement
             step2Content.style.opacity = '0';
             step2Content.style.transform = 'translateX(30px)';
             step2Content.style.pointerEvents = 'none';
@@ -206,19 +223,12 @@
                 step1Content.style.pointerEvents = 'auto';
             }, 150);
 
-            // Transition de l'image
             imageStep1.style.opacity = '1';
             imageStep2.style.opacity = '0';
 
-            // Transition des textes
             setTimeout(() => {
                 formTitle.textContent = 'Créer votre profil';
                 formSubtitle.textContent = 'Entrez vos informations personnelles pour commencer votre expérience de santé personnalisée.';
-                stepIndicator.textContent = 'Étape 1 de 2';
-                step1Indicator.classList.add('bg-primary');
-                step2Indicator.classList.remove('bg-primary');
-                step2Indicator.classList.add('bg-surface-container-highest');
-
                 step1Footer.classList.remove('hidden');
                 step1Social.classList.remove('hidden');
                 step1SocialButtons.classList.remove('hidden');
@@ -229,57 +239,63 @@
         // ÉVÉNEMENTS
         // ============================================
 
-        // Validation en temps réel
         const inputs = form.querySelectorAll('input, select');
+        
+        // Validation en temps réel
         inputs.forEach(input => {
             input.addEventListener('blur', () => validateField(input));
             input.addEventListener('change', () => validateField(input));
         });
 
         // Afficher/masquer mot de passe
-        document.querySelectorAll('.toggle-password').forEach(button => {
-            button.addEventListener('click', function(e) {
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetId = this.dataset.target;
-                const input = document.getElementById(targetId);
-
+                const input = document.getElementById(btn.dataset.target);
+                const icon = btn.querySelector('.material-symbols-outlined');
+                
                 if (input.type === 'password') {
                     input.type = 'text';
-                    this.querySelector('.material-symbols-outlined').textContent = 'visibility_off';
+                    icon.textContent = 'visibility_off';
                 } else {
                     input.type = 'password';
-                    this.querySelector('.material-symbols-outlined').textContent = 'visibility';
+                    icon.textContent = 'visibility';
                 }
             });
         });
 
-        // Bouton Continuer vers Étape 2
-        nextStep2Btn.addEventListener('click', function(e) {
+        // Navigation étapes
+        nextStep2Btn.addEventListener('click', (e) => {
             e.preventDefault();
-
-            const fullNameInput = document.getElementById('full_name');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-
             let isValid = true;
-            if (!validateField(fullNameInput)) isValid = false;
-            if (!validateField(emailInput)) isValid = false;
-            if (!validateField(passwordInput)) isValid = false;
-
-            if (isValid) {
-                transitionToStep2();
-            }
+            ['full_name', 'gender', 'email', 'password'].forEach(name => {
+                if (!validateField(form.elements[name])) isValid = false;
+            });
+            if (isValid) transitionToStep2();
         });
 
-        // Bouton Retour
-        backToStep1Btn.addEventListener('click', function(e) {
+        backToStep1Btn.addEventListener('click', (e) => {
             e.preventDefault();
             transitionToStep1();
         });
 
         // Calcul IMC en temps réel
-        weightInput.addEventListener('input', calculateBMI);
-        heightInput.addEventListener('input', calculateBMI);
+        [weightInput, heightInput].forEach(input => {
+            input.addEventListener('input', calculateBMI);
+        });
+
+        // Fermer les modals
+        successMessage.addEventListener('click', (e) => {
+            if (e.target === successMessage) successMessage.classList.add('hidden');
+        });
+
+        document.getElementById('closeErrorBtn').addEventListener('click', () => {
+            errorMessage.classList.add('hidden');
+        });
+
+        errorMessage.addEventListener('click', (e) => {
+            if (e.target === errorMessage) errorMessage.classList.add('hidden');
+        });
 
         // Soumission du formulaire
         form.addEventListener('submit', function(e) {
@@ -287,52 +303,31 @@
 
             if (currentStep === 2) {
                 let isFormValid = true;
+                const inputs = form.querySelectorAll('input, select');
                 inputs.forEach(input => {
-                    if (!validateField(input)) {
-                        isFormValid = false;
-                    }
+                    if (!validateField(input)) isFormValid = false;
                 });
 
-                if (isFormValid) {
-                    successMessage.classList.remove('hidden');
+                if (!isFormValid) return;
 
-                    console.log('✅ Formulaire valide! Données:');
-                    const formData = new FormData(form);
-                    for (let [key, value] of formData) {
-                        console.log(`${key}: ${value}`);
+                fetch('/register', {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {'X-Requested-With': 'XMLHttpRequest'}
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('✅ Inscription réussie!', data);
+                        showSuccess(data.message);
+                        setTimeout(resetForm, 3000);
+                    } else {
+                        showError(getErrorMessage(data.message));
                     }
-
-                    setTimeout(() => {
-                        form.reset();
-                        inputs.forEach(input => {
-                            input.classList.remove('border-red-500', 'border-green-500', 'bg-red-50', 'bg-green-50');
-                        });
-                        document.querySelectorAll('.error-message').forEach(msg => {
-                            msg.classList.add('hidden');
-                        });
-                        successMessage.classList.add('hidden');
-                        bmiValue.textContent = '--';
-                        bmiCategory.textContent = 'Entrez poids et taille pour calculer';
-                        bmiCategory.className = 'font-label-sm text-label-sm text-on-surface-variant';
-
-                        transitionToStep1();
-                    }, 2000);
-                }
+                })
+                .catch(err => {
+                    console.error('❌ Erreur réseau:', err);
+                    showError(appMessages?.error?.network_error || 'Erreur réseau: ' + err.message);
+                });
             }
         });
-
-        // Fermer le message de succès au clic
-        successMessage.addEventListener('click', function(e) {
-            if (e.target === successMessage) {
-                successMessage.classList.add('hidden');
-            }
-        });
-
-        // Sélection des objectifs
-        document.querySelectorAll('label[data-goal]').forEach(label => {
-            label.addEventListener('change', function() {
-                const goal = this.getAttribute('data-goal');
-                console.log('📊 Objectif sélectionné:', goal);
-            });
-        });
-        

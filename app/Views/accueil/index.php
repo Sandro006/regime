@@ -147,26 +147,28 @@
             <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Dashboard</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Diets</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Activities</a>
-<div class="flex items-center gap-md">
-    <!-- Bouton Inscription / Register - Style plus visible -->
-    <a href="/register" 
-       class="btn btn-primary flex items-center gap-1 px-4 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-container active:scale-95 transition-all">
-        <span class="material-symbols-outlined text-base">app_registration</span>
-        <span class="text-sm font-medium">S'inscrire</span>
-    </a>
-    
-    <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
-        <span class="material-symbols-outlined">notifications</span>
-    </button>
-    
-    <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
-        <span class="material-symbols-outlined">settings</span>
-    </button>
-    
-    <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container">
-        <img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdFX6Wry1yhOmHFnavxcNs8Czveflefzzn2IxipOguOzlQ4ok0DQOC_2oSdrrdxJ1CWqvqbhsNbN8_mjBxz3N8PmDOMTIeWNP-xQ0JrKLH3_Ovv1Fl3lV-L-UhQLi3y1bTki-izPUuT-63hQMS5XAtj6AeAYRjPZrigI0qCb2E1B9heMgwXPRB_4lgDojrcnnpN-S4ANyklQTCUA64togdAtNZo-dnGPmEsIYhnOHu_zIn91o4LcKuBPvTtDimtslLys0K8eQEpi" />
-    </div>
-</div>
+            <div class="flex items-center gap-md">
+                <?php if (!session()->get('estConnecte')) { ?>
+                    <!-- Bouton Inscription pour utilisateur non connecté -->
+                    <a href="/register"
+                        class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                        <span class="material-symbols-outlined">app_registration</span>
+                        <span class="text-sm font-medium hidden sm:inline">S'inscrire</span>
+                    </a>
+                <?php } else { ?>
+                    <!-- Boutons pour utilisateur connecté -->
+                    <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
+                        <span class="material-symbols-outlined">settings</span>
+                    </button>
+                <?php } ?>
+
+                <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container">
+                    <img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdFX6Wry1yhOmHFnavxcNs8Czveflefzzn2IxipOguOzlQ4ok0DQOC_2oSdrrdxJ1CWqvqbhsNbN8_mjBxz3N8PmDOMTIeWNP-xQ0JrKLH3_Ovv1Fl3lV-L-UhQLi3y1bTki-izPUuT-63hQMS5XAtj6AeAYRjPZrigI0qCb2E1B9heMgwXPRB_4lgDojrcnnpN-S4ANyklQTCUA64togdAtNZo-dnGPmEsIYhnOHu_zIn91o4LcKuBPvTtDimtslLys0K8eQEpi" />
+                </div>
+            </div>
     </header>
     <main class="pt-24 px-container-margin max-w-7xl mx-auto space-y-xl pb-12">
         <!-- Hero Health Metrics Section -->

@@ -172,6 +172,7 @@
                     <p class="font-body-md text-body-md text-on-surface-variant transition-all duration-300" id="formSubtitle">Entrez vos informations personnelles pour commencer votre expérience de santé personnalisée.</p>
                 </div>
                 <form class="space-y-md" id="registrationForm">
+                    <?= csrf_field() ?>
 
                     <!-- ÉTAPE 1: Profil Personnel -->
                     <div id="step1Content" class="space-y-md transition-all duration-300 ease-in-out">
@@ -190,6 +191,20 @@
                                     </div>
                                     <input class="block w-full pl-lg pr-md py-sm bg-surface-container-lowest border-2 border-outline-variant rounded-lg text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" id="full_name" name="full_name" placeholder="Jean Dupont" type="text" required />
                                     <span class="error-message text-red-500 text-label-sm hidden" data-field="full_name"></span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-xs">
+                                <label class="font-label-bold text-label-bold text-on-surface" for="gender">
+                                    Genre <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative group">
+                                    <select class="block w-full pl-md pr-md py-sm bg-surface-container-lowest border-2 border-outline-variant rounded-lg text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" id="gender" name="gender" required>
+                                        <option value="">Sélectionner votre genre</option>
+                                        <option value="male">Homme</option>
+                                        <option value="female">Femme</option>
+                                    </select>
+                                    <span class="error-message text-red-500 text-label-sm hidden" data-field="gender"></span>
                                 </div>
                             </div>
 
@@ -344,8 +359,17 @@
                 <div id="successMessage" class="hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
                     <div class="bg-surface p-lg rounded-xl text-center max-w-sm">
                         <span class="material-symbols-outlined text-[48px] text-primary mb-md block">check_circle</span>
-                        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Welcome to VitalFit!</h3>
-                        <p class="font-body-md text-body-md text-on-surface-variant">Your account has been created successfully.</p>
+                        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs" id="successTitle">Welcome to VitalFit!</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant" id="successText">Your account has been created successfully.</p>
+                    </div>
+                </div>
+
+                <div id="errorMessage" class="hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+                    <div class="bg-surface p-lg rounded-xl text-center max-w-sm">
+                        <span class="material-symbols-outlined text-[48px] text-error mb-md block">error</span>
+                        <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Erreur</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md" id="errorText">Une erreur est survenue</p>
+                        <button class="w-full bg-error text-white font-label-bold text-label-bold py-sm px-md rounded-lg" id="closeErrorBtn">Fermer</button>
                     </div>
                 </div>
 
@@ -382,6 +406,10 @@
             </div>
         </section>
     </main>
+    <script>
+        // Messages personnalisés chargés depuis le serveur
+        const appMessages = <?= $messages ?? '{}' ?>;
+    </script>
     <script src="<?= base_url('/assets/js/validation_form.js') ?>" defer></script>
                        
 
