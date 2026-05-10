@@ -373,10 +373,10 @@
                     </div>
                 </div>
 
-                <div class="mt-lg pt-lg border-t border-surface-container hidden" id="step1Footer">
+                <div class="mt-lg pt-lg border-t border-surface-container" id="step1Footer">
                     <p class="text-center text-on-surface-variant font-body-md text-body-md">
                         Already have an account?
-                        <a class="text-primary font-label-bold hover:underline" href="#">Log in</a>
+                        <a class="text-primary font-label-bold hover:underline" href="/login">Log in</a>
                     </p>
                 </div>
 

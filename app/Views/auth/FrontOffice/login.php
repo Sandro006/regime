@@ -129,23 +129,26 @@
 <p class="font-body-md text-on-surface-variant">Enter your credentials to access your wellness dashboard.</p>
 </section>
 <!-- Login Form -->
-<form class="space-y-md">
+<form class="space-y-md" id="loginForm">
+<?= csrf_field() ?>
 <div>
 <label class="block font-label-bold text-label-bold text-on-surface mb-base" for="email">Email Address</label>
-<input class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md placeholder:text-on-surface-variant/50" id="email" placeholder="name@example.com" type="email"/>
+<input class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md placeholder:text-on-surface-variant/50" id="email" name="email" placeholder="name@example.com" type="email" required/>
+<span class="error-message text-red-500 text-label-sm hidden" data-field="email"></span>
 </div>
 <div>
 <div class="flex justify-between items-center mb-base">
 <label class="block font-label-bold text-label-bold text-on-surface" for="password">Password</label>
 <a class="text-label-bold font-label-bold text-primary hover:underline" href="#">Forgot password?</a>
 </div>
-<input class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md placeholder:text-on-surface-variant/50" id="password" placeholder="••••••••" type="password"/>
+<input class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all font-body-md placeholder:text-on-surface-variant/50" id="password" name="password" placeholder="••••••••" type="password" required/>
+<span class="error-message text-red-500 text-label-sm hidden" data-field="password"></span>
 </div>
 <div class="flex items-center">
 <input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary bg-surface-container-low" id="remember" type="checkbox"/>
 <label class="ml-sm font-body-md text-on-surface-variant" for="remember">Remember me for 30 days</label>
 </div>
-<button class="w-full py-md bg-primary text-on-primary font-headline-md rounded-xl shadow-sm hover:opacity-90 active:scale-[0.98] transition-all" type="submit">
+<button class="w-full py-md bg-primary text-on-primary font-headline-md rounded-xl shadow-sm hover:opacity-90 active:scale-[0.98] transition-all" type="button" id="loginBtn">
                         Log In
                     </button>
 </form>
@@ -172,7 +175,7 @@
 <!-- Footer Link -->
 <p class="text-center font-body-md text-on-surface-variant">
                     Don't have an account? 
-                    <a class="font-label-bold text-primary hover:underline" href="#">Create an account</a>
+                    <a class="font-label-bold text-primary hover:underline" href="/register">Create an account</a>
 </p>
 </div>
 </div>
@@ -233,4 +236,48 @@
             © 2024 VitalFit Platform
         </div>
 </footer>
+<script>
+document.getElementById('loginBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    if (!email || !password) {
+        alert('Veuillez remplir tous les champs');
+        return;
+    }
+    
+    // Récupérer le token CSRF
+    const csrfToken = document.querySelector('input[name="csrf_test_name"]').value;
+    
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({ 
+                email, 
+                password,
+                csrf_test_name: csrfToken
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Rediriger vers la page d'accueil
+            window.location.href = data.redirect;
+        } else {
+            alert(data.message || 'Une erreur est survenue');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('Une erreur est survenue lors de la connexion');
+    }
+});
+</script>
 </body></html>
