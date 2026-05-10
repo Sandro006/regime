@@ -149,7 +149,6 @@
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/activite/list">Activities</a>
             <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Tableau de bord</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Régimes</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Activités</a>
             <?php if (session()->get('estConnecte')) { ?>
                 <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/profile">Profil</a>
             <?php } ?>
