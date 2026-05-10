@@ -45,6 +45,27 @@
 				</div>
 
 				<?php $user = session()->get('user'); ?>
+				<?php $flashError = session()->getFlashdata('error'); ?>
+				<?php $flashSuccess = session()->getFlashdata('success'); ?>
+				<?php $flashInfo = session()->getFlashdata('info'); ?>
+
+				<?php if (!empty($flashError)) : ?>
+					<div class="alert alert-danger" role="alert">
+						<?= esc($flashError) ?>
+					</div>
+				<?php endif; ?>
+
+				<?php if (!empty($flashSuccess)) : ?>
+					<div class="alert alert-success" role="alert">
+						<?= esc($flashSuccess) ?>
+					</div>
+				<?php endif; ?>
+
+				<?php if (!empty($flashInfo)) : ?>
+					<div class="alert alert-info" role="alert">
+						<?= esc($flashInfo) ?>
+					</div>
+				<?php endif; ?>
 
 				<?php if (empty($objectifs)) : ?>
 					<div class="alert alert-warning" role="alert">
@@ -64,7 +85,7 @@
 							<?php endif; ?>
 
 							<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-								<?php foreach ($objectifs as $objectif) : ?>
+								<?php foreach ($objectifs as $index => $objectif) : ?>
 									<?php $objectifId = esc($objectif['id']); ?>
 									<?php $objectifNom = esc($objectif['objectif']); ?>
 									<?php $objectifDescription = trim($objectif['description'] ?? ''); ?>
@@ -76,6 +97,7 @@
 											name="objectif_id"
 											id="objectif-<?= $objectifId ?>"
 											value="<?= $objectifId ?>"
+											<?= $index === 0 ? 'required' : '' ?>
 											autocomplete="off" />
 										<label class="card objectif-card h-100" for="objectif-<?= $objectifId ?>">
 											<div class="card-body">
