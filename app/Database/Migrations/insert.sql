@@ -17,3 +17,10 @@ INSERT INTO activites_sportives (nom_activite, description, calories_brulees, ni
 ('Marche rapide', 'Marche soutenue pour activer la depense calorique.', 200, 'facile');
 
 
+INSERT INTO regimes (nom_regime, description, prix, duree, variation_poids, pourcentage_viande, pourcentage_poisson, pourcentage_volaille) VALUES
+('Keto', 'Regime pauvre en glucides, riche en lipides.', 49.99, 30, -5.00, 60, 20, 20),
+('Mass Gain', 'Regime hypercalorique pour prise de masse.', 59.99, 45, 8.00, 40, 10, 50),
+('Detox', 'Regime leger pour purifier l organisme.', 39.99, 14, -3.00, 10, 40, 50),
+('Equilibre', 'Regime equilibre pour maintien du poids.', 44.99, 30, 0.00, 35, 35, 30),
+('Low Carb', 'Regime modere en glucides pour secher.', 52.99, 30, -4.00, 50, 20, 30),
+('High Protein', 'Regime riche en proteines pour sport.', 54.99, 30, 3.00, 45, 15, 40);
