@@ -13,23 +13,20 @@ class UserModel extends Model
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        'nom', 'email', 'motdepasse', 'genre', 
+        'username', 'email', 'password', 'gender', 
         'taille', 'poids', 'solde', 'gold'
     ];
 
     // Dates
-    protected $useTimestamps = true;
-    protected $dateFormat = 'datetime';
-    protected $createdField = 'date_inscription';
-    protected $updatedField = false;
-    protected $deletedField = false;
+    protected $useTimestamps = false;
+
 
     // Validation
     protected $validationRules = [
-        'nom' => 'required|min_length[2]|max_length[100]',
+        'username' => 'required|min_length[2]|max_length[100]',
         'email' => 'required|valid_email|is_unique[users.email]',
-        'motdepasse' => 'required|min_length[6]',
-        'genre' => 'required|in_list[M,F]',
+        'password' => 'required|min_length[8]',
+        'gender' => 'required|in_list[male,female]',
         'taille' => 'required|decimal|greater_than[0]|less_than[3]',
         'poids' => 'required|decimal|greater_than[0]|less_than[500]',
         'solde' => 'permit_empty|decimal',
@@ -38,18 +35,6 @@ class UserModel extends Model
 
     protected $validationMessages = [];
     protected $skipValidation = false;
-
-    // Hashage automatique du mot de passe
-    protected $beforeInsert = ['hashPassword'];
-    protected $beforeUpdate = ['hashPassword'];
-
-    protected function hashPassword(array $data)
-    {
-        if (isset($data['data']['motdepasse'])) {
-            $data['data']['motdepasse'] = password_hash($data['data']['motdepasse'], PASSWORD_DEFAULT);
-        }
-        return $data;
-    }
 
     // ============ CRUD METHODS ============
 
