@@ -650,7 +650,7 @@
 
 ### ✅ Login Admin
 
-- [ ] **10.1** — Créer modèle Admin
+- [x] **10.1** — Créer modèle Admin
   - **Responsable:** Elisa
   - **Fichier:** `app/Models/AdminModel.php`
   - **Champs:**
@@ -661,7 +661,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** Modèle chargeable
 
-- [ ] **10.2** — Insérer admin de test en BD
+- [x] **10.2** — Insérer admin de test en BD
   - **Responsable:** Elisa
   - **Comment:** Insérer 1 admin avec mdp hashé
   - **Dépendance:** 10.1 complété

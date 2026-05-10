@@ -62,6 +62,9 @@ class Auth extends BaseController
             // Récupérer l'utilisateur nouvellement créé
             $user = $this->userModel->find($userId);
             
+            // Calcul du BMI
+            $bmi = round($user['poids'] / ($user['taille'] ** 2), 1);
+            
             // Stocker l'utilisateur en session
             $session = session();
             $session->set([
@@ -70,7 +73,12 @@ class Auth extends BaseController
                     'id' => $user['id'],
                     'username' => $user['username'],
                     'email' => $user['email'],
-                    'gender' => $user['gender']
+                    'gender' => $user['gender'],
+                    'taille' => $user['taille'],
+                    'poids' => $user['poids'],
+                    'solde' => $user['solde'],
+                    'gold' => $user['gold'],
+                    'bmi' => $bmi
                 ]
             ]);
             
@@ -127,6 +135,9 @@ public function doLogin(){
         
         if ($user) {
             // Démarrer la session
+            // Calcul du BMI
+            $bmi = round($user['poids'] / ($user['taille'] ** 2), 1);
+            
             $sessionData = [
                 'estConnecte' => true,
                 'user' => [
@@ -134,7 +145,11 @@ public function doLogin(){
                     'username' => $user['username'],
                     'email' => $user['email'],
                     'gender' => $user['gender'],
-                    'gold' => $user['gold']
+                    'gold' => $user['gold'],
+                    'taille' => $user['taille'],
+                    'poids' => $user['poids'],
+                    'solde' => $user['solde'],
+                    'bmi' => $bmi
                 ]
             ];
             

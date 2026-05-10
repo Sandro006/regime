@@ -147,6 +147,9 @@
             <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Dashboard</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Diets</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Activities</a>
+            <?php if (session()->get('estConnecte')) { ?>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/profile">Profile</a>
+            <?php } ?>
             <div class="flex items-center gap-md">
                 <?php if (!session()->get('estConnecte')) { ?>
                     <!-- Bouton Inscription pour utilisateur non connecté -->
@@ -160,17 +163,15 @@
                     <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
                         <span class="material-symbols-outlined">notifications</span>
                     </button>
-                    <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
-                        <a href="/logout"
-                            class="flex items-center gap-1">
-                            <span class="material-symbols-outlined">logout</span>
-                        </a>
-                    </button>
+                    <a href="/logout"
+                        class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                        <span class="material-symbols-outlined">logout</span>
+                    </a>
                 <?php } ?>
 
-                <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container">
-                    <img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdFX6Wry1yhOmHFnavxcNs8Czveflefzzn2IxipOguOzlQ4ok0DQOC_2oSdrrdxJ1CWqvqbhsNbN8_mjBxz3N8PmDOMTIeWNP-xQ0JrKLH3_Ovv1Fl3lV-L-UhQLi3y1bTki-izPUuT-63hQMS5XAtj6AeAYRjPZrigI0qCb2E1B9heMgwXPRB_4lgDojrcnnpN-S4ANyklQTCUA64togdAtNZo-dnGPmEsIYhnOHu_zIn91o4LcKuBPvTtDimtslLys0K8eQEpi" />
-                </div>
+                <a href="/profile" class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container hover:shadow-lg transition-shadow" title="My Profile">
+                    <img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdFX6Wry1yhOmHFnavxcNs8Czveflefzzn2IxipOguOzlQ4ok0DQOC_2oSdrrdxJ1CWqvqbhsNbN8_mjBxz3N8PmDOMTIeWNP-xQ0JrKLH3_Ovv1Fl3lV-L-UhQLi3y1bTki-izPUuT-63hQMS5XAtj6AeAYRjPZrigI0qCb2E1B9heMgwXPRB_4lgDojrcnnpN-S4ANyklQTCUA64togdAtNZo-dnGPmEsIYhnOHu_zIn91o4LcKuBPvTtDimtslLys0K8eQEpi" class="w-full h-full object-cover" />
+                </a>
             </div>
     </header>
     <main class="pt-24 px-container-margin max-w-7xl mx-auto space-y-xl pb-12">
@@ -182,7 +183,7 @@
                     <span class="font-label-caps text-label-caps text-on-surface-variant">CURRENT BMI</span>
                     <span class="text-primary material-symbols-outlined">speed</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl text-primary">22.4</div>
+                <div class="font-metric-xl text-metric-xl text-primary"><?php echo isset($user) ? $user['bmi'] : '22.4'; ?></div>
                 <div class="mt-xs inline-flex px-sm py-base rounded-full bg-primary-container/20 text-on-primary-container font-label-caps text-[10px]">NORMAL</div>
             </div>
             <!-- Weight Card -->
@@ -191,7 +192,7 @@
                     <span class="font-label-caps text-label-caps text-on-surface-variant">CURRENT WEIGHT</span>
                     <span class="text-secondary material-symbols-outlined">monitor_weight</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl text-on-surface">75<span class="text-body-lg ml-1 text-on-surface-variant">kg</span></div>
+                <div class="font-metric-xl text-metric-xl text-on-surface"><?php echo isset($user) ? $user['poids'] : '75'; ?><span class="text-body-lg ml-1 text-on-surface-variant">kg</span></div>
                 <div class="mt-xs flex items-center gap-1 text-on-surface-variant font-body-md italic">
                     <span class="material-symbols-outlined text-[16px]">trending_down</span> -0.5kg this week
                 </div>
@@ -214,7 +215,7 @@
                     <span class="font-label-caps text-label-caps opacity-80">WALLET BALANCE</span>
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl">50.00€</div>
+                <div class="font-metric-xl text-metric-xl"><?php echo isset($user) ? number_format($user['solde'], 2) : '50.00'; ?>€</div>
                 <button class="mt-md w-full py-base bg-white/20 hover:bg-white/30 rounded-lg font-label-caps transition-colors">ADD FUNDS</button>
             </div>
         </section>
@@ -364,11 +365,11 @@
             <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
             <span class="font-label-caps text-label-caps mt-1">Wallet</span>
         </a>
-        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="#">
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="/profile">
             <span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
             <span class="font-label-caps text-label-caps mt-1">Profile</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/logout">
             <span class="material-symbols-outlined" data-icon="logout">logout</span>
             <span class="font-label-caps text-label-caps mt-1">Logout</span>
         </a>
