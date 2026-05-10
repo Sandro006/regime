@@ -144,9 +144,6 @@
             <span class="font-display-md text-display-md font-bold text-primary dark:text-primary-fixed-dim">VitalFit</span>
         </div>
         <div class="hidden md:flex gap-lg">
-            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Dashboard</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Diets</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/activite/list">Activities</a>
             <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Tableau de bord</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Régimes</a>
             <?php if (session()->get('estConnecte')) { ?>
@@ -180,6 +177,7 @@
                     <img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdFX6Wry1yhOmHFnavxcNs8Czveflefzzn2IxipOguOzlQ4ok0DQOC_2oSdrrdxJ1CWqvqbhsNbN8_mjBxz3N8PmDOMTIeWNP-xQ0JrKLH3_Ovv1Fl3lV-L-UhQLi3y1bTki-izPUuT-63hQMS5XAtj6AeAYRjPZrigI0qCb2E1B9heMgwXPRB_4lgDojrcnnpN-S4ANyklQTCUA64togdAtNZo-dnGPmEsIYhnOHu_zIn91o4LcKuBPvTtDimtslLys0K8eQEpi" class="w-full h-full object-cover" />
                 </a>
             </div>
+        </div>
     </header>
     <main class="pt-24 px-container-margin max-w-7xl mx-auto space-y-xl pb-12">
         <!-- Hero Health Metrics Section -->
@@ -301,60 +299,40 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-                <!-- Activity 1 -->
-                <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
-                    <div class="h-40 overflow-hidden relative">
-                        <img alt="Cardio session" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-energy photograph of a person performing intense cardio in a modern, well-lit fitness studio. The background is minimalist with soft white walls and natural light streaming through large windows. The mood is energetic and motivating, using a fresh green and soft blue color palette to align with the health and vitality theme of VitalFit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrO5g4Ks84vcAZ2PetS4BEYYjU__DoLdJQeNjdC1vtnwtXDznAYjmhRs0S8hInlv5VD8F231t6cMYS7BmigyPWQmmQymWv8ABI9Ak99zlNte0UmLBTd44bUWAggZiN05rn1q7d2xSXnksseRlbxocr6mhVe9c-IkGidE1uuu9OgvQgAdGE3Z4at06uBOLAMoGOS5jeCe6Vop6nQsT-RX_Whm_SLQ_qF_lkGXdJCXsLyspS_zMW9XSL_fAwT_1-qFItpdlhL4fZSqTV" />
-                        <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]">INTENSE</div>
-                    </div>
-                    <div class="p-md">
-                        <h4 class="font-headline-sm text-on-surface">Séance HIIT</h4>
-                        <p class="text-on-surface-variant font-body-md text-xs mt-base">Burn maximum calories in short bursts of high intensity.</p>
-                        <div class="mt-md flex items-center justify-between">
-                            <div class="flex items-center gap-1 text-primary">
-                                <span class="material-symbols-outlined text-sm">schedule</span>
-                                <span class="font-label-caps">30 MIN</span>
+                <?php if (isset($activites) && !empty($activites)): ?>
+                    <?php 
+                    $images = [
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuBrO5g4Ks84vcAZ2PetS4BEYYjU__DoLdJQeNjdC1vtnwtXDznAYjmhRs0S8hInlv5VD8F231t6cMYS7BmigyPWQmmQymWv8ABI9Ak99zlNte0UmLBTd44bUWAggZiN05rn1q7d2xSXnksseRlbxocr6mhVe9c-IkGidE1uuu9OgvQgAdGE3Z4at06uBOLAMoGOS5jeCe6Vop6nQsT-RX_Whm_SLQ_qF_lkGXdJCXsLyspS_zMW9XSL_fAwT_1-qFItpdlhL4fZSqTV',
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuAWUpm1Zjv0SuSPzps7RW8oztqkWmc0P3pnvzC-zJQDzaN8NLDUyHIrBRDNDz4dtvWchZttqLe32C-kZhIcy1Vee5xKWNTYutGweM6knia1neaHkHLytVUC8PdKC3WWPtB8C0_5XVoCcD0ey9jZkdvNwjr3H_61SH57K4iRv4oK0nRC09de_KXyxxCjf_wH2LlePa5Knolb7KR5CDkfYll6hsn8DjsyKc3nXPPERvEcaTDVPvshpRr_-stLY9DcTJ1624b_pwv-aAlL',
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuApsfa1nxamzqeH9o2-lHw4yKeAp0QtL8RKKp8p35mhMmbx2_nP0TwbOtV1GpZUmkMQ336HBS0iS9lP2G8Xre4KstCyp_cc0Hw9hbuRJ3CYBqRIOpPIxwKVr1RpwM4YLxQdCbxFqLZOhxHuB2yrhThE59YEItFTA-4G2rEvKwmdV4BL8TUflCGjt3ZgcALaUmHe4Kxdvm8srn_7e6wSMYHwj2qceSZnrNy8LqCF71Xq67wpCLwZT94TI27-y8F5PyPyzKdLxg-MAMUu'
+                    ];
+                    $niveaux = ['facile' => 'FACILE', 'moyen' => 'MODÉRÉ', 'difficile' => 'INTENSE'];
+                    ?>
+                    <?php foreach ($activites as $index => $activite): ?>
+                    <!-- Activity Card -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
+                        <div class="h-40 overflow-hidden relative">
+                            <img alt="<?php echo htmlspecialchars($activite['nom_activite']); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="<?php echo $images[$index % count($images)]; ?>" />
+                            <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]"><?php echo $niveaux[$activite['niveau_difficulte']] ?? strtoupper($activite['niveau_difficulte']); ?></div>
+                        </div>
+                        <div class="p-md">
+                            <h4 class="font-headline-sm text-on-surface"><?php echo htmlspecialchars($activite['nom_activite']); ?></h4>
+                            <p class="text-on-surface-variant font-body-md text-xs mt-base"><?php echo htmlspecialchars($activite['description']); ?></p>
+                            <div class="mt-md flex items-center justify-between">
+                                <div class="flex items-center gap-xs">
+                                    <span class="material-symbols-outlined text-secondary text-[20px]">local_fire_department</span>
+                                    <span class="font-label-caps text-label-caps text-on-surface"><?php echo $activite['calories_brulees']; ?> cal</span>
+                                </div>
+                                <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
                             </div>
-                            <div class="text-secondary font-bold font-label-caps">500 KCAL</div>
                         </div>
                     </div>
-                </div>
-                <!-- Activity 2 -->
-                <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
-                    <div class="h-40 overflow-hidden relative">
-                        <img alt="Outdoor running" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A serene landscape of a trail runner at sunrise, surrounded by misty green hills. The lighting is warm and ethereal, creating a sense of peace and vitality. The overall aesthetic is clean and high-end, focusing on the freedom of movement and outdoor wellness, matching the VitalFit corporate modern brand style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWUpm1Zjv0SuSPzps7RW8oztqkWmc0P3pnvzC-zJQDzaN8NLDUyHIrBRDNDz4dtvWchZttqLe32C-kZhIcy1Vee5xKWNTYutGweM6knia1neaHkHLytVUC8PdKC3WWPtB8C0_5XVoCcD0ey9jZkdvNwjr3H_61SH57K4iRv4oK0nRC09de_KXyxxCjf_wH2LlePa5Knolb7KR5CDkfYll6hsn8DjsyKc3nXPPERvEcaTDVPvshpRr_-stLY9DcTJ1624b_pwv-aAlL" />
-                        <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]">MODÉRÉ</div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-span-full text-center py-lg text-on-surface-variant">
+                        Aucune activité disponible pour le moment.
                     </div>
-                    <div class="p-md">
-                        <h4 class="font-headline-sm text-on-surface">Course matinale</h4>
-                        <p class="text-on-surface-variant font-body-md text-xs mt-base">Steady state cardio for cardiovascular health and endurance.</p>
-                        <div class="mt-md flex items-center justify-between">
-                            <div class="flex items-center gap-1 text-primary">
-                                <span class="material-symbols-outlined text-sm">schedule</span>
-                                <span class="font-label-caps">45 MIN</span>
-                            </div>
-                            <div class="text-secondary font-bold font-label-caps">350 KCAL</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Activity 3 -->
-                <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
-                    <div class="h-40 overflow-hidden relative">
-                        <img alt="Strength training" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist yoga studio with polished concrete floors and soft indirect lighting. A single person is in a focused stretching pose, emphasizing flexibility and balance. The color palette is composed of muted greens, soft grays, and natural wood tones, embodying the calm and structured philosophy of the VitalFit health app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApsfa1nxamzqeH9o2-lHw4yKeAp0QtL8RKKp8p35mhMmbx2_nP0TwbOtV1GpZUmkMQ336HBS0iS9lP2G8Xre4KstCyp_cc0Hw9hbuRJ3CYBqRIOpPIxwKVr1RpwM4YLxQdCbxFqLZOhxHuB2yrhThE59YEItFTA-4G2rEvKwmdV4BL8TUflCGjt3ZgcALaUmHe4Kxdvm8srn_7e6wSMYHwj2qceSZnrNy8LqCF71Xq67wpCLwZT94TI27-y8F5PyPyzKdLxg-MAMUu" />
-                        <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]">FACILE</div>
-                    </div>
-                    <div class="p-md">
-                        <h4 class="font-headline-sm text-on-surface">Yoga Flow</h4>
-                        <p class="text-on-surface-variant font-body-md text-xs mt-base">Active recovery focusing on core strength and flexibility.</p>
-                        <div class="mt-md flex items-center justify-between">
-                            <div class="flex items-center gap-1 text-primary">
-                                <span class="material-symbols-outlined text-sm">schedule</span>
-                                <span class="font-label-caps">60 MIN</span>
-                            </div>
-                            <div class="text-secondary font-bold font-label-caps">180 KCAL</div>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </section>
     </main>

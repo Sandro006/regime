@@ -24,6 +24,8 @@ $routes->get('/admin/logout', 'Admin\\Auth::logout');
 $routes->get('/profile', 'Profile::index');
 $routes->get('/profile/edit', 'Profile::edit');
 $routes->post('/profile/doEdit', 'Profile::doEdit');
+$routes->get('/profile/editObjectif', 'Profile::editObjectif');
+$routes->post('/profile/doEditObjectif', 'Profile::doEditObjectif');
 
 // Routes objectifs
 $routes->get('/objectif/list', 'Objectif::list');

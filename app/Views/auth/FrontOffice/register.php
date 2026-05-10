@@ -314,32 +314,30 @@
                             <legend class="font-label-bold text-label-bold text-primary mb-md text-lg">Votre objectif de santé</legend>
 
                             <div class="space-y-sm">
-                                <label class="flex items-center p-sm border-2 border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-lowest transition-all" data-goal="increase">
-                                    <input class="w-4 h-4 accent-primary cursor-pointer" name="goal" type="radio" value="increase" required />
-                                    <span class="ml-sm flex-1">
-                                        <span class="font-label-bold text-label-bold text-on-surface block">Augmenter mon IMC</span>
-                                        <span class="font-label-sm text-label-sm text-on-surface-variant">Gagner du muscle et renforcer ma force</span>
-                                    </span>
-                                    <span class="material-symbols-outlined text-primary text-[24px]" data-icon="trending_up">trending_up</span>
-                                </label>
-
-                                <label class="flex items-center p-sm border-2 border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-lowest transition-all" data-goal="reduce">
-                                    <input class="w-4 h-4 accent-primary cursor-pointer" name="goal" type="radio" value="reduce" required />
-                                    <span class="ml-sm flex-1">
-                                        <span class="font-label-bold text-label-bold text-on-surface block">Réduire mon IMC</span>
-                                        <span class="font-label-sm text-label-sm text-on-surface-variant">Perdre du poids et améliorer ma santé</span>
-                                    </span>
-                                    <span class="material-symbols-outlined text-primary text-[24px]" data-icon="trending_down">trending_down</span>
-                                </label>
-
-                                <label class="flex items-center p-sm border-2 border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-lowest transition-all" data-goal="maintain">
-                                    <input class="w-4 h-4 accent-primary cursor-pointer" name="goal" type="radio" value="maintain" required />
-                                    <span class="ml-sm flex-1">
-                                        <span class="font-label-bold text-label-bold text-on-surface block">Maintenir mon IMC</span>
-                                        <span class="font-label-sm text-label-sm text-on-surface-variant">Atteindre et maintenir un poids idéal</span>
-                                    </span>
-                                    <span class="material-symbols-outlined text-primary text-[24px]" data-icon="favorite">favorite</span>
-                                </label>
+                                <?php if (isset($objectifs) && !empty($objectifs)): ?>
+                                    <?php foreach ($objectifs as $index => $objectif): ?>
+                                        <label class="flex items-center p-sm border-2 border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-lowest transition-all">
+                                            <input 
+                                                class="w-4 h-4 accent-primary cursor-pointer" 
+                                                name="objectif_id" 
+                                                type="radio" 
+                                                value="<?php echo $objectif['id']; ?>" 
+                                                <?php echo ($index === 0) ? 'checked' : ''; ?>
+                                                required 
+                                            />
+                                            <span class="ml-sm flex-1">
+                                                <span class="font-label-bold text-label-bold text-on-surface block"><?php echo htmlspecialchars($objectif['objectif']); ?></span>
+                                                <span class="font-label-sm text-label-sm text-on-surface-variant"><?php echo htmlspecialchars($objectif['description']); ?></span>
+                                            </span>
+                                            <span class="material-symbols-outlined text-primary text-[24px]">
+                                                <?php 
+                                                    $icones = ['trending_down', 'trending_up', 'favorite'];
+                                                    echo $icones[$index % 3];
+                                                ?>
+                                            </span>
+                                        </label>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
 
                         </fieldset>
