@@ -25,7 +25,7 @@ class Auth extends BaseController
         return view('auth/FrontOffice/register', ['messages' => json_encode($messages)]);
     }
 
-    public function login(): string
+    public function loginPage(): string
     {
         // Charger les messages personnalisés
         $messagesFile = APPPATH . 'Config/Messages.json';
@@ -35,7 +35,7 @@ class Auth extends BaseController
             $messages = json_decode(file_get_contents($messagesFile), true)['auth']['login'] ?? [];
         }
         
-        return view('auth/FrontOffice/login', ['messages' => json_encode($messages)]);
+        return view('auth/BackOffice/login', ['messages' => json_encode($messages)]);
     }
 
     /**
