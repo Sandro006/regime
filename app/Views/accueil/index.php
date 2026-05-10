@@ -161,7 +161,10 @@
                         <span class="material-symbols-outlined">notifications</span>
                     </button>
                     <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
-                        <span class="material-symbols-outlined">settings</span>
+                        <a href="/logout"
+                            class="flex items-center gap-1">
+                            <span class="material-symbols-outlined">logout</span>
+                        </a>
                     </button>
                 <?php } ?>
 
