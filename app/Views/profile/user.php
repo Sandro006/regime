@@ -188,7 +188,10 @@
                         <span class="material-symbols-outlined">edit</span>
                         Edit Profile
                     </a>
-                    <button class="px-lg py-sm border-2 border-primary text-primary rounded-lg font-label-caps text-label-caps hover:bg-primary/5 active:scale-95 transition-all">Change Password</button>
+                    <a href="/profile/editObjectif" class="px-lg py-sm border-2 border-primary text-primary rounded-lg font-label-caps text-label-caps hover:bg-primary/5 active:scale-95 transition-all inline-flex items-center gap-1">
+                        <span class="material-symbols-outlined">flag</span>
+                        Changer d'objectif
+                    </a>
                 </div>
             </div>
         </section>
