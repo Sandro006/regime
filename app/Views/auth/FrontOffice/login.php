@@ -144,6 +144,12 @@
                     <h1 class="font-display-lg text-display-lg text-primary tracking-tight">VitalFit</h1>
                     <p class="font-body-lg text-body-lg text-on-surface-variant mt-xs">Welcome back. Your wellness journey continues.</p>
                 </div>
+                <div class="bg-surface-container-low p-md rounded-xl border-2 border-primary/30 mt-md">
+                    <ul class="list-disc list-inside text-on-surface-variant">
+                        <li><span>Email: test@test.com</span></li>
+                        <li><span>Password: test</span></li>
+                    </ul>
+                </div>
                 <!-- Login Form Card -->
                 <div class="bg-surface-container-lowest rounded-xl shadow-lg p-lg border border-outline-variant/10">
 
