@@ -38,19 +38,11 @@ class UserModel extends Model
 
     // ============ CRUD METHODS ============
 
-    /**
-     * CREATE - Créer un utilisateur
-     */
-    public function createUser($data)
-    {
+    public function createUser($data){
         return $this->insert($data);
     }
 
-    /**
-     * READ - Récupérer tous les utilisateurs
-     */
-    public function getAllUsers()
-    {
+    public function getAllUsers(){
         return $this->findAll();
     }
 
@@ -82,14 +74,6 @@ class UserModel extends Model
      * DELETE - Supprimer un utilisateur
      */
     public function deleteUser($id)
-    {
-        return $this->delete($id);
-    }
-
-    /**
-     * DELETE (soft) - Marquage comme supprimé (si useSoftDeletes = true)
-     */
-    public function softDeleteUser($id)
     {
         return $this->delete($id);
     }

@@ -152,12 +152,7 @@
             <?php } ?>
             <div class="flex items-center gap-md">
                 <?php if (!session()->get('estConnecte')) { ?>
-                    <!-- Boutons pour utilisateur non connecté -->
-                    <a href="/login"
-                        class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
-                        <span class="material-symbols-outlined">login</span>
-                        <span class="text-sm font-medium hidden sm:inline">Se connecter</span>
-                    </a>
+                    <!-- Bouton Inscription pour utilisateur non connecté -->
                     <a href="/register"
                         class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
                         <span class="material-symbols-outlined">app_registration</span>
@@ -358,43 +353,26 @@
     </main>
     <!-- BottomNavBar (Mobile) -->
     <nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container dark:bg-surface-container-highest shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex justify-around items-center px-4 py-3">
-        <?php if (!session()->get('estConnecte')) { ?>
-            <!-- Navigation mobile - Utilisateur non connecté -->
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/">
-                <span class="material-symbols-outlined" data-icon="home">home</span>
-                <span class="font-label-caps text-label-caps mt-1">Accueil</span>
-            </a>
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/login">
-                <span class="material-symbols-outlined" data-icon="login">login</span>
-                <span class="font-label-caps text-label-caps mt-1">Connexion</span>
-            </a>
-            <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="/register">
-                <span class="material-symbols-outlined" data-icon="app_registration">app_registration</span>
-                <span class="font-label-caps text-label-caps mt-1">S'inscrire</span>
-            </a>
-        <?php } else { ?>
-            <!-- Navigation mobile - Utilisateur connecté -->
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
-                <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
-                <span class="font-label-caps text-label-caps mt-1">Régimes</span>
-            </a>
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
-                <span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
-                <span class="font-label-caps text-label-caps mt-1">Activités</span>
-            </a>
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
-                <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
-                <span class="font-label-caps text-label-caps mt-1">Portefeuille</span>
-            </a>
-            <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="/profile">
-                <span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
-                <span class="font-label-caps text-label-caps mt-1">Profil</span>
-            </a>
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/logout">
-                <span class="material-symbols-outlined" data-icon="logout">logout</span>
-                <span class="font-label-caps text-label-caps mt-1">Déconnexion</span>
-            </a>
-        <?php } ?>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
+            <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+            <span class="font-label-caps text-label-caps mt-1">Régimes</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
+            <span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+            <span class="font-label-caps text-label-caps mt-1">Activités</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
+            <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+            <span class="font-label-caps text-label-caps mt-1">Portefeuille</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="/profile">
+            <span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+            <span class="font-label-caps text-label-caps mt-1">Profil</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/logout">
+            <span class="material-symbols-outlined" data-icon="logout">logout</span>
+            <span class="font-label-caps text-label-caps mt-1">Déconnexion</span>
+        </a>
     </nav>
     <!-- FAB (Contextual for Tableau de bord) -->
     <button class="fixed right-lg bottom-28 md:bottom-lg w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform hover:bg-primary-container hover:text-on-primary-container group z-40">
