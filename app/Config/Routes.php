@@ -29,3 +29,7 @@ $routes->post('/profile/doEdit', 'Profile::doEdit');
 $routes->get('/objectif/list', 'Objectif::list');
 $routes->post('/objectif/save', 'Objectif::save');
 
+// Routes activites
+$routes->get('/activite/list', 'Activite::list');
+$routes->get('/activite/recommended', 'Activite::recommended');
+

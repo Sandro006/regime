@@ -144,6 +144,9 @@
             <span class="font-display-md text-display-md font-bold text-primary dark:text-primary-fixed-dim">VitalFit</span>
         </div>
         <div class="hidden md:flex gap-lg">
+            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Dashboard</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Diets</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/activite/list">Activities</a>
             <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Tableau de bord</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Régimes</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Activités</a>
