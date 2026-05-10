@@ -163,18 +163,18 @@
 
 ### ✅ Affichage & Modification Profil
 
-- [ ] **2.1** — Créer contrôleur Profile
+- [x] **2.1** — Créer contrôleur Profile
   - **Responsable:** Bidy
   - **Fichier:** `app/Controllers/Profile.php`
   - **Méthodes:**
     - `index()` - Afficher profil
     - `edit()` - Formulaire modification
-    - `update()` - Sauvegarder modifications (POST)
+    - `doedit()` - Sauvegarder modifications (POST)
   - **Comment:** Vérifier session utilisateur, charger depuis UserModel
   - **Dépendance:** 1.6 complété
   - **Validation:** Contrôleur chargeable
 
-- [ ] **2.2** — Créer vue profil
+- [x] **2.2** — Créer vue profil
   - **Responsable:** Elisa
   - **Fichier:** `app/Views/profile/index.php`
   - **Affiche:**
@@ -190,7 +190,7 @@
   - **Dépendance:** 2.1 complété
   - **Validation:** Vue affichable
 
-- [ ] **2.3** — Créer vue modification profil
+- [x] **2.3** — Créer vue modification profil
   - **Responsable:** Elisa
   - **Fichier:** `app/Views/profile/edit.php`
   - **Champs éditables:**
@@ -201,7 +201,7 @@
   - **Dépendance:** 2.1 complété
   - **Validation:** Vue affichable avec pré-remplissage
 
-- [ ] **2.4** — Implémenter calcul IMC
+- [x] **2.4** — Implémenter calcul IMC
   - **Responsable:** Sandro
   - **Formule:** `IMC = poids / (taille * taille)`
   - **Comment:** 
@@ -211,7 +211,7 @@
   - **Dépendance:** 2.2 complété
   - **Validation:** IMC affiché correctement dans vue profil
 
-- [ ] **2.5** — Implémenter modification profil
+- [x] **2.5** — Implémenter modification profil
   - **Responsable:** Bidy
   - **Comment:**
     - Récupérer données POST
@@ -229,7 +229,7 @@
 
 ### ✅ Gestion des Objectifs
 
-- [ ] **3.1** — Créer modèle Objectif
+- [x] **3.1** — Créer modèle Objectif
   - **Responsable:** Elisa
   - **Fichier:** `app/Models/ObjectifModel.php`
   - **Champs:**
@@ -240,7 +240,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** 3 objectifs en BD
 
-- [ ] **3.2** — Créer modèle UtilisateurObjectif
+- [x] **3.2** — Créer modèle UtilisateurObjectif
   - **Responsable:** Elisa
   - **Fichier:** `app/Models/UtilisateurObjectifModel.php`
   - **Champs:**
@@ -251,7 +251,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** Modèle chargeable
 
-- [ ] **3.3** — Créer contrôleur Objectif
+- [x] **3.3** — Créer contrôleur Objectif
   - **Responsable:** Sandro
   - **Fichier:** `app/Controllers/Objectif.php`
   - **Méthodes:**
@@ -260,7 +260,7 @@
   - **Dépendance:** 3.1, 3.2 complétés
   - **Validation:** Contrôleur chargeable
 
-- [ ] **3.4** — Créer vue liste objectifs
+- [x] **3.4** — Créer vue liste objectifs
   - **Responsable:** Bidy
   - **Fichier:** `app/Views/objectif/list.php`
   - **Affiche:** Liste radios/boutons avec description
@@ -667,7 +667,7 @@
   - **Dépendance:** 10.1 complété
   - **Validation:** Admin présent en BD
 
-- [ ] **10.3** — Créer contrôleur AdminAuth
+- [x] **10.3** — Créer contrôleur AdminAuth
   - **Responsable:** Sandro
   - **Fichier:** `app/Controllers/Admin/Auth.php`
   - **Méthodes:**
