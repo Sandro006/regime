@@ -2,24 +2,25 @@
 
 namespace App\Controllers;
 use App\Models\UserModel;
+use App\Models\ObjectifModel;
+use App\Models\UtilisateurObjectifModel;
 
 class Auth extends BaseController
 {
     protected $userModel;
+    protected $objectifModel;
+    protected $utilisateurObjectifModel;
 
     public function __construct(){
         $this->userModel = new UserModel();
+        $this->objectifModel = new ObjectifModel();
+        $this->utilisateurObjectifModel = new UtilisateurObjectifModel();
     }
     public function Register(): string{
-        // Charger les messages personnalisés
-        $messagesFile = APPPATH . 'Config/Messages.json';
-        $messages = [];
+        // Récupérer les objectifs de la base de données
+        $objectifs = $this->objectifModel->getAllObjectifs();
         
-        if (file_exists($messagesFile)) {
-            $messages = json_decode(file_get_contents($messagesFile), true)['auth']['register'] ?? [];
-        }
-        
-        return view('auth/FrontOffice/register', ['messages' => json_encode($messages)]);
+        return view('auth/FrontOffice/register', ['objectifs' => $objectifs]);
     }
 
     /**
@@ -38,12 +39,23 @@ class Auth extends BaseController
             'gold' => 0
         ];
 
+        // Récupérer l'objectif sélectionné
+        $objectifId = $this->request->getPost('objectif_id');
+
         // Valider les données
         if (!$this->userModel->validate($data)) {
             return $this->response->setStatusCode(400)->setJSON([
                 'success' => false,
                 'message' => 'Données invalides',
                 'errors' => $this->userModel->errors()
+            ]);
+        }
+
+        // Valider que l'objectif est sélectionné
+        if (empty($objectifId)) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'success' => false,
+                'message' => 'Veuillez sélectionner un objectif'
             ]);
         }
 
@@ -55,12 +67,26 @@ class Auth extends BaseController
             ]);
         }
 
+        // Vérifier que l'objectif existe
+        if (!$this->objectifModel->find($objectifId)) {
+            return $this->response->setStatusCode(400)->setJSON([
+                'success' => false,
+                'message' => 'Objectif invalide'
+            ]);
+        }
+
         // Enregistrer l'utilisateur
         try {
             $userId = $this->userModel->insert($data);
             
             // Récupérer l'utilisateur nouvellement créé
             $user = $this->userModel->find($userId);
+            
+            // Enregistrer l'association utilisateur-objectif
+            $this->utilisateurObjectifModel->insert([
+                'user_id' => $userId,
+                'objectif_id' => $objectifId
+            ]);
             
             // Calcul du BMI
             $bmi = round($user['poids'] / ($user['taille'] ** 2), 1);
