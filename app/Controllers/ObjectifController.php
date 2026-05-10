@@ -23,7 +23,7 @@ class Objectif extends BaseController
     {
         $objectifs = $this->objectifModel->getAllObjectifs();
 
-        return view('objectifs/list', ['objectifs' => $objectifs]);
+        return view('objectif/list', ['objectifs' => $objectifs]);
     }
 
     /**
@@ -31,14 +31,16 @@ class Objectif extends BaseController
      */
     public function save()
     {
-        $userId = $this->request->getPost('user_id');
         $objectifId = $this->request->getPost('objectif_id');
+        $userId = $this->request->getPost('user_id');
+        $sessionUser = session()->get('user');
+
+        if (!$userId && !empty($sessionUser['id'])) {
+            $userId = $sessionUser['id'];
+        }
 
         if (!$userId || !$objectifId) {
-            return $this->response->setStatusCode(400)->setJSON([
-                'success' => false,
-                'message' => 'Paramètres manquants (user_id, objectif_id)'
-            ]);
+            return redirect()->back()->with('error', 'Parametres manquants (user_id, objectif_id)');
         }
 
         // Vérifier si l'association existe déjà
@@ -48,28 +50,19 @@ class Objectif extends BaseController
             ->first();
 
         if ($existing) {
-            return $this->response->setStatusCode(409)->setJSON([
-                'success' => false,
-                'message' => 'Cet objectif est déjà assigné à cet utilisateur'
-            ]);
+            return redirect()->to('/')->with('info', 'Cet objectif est deja assigne a cet utilisateur');
         }
 
         try {
             $this->utilisateurObjectifModel->createAssociation([
                 'user_id' => $userId,
-                'objectif_id' => $objectifId
+                'objectif_id' => $objectifId,
+                'date_choix' => date('Y-m-d')
             ]);
 
-            return $this->response->setStatusCode(201)->setJSON([
-                'success' => true,
-                'message' => 'Objectif assigné avec succès'
-            ]);
+            return redirect()->to('/')->with('success', 'Objectif assigne avec succes');
         } catch (\Exception $e) {
-            return $this->response->setStatusCode(500)->setJSON([
-                'success' => false,
-                'message' => 'Erreur lors de l\'assignation',
-                'error' => $e->getMessage()
-            ]);
+            return redirect()->back()->with('error', 'Erreur lors de l\'assignation');
         }
     }
 }
