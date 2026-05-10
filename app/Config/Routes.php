@@ -21,4 +21,7 @@ $routes->get('/profile/edit', 'Profile::edit');
 $routes->post('/profile/doEdit', 'Profile::doEdit');
 
 // $routes->get('/dashboard', '/accueil/index_fr.php');
+// Routes objectifs
+$routes->get('/objectif/list', 'Objectif::list');
+$routes->post('/objectif/save', 'Objectif::save');
 
