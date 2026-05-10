@@ -10,7 +10,7 @@
 
 ### ✅ Configuration du projet CodeIgniter4
 
-- [ ] **0.1** — Cloner/créer le projet CodeIgniter4
+- x] **0.1** — Cloner/créer le projet CodeIgniter4
   - **Responsable:** Sandro
   - **Comment:** `composer create-project codeigniter4/appstarter regime` ou utiliser le dossier existant
   - **Dépendance:** Aucune
