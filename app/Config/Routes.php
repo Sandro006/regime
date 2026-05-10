@@ -29,3 +29,8 @@ $routes->post('/profile/doEdit', 'Profile::doEdit');
 $routes->get('/objectif/list', 'Objectif::list');
 $routes->post('/objectif/save', 'Objectif::save');
 
+// Routes portefeuille
+$routes->get('/portefeuille', 'Portefeuille::index');
+$routes->get('/portefeuille/recharger', 'Portefeuille::recharger');
+$routes->post('/portefeuille/validerCode', 'Portefeuille::validerCode');
+

@@ -443,7 +443,7 @@
   - **Dépendance:** 6.1, 6.2 complétés
   - **Validation:** Contrôleur chargeable
 
-- [ ] **6.4** — Créer vue portefeuille
+- [X] **6.4** — Créer vue portefeuille
   - **Responsable:** Elisa
   - **Fichier:** `app/Views/portefeuille/index.php`
   - **Affiche:**
@@ -453,7 +453,7 @@
   - **Dépendance:** 6.3 complété
   - **Validation:** Vue affichable
 
-- [ ] **6.5** — Créer vue recharge code
+- [X] **6.5** — Créer vue recharge code
   - **Responsable:** Elisa
   - **Fichier:** `app/Views/portefeuille/recharger.php`
   - **Formulaire:** Input pour saisir code
