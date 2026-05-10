@@ -15,3 +15,5 @@ INSERT INTO activites_sportives (nom_activite, description, calories_brulees, ni
 ('HIIT', 'Intervalles intensifs courts pour bruler un max.', 500, 'difficile'),
 ('Cycling', 'Velo stationnaire ou exterieur, effort continu.', 320, 'moyen'),
 ('Marche rapide', 'Marche soutenue pour activer la depense calorique.', 200, 'facile');
+
+
