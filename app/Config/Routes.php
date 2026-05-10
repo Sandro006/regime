@@ -20,3 +20,12 @@ $routes->post('/admin/authenticate', 'Admin\\Auth::authenticate');
 $routes->get('/admin/logout', 'Admin\\Auth::logout');
 
 
+// Routes pour le profil utilisateur
+$routes->get('/profile', 'Profile::index');
+$routes->get('/profile/edit', 'Profile::edit');
+$routes->post('/profile/doEdit', 'Profile::doEdit');
+
+// Routes objectifs
+$routes->get('/objectif/list', 'Objectif::list');
+$routes->post('/objectif/save', 'Objectif::save');
+
