@@ -55,4 +55,12 @@ class ObjectifModel extends Model
     {
         return $this->delete($id);
     }
+
+    public function getUserObjectif($userId)
+    {
+        return $this->select('objectifs.*')
+                    ->join('utilisateurs_objectifs', 'objectifs.id = utilisateurs_objectifs.objectif_id')
+                    ->where('utilisateurs_objectifs.user_id', $userId)
+                    ->first();
+    }
 }
