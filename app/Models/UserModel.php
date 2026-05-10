@@ -97,4 +97,34 @@ class UserModel extends Model
         
         return $user; // Authentification réussie
     }
+
+    /**
+     * Calcule l'IMC (Indice de Masse Corporelle)
+     * Formule: IMC = poids (kg) / (taille (m) * taille (m))
+     * Retourne un tableau avec: ['valeur' => float, 'categorie' => string]
+     */
+    public function calculateIMC($poids, $taille)
+    {
+        if ($taille <= 0 || $poids <= 0) {
+            return ['valeur' => 0, 'categorie' => 'Invalide'];
+        }
+
+        $imc = $poids / ($taille * $taille);
+
+        // Déterminer la catégorie
+        if ($imc < 18.5) {
+            $categorie = 'Maigre';
+        } elseif ($imc < 25) {
+            $categorie = 'Normal';
+        } elseif ($imc < 30) {
+            $categorie = 'Surpoids';
+        } else {
+            $categorie = 'Obésité';
+        }
+
+        return [
+            'valeur' => round($imc, 1),
+            'categorie' => $categorie
+        ];
+    }
 }

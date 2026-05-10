@@ -28,6 +28,4 @@ class Home extends BaseController
             'activites' => $activites
         ]);
     }
-
-
 }
