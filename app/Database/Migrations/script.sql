@@ -155,9 +155,15 @@ CREATE TABLE IF NOT EXISTS `codes_portefeuille` (
     `code` VARCHAR(50) NOT NULL UNIQUE,
     `montant` DECIMAL(10,2) NOT NULL,
     `utilise` BOOLEAN DEFAULT FALSE,
+    `utilisateur_id` INT DEFAULT NULL,
     `date_creation` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `date_utilisation` TIMESTAMP NULL DEFAULT NULL,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+
+    FOREIGN KEY (`utilisateur_id`)
+        REFERENCES `users`(`id`)
+        ON DELETE SET NULL
 );
 
 -- =========================
@@ -165,15 +171,16 @@ CREATE TABLE IF NOT EXISTS `codes_portefeuille` (
 -- =========================
 CREATE TABLE IF NOT EXISTS `transactions` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` INT NOT NULL,
-    `type_transaction`
-        ENUM('achat', 'recharge') NOT NULL,
+    `utilisateur_id` INT NOT NULL,
+    `type`
+        ENUM('Recharge', 'Achat', 'Gold', 'Remboursement') NOT NULL,
     `montant` DECIMAL(10,2) NOT NULL,
     `date_transaction` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `description` TEXT DEFAULT NULL,
 
     PRIMARY KEY (`id`),
 
-    FOREIGN KEY (`user_id`)
+    FOREIGN KEY (`utilisateur_id`)
         REFERENCES `users`(`id`)
         ON DELETE CASCADE
 );

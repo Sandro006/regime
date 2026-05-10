@@ -33,4 +33,8 @@ $routes->post('/objectif/save', 'Objectif::save');
 $routes->get('/portefeuille', 'Portefeuille::index');
 $routes->get('/portefeuille/recharger', 'Portefeuille::recharger');
 $routes->post('/portefeuille/validerCode', 'Portefeuille::validerCode');
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 

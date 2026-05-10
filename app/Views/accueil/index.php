@@ -221,7 +221,7 @@
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
                 </div>
                 <div class="font-metric-xl text-metric-xl"><?php echo isset($user) ? number_format($user['solde'], 2) : '50.00'; ?>€</div>
-                <button class="mt-md w-full py-base bg-white/20 hover:bg-white/30 rounded-lg font-label-caps transition-colors">AJOUTER DES FONDS</button>
+                <a href="/portefeuille/recharger" class="mt-md w-full py-base bg-white/20 hover:bg-white/30 rounded-lg font-label-caps transition-colors text-center block">RECHARGER</a>
             </div>
         </section>
         <!-- Active Régimes Section (Bento Layout) -->

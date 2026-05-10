@@ -31,7 +31,7 @@ class CodePortefeuilleModel extends Model
     protected $validationRules    = [
         'code'              => 'required|string|unique_except[codes_portefeuille.code,id,{id}]',
         'montant'           => 'required|decimal',
-        'utilise'           => 'boolean',
+        'utilise'           => 'in_list[0,1,true,false]',
         'utilisateur_id'    => 'permit_empty|integer',
         'date_creation'     => 'permit_empty|valid_date',
         'date_utilisation'  => 'permit_empty|valid_date'
