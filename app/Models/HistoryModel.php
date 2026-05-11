@@ -38,4 +38,23 @@ class HistoryModel extends Model
                     ->orderBy('created_at', 'ASC')
                     ->findAll();
     }
+
+    private function getPoidsVariationFromHistory($userId){
+    $historique = $this->historyModel
+        ->where('user_id', $userId)
+        ->orderBy('date_creation', 'DESC')
+        ->first();
+    
+    if ($historique && isset($historique['variation_poids'])) {
+        $variation = floatval($historique['variation_poids']);
+        return [
+            'variation' => $variation,
+            'texte' => $this->formatVariationTexte($variation),
+            'icone' => $variation < 0 ? 'trending_down' : ($variation > 0 ? 'trending_up' : 'trending_flat'),
+            'couleur' => $variation < 0 ? 'text-green-600' : ($variation > 0 ? 'text-red-500' : 'text-gray-500')
+        ];
+    }
+    
+    return null;
+}
 }
