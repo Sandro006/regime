@@ -23,8 +23,14 @@ class Regime extends BaseController
     {
         $regimes = $this->regimeModel->getAllRegimes();
         
+        $user = null;
+        if (session()->get('estConnecte')) {
+            $user = session()->get('user');
+        }
+        
         return view('regime/list', [
-            'regimes' => $regimes
+            'regimes' => $regimes,
+            'user' => $user
         ]);
     }
 
@@ -36,11 +42,17 @@ class Regime extends BaseController
         $regime = $this->regimeModel->getRegimeById($id);
         
         if (!$regime) {
-            return redirect()->to('/regime/list')->with('error', 'Régime non trouvé');
+            return redirect()->to('/regime')->with('error', 'Régime non trouvé');
+        }
+
+        $user = null;
+        if (session()->get('estConnecte')) {
+            $user = session()->get('user');
         }
 
         return view('regime/detail', [
-            'regime' => $regime
+            'regime' => $regime,
+            'user' => $user
         ]);
     }
 

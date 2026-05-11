@@ -36,6 +36,7 @@ $routes->get('/activite/list', 'Activite::list');
 $routes->get('/activite/recommended', 'Activite::recommended');
 
 // Routes regimes
+$routes->get('/regime', 'Regime::list');
 $routes->get('/regime/list', 'Regime::list');
 $routes->get('/regime/detail/(:num)', 'Regime::detail/$1');
 $routes->get('/regime/recommended', 'Regime::recommended');
@@ -44,3 +45,8 @@ $routes->get('/regime/recommended', 'Regime::recommended');
 $routes->get('/portefeuille', 'Portefeuille::index');
 $routes->get('/portefeuille/recharger', 'Portefeuille::recharger');
 $routes->post('/portefeuille/validerCode', 'Portefeuille::validerCode');
+
+// Routes achat régimes
+$routes->post('/achat/acheterRegime/(:num)', 'Achat::acheterRegime/$1');
+$routes->get('/achat/mesRegimes', 'Achat::mesRegimes');
+$routes->post('/achat/completerRegime/(:num)', 'Achat::completerRegime/$1');

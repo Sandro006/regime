@@ -126,8 +126,7 @@ class Portefeuille extends BaseController
         $this->userModel->update($userId, [
             'solde' => $newSolde
         ]);
-
-        // Marquer le code comme utilisé
+        
         $dateUtilisation = date('Y-m-d H:i:s');
         $this->codeModel->markAsUsed($codePortefeuille['id'], $userId, $dateUtilisation);
 
