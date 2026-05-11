@@ -6,61 +6,60 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Dashboard Admin | VitalFit</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;600&family=Lexend:wght@600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@600;700&family=Lexend:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "outline-variant": "#bbcbbb",
-                        "on-surface": "#161d17",
-                        "secondary-container": "#fc8f34",
-                        "on-secondary-fixed": "#301400",
-                        "inverse-primary": "#4ae183",
-                        "on-background": "#161d17",
-                        "secondary": "#944a00",
-                        "inverse-on-surface": "#ebf3e8",
-                        "surface-bright": "#f3fcf1",
-                        "on-tertiary": "#ffffff",
-                        "tertiary-fixed": "#ffdbd0",
-                        "on-secondary": "#ffffff",
-                        "error": "#ba1a1a",
-                        "secondary-fixed-dim": "#ffb783",
-                        "primary-container": "#2ecc71",
-                        "secondary-fixed": "#ffdcc5",
-                        "on-primary-fixed": "#00210c",
-                        "surface-tint": "#006d37",
-                        "on-error": "#ffffff",
-                        "primary": "#006d37",
-                        "tertiary-fixed-dim": "#ffb59d",
-                        "on-tertiary-fixed": "#390c00",
-                        "inverse-surface": "#2b322b",
-                        "outline": "#6c7b6d",
-                        "surface-container-low": "#eef6eb",
-                        "surface-container-high": "#e2ebe0",
-                        "on-secondary-fixed-variant": "#713700",
-                        "on-primary-fixed-variant": "#005228",
-                        "on-error-container": "#93000a",
-                        "surface-container-highest": "#dce5da",
-                        "on-secondary-container": "#663100",
-                        "primary-fixed-dim": "#4ae183",
-                        "on-tertiary-container": "#772e14",
-                        "on-surface-variant": "#3d4a3e",
-                        "surface-dim": "#d4dcd2",
-                        "surface-variant": "#dce5da",
                         "tertiary-container": "#ff9875",
-                        "tertiary": "#98472a",
-                        "on-tertiary-fixed-variant": "#793015",
-                        "primary-fixed": "#6bfe9c",
-                        "surface-container": "#e8f0e5",
-                        "surface": "#f3fcf1",
+                        "on-tertiary-fixed": "#390c00",
+                        "on-background": "#161d17",
                         "on-primary": "#ffffff",
+                        "outline-variant": "#bbcbbb",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#663100",
+                        "on-tertiary-container": "#772e14",
+                        "primary-container": "#2ecc71",
+                        "on-secondary-fixed-variant": "#713700",
+                        "tertiary-fixed-dim": "#ffb59d",
+                        "outline": "#6c7b6d",
+                        "surface-tint": "#006d37",
+                        "primary": "#006d37",
+                        "surface-dim": "#d4dcd2",
+                        "inverse-primary": "#4ae183",
+                        "tertiary-fixed": "#ffdbd0",
+                        "on-primary-fixed": "#00210c",
+                        "surface-container": "#e8f0e5",
                         "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#dce5da",
                         "on-primary-container": "#005027",
+                        "inverse-surface": "#2b322b",
+                        "on-secondary": "#ffffff",
                         "error-container": "#ffdad6",
-                        "background": "#f3fcf1"
+                        "on-surface": "#161d17",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#dce5da",
+                        "surface-container-low": "#eef6eb",
+                        "surface": "#f3fcf1",
+                        "primary-fixed-dim": "#4ae183",
+                        "on-tertiary-fixed-variant": "#793015",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e2ebe0",
+                        "secondary-container": "#fc8f34",
+                        "inverse-on-surface": "#ebf3e8",
+                        "on-secondary-fixed": "#301400",
+                        "surface-bright": "#f3fcf1",
+                        "background": "#f3fcf1",
+                        "tertiary": "#98472a",
+                        "on-primary-fixed-variant": "#005228",
+                        "on-surface-variant": "#3d4a3e",
+                        "primary-fixed": "#6bfe9c",
+                        "secondary-fixed-dim": "#ffb783",
+                        "secondary": "#944a00",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#ffdcc5"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.25rem",
@@ -69,54 +68,54 @@
                         "full": "9999px"
                     },
                     "spacing": {
-                        "xl": "40px",
-                        "md": "16px",
                         "container-margin": "20px",
-                        "gutter": "16px",
                         "xs": "8px",
+                        "base": "4px",
+                        "md": "16px",
                         "sm": "12px",
                         "lg": "24px",
-                        "base": "4px"
+                        "gutter": "16px",
+                        "xl": "40px"
                     },
                     "fontFamily": {
-                        "metric-xl": ["Lexend"],
-                        "headline-sm": ["Montserrat"],
-                        "body-md": ["Inter"],
-                        "display-md": ["Montserrat"],
+                        "body-lg": ["Inter"],
                         "display-lg": ["Montserrat"],
+                        "metric-xl": ["Lexend"],
+                        "display-md": ["Montserrat"],
+                        "headline-sm": ["Montserrat"],
                         "label-caps": ["Lexend"],
-                        "body-lg": ["Inter"]
+                        "body-md": ["Inter"]
                     },
                     "fontSize": {
-                        "metric-xl": ["40px", {
-                            "lineHeight": "48px",
-                            "letterSpacing": "-0.03em",
-                            "fontWeight": "700"
-                        }],
-                        "headline-sm": ["20px", {
-                            "lineHeight": "28px",
-                            "fontWeight": "600"
-                        }],
-                        "body-md": ["14px", {
-                            "lineHeight": "20px",
+                        "body-lg": ["16px", {
+                            "lineHeight": "24px",
                             "fontWeight": "400"
-                        }],
-                        "display-md": ["24px", {
-                            "lineHeight": "32px",
-                            "fontWeight": "700"
                         }],
                         "display-lg": ["32px", {
                             "lineHeight": "40px",
                             "letterSpacing": "-0.02em",
                             "fontWeight": "700"
                         }],
+                        "metric-xl": ["40px", {
+                            "lineHeight": "48px",
+                            "letterSpacing": "-0.03em",
+                            "fontWeight": "700"
+                        }],
+                        "display-md": ["24px", {
+                            "lineHeight": "32px",
+                            "fontWeight": "700"
+                        }],
+                        "headline-sm": ["20px", {
+                            "lineHeight": "28px",
+                            "fontWeight": "600"
+                        }],
                         "label-caps": ["12px", {
                             "lineHeight": "16px",
                             "letterSpacing": "0.05em",
                             "fontWeight": "600"
                         }],
-                        "body-lg": ["16px", {
-                            "lineHeight": "24px",
+                        "body-md": ["14px", {
+                            "lineHeight": "20px",
                             "fontWeight": "400"
                         }]
                     }
@@ -129,225 +128,159 @@
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
 
-        .sidebar-menu-item {
-            @apply flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer;
-        }
-
-        .sidebar-menu-item.active {
-            @apply bg-primary-container text-on-primary-container;
+        body {
+            background-color: #F8F9FA;
+            color: #161d17;
         }
     </style>
 </head>
 
-<body class="bg-background text-on-background font-body-md">
-    <div class="flex h-screen">
-        <!-- SIDEBAR -->
-        <aside class="w-64 bg-surface border-r-2 border-outline-variant/30 p-md flex flex-col overflow-y-auto">
-            <!-- Logo/Header -->
-            <div class="mb-lg pb-md border-b-2 border-outline-variant/30">
-                <h2 class="font-display-md text-display-md text-primary">VitalFit</h2>
-                <p class="font-body-md text-on-surface-variant text-sm">Administration</p>
-            </div>
-
-            <!-- Menu Items -->
-            <nav class="flex-1 space-y-sm">
-                <!-- Dashboard -->
-                <div class="sidebar-menu-item active">
-                    <span class="material-symbols-outlined">dashboard</span>
-                    <span>Dashboard</span>
+<body class="bg-background font-body-lg text-on-background min-h-screen pb-24 md:pb-0">
+    <!-- TopAppBar -->
+    <header class="bg-surface shadow-sm flex justify-between items-center w-full px-6 py-4 fixed top-0 z-50">
+        <div class="flex items-center gap-2">
+            <span class="font-display-md text-display-md font-bold text-primary">VitalFit Admin</span>
+        </div>
+        <div class="hidden md:flex gap-6 items-center">
+            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="/admin/dashboard">Dashboard</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Utilisateurs</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Régimes</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Codes</a>
+            <div class="flex items-center gap-3 pl-6 border-l border-outline-variant">
+                <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+                    <?= strtoupper(substr($admin_name ?? 'A', 0, 1)) ?>
                 </div>
-
-                <!-- Divider -->
-                <div class="my-md border-t border-outline-variant/30"></div>
-
-                <!-- Gestion Utilisateurs -->
-                <div class="font-label-caps text-label-caps text-on-surface-variant/60 px-md mb-xs">
-                    UTILISATEURS
-                </div>
-                <a href="#" class="sidebar-menu-item">
-                    <span class="material-symbols-outlined">people</span>
-                    <span>Utilisateurs</span>
-                </a>
-
-                <!-- Divider -->
-                <div class="my-md border-t border-outline-variant/30"></div>
-
-                <!-- Gestion Contenu -->
-                <div class="font-label-caps text-label-caps text-on-surface-variant/60 px-md mb-xs">
-                    CONTENU
-                </div>
-                <a href="#" class="sidebar-menu-item">
-                    <span class="material-symbols-outlined">restaurant</span>
-                    <span>Régimes</span>
-                </a>
-                <a href="#" class="sidebar-menu-item">
-                    <span class="material-symbols-outlined">fitness_center</span>
-                    <span>Activités</span>
-                </a>
-
-                <!-- Divider -->
-                <div class="my-md border-t border-outline-variant/30"></div>
-
-                <!-- Gestion Commerce -->
-                <div class="font-label-caps text-label-caps text-on-surface-variant/60 px-md mb-xs">
-                    COMMERCE
-                </div>
-                <a href="#" class="sidebar-menu-item">
-                    <span class="material-symbols-outlined">discount</span>
-                    <span>Codes Recharge</span>
-                </a>
-                <a href="#" class="sidebar-menu-item">
-                    <span class="material-symbols-outlined">settings</span>
-                    <span>Paramètres</span>
-                </a>
-            </nav>
-
-            <!-- Logout Button -->
-            <div class="border-t border-outline-variant/30 pt-md">
-                <a href="/admin/logout" class="sidebar-menu-item text-error hover:bg-error/10">
-                    <span class="material-symbols-outlined">logout</span>
-                    <span>Déconnexion</span>
-                </a>
-            </div>
-        </aside>
-
-        <!-- MAIN CONTENT -->
-        <main class="flex-1 flex flex-col overflow-hidden bg-background">
-            <!-- TOP BAR -->
-            <header class="bg-surface border-b-2 border-outline-variant/30 px-lg py-md flex items-center justify-between">
-                <div>
-                    <h1 class="font-display-md text-display-md text-on-surface">Dashboard</h1>
-                    <p class="font-body-md text-on-surface-variant text-sm">Bienvenue <?= htmlspecialchars($admin_name ?? 'Admin') ?></p>
-                </div>
-                <div class="flex items-center gap-md">
-                    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
-                        <?= strtoupper(substr($admin_name ?? 'A', 0, 1)) ?>
-                    </div>
-                </div>
-            </header>
-
-            <!-- CONTENT AREA -->
-            <div class="flex-1 overflow-y-auto p-lg">
-                <!-- STATISTICS CARDS -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md mb-lg">
-                    <!-- Total Users Card -->
-                    <div class="bg-surface rounded-xl p-md border-2 border-primary/30 hover:shadow-lg transition-shadow">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">Utilisateurs</p>
-                                <h3 class="font-metric-xl text-metric-xl text-primary"><?= number_format($total_users) ?></h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-primary" style="font-size: 28px;">people</span>
-                            </div>
-                        </div>
-                        <p class="font-body-md text-on-surface-variant text-sm mt-md">Utilisateurs actifs</p>
-                    </div>
-
-                    <!-- Total Revenue Card -->
-                    <div class="bg-surface rounded-xl p-md border-2 border-secondary-container/30 hover:shadow-lg transition-shadow">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">Revenu</p>
-                                <h3 class="font-metric-xl text-metric-xl text-secondary-container"><?= number_format($total_revenue, 0) ?> Ar</h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-full bg-secondary-container/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-secondary-container" style="font-size: 28px;">attach_money</span>
-                            </div>
-                        </div>
-                        <p class="font-body-md text-on-surface-variant text-sm mt-md">Revenu total</p>
-                    </div>
-
-                    <!-- Gold Users Card -->
-                    <div class="bg-surface rounded-xl p-md border-2 border-tertiary/30 hover:shadow-lg transition-shadow">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">Membres Gold</p>
-                                <h3 class="font-metric-xl text-metric-xl text-tertiary"><?= number_format($total_gold_users) ?></h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-tertiary" style="font-size: 28px;">star</span>
-                            </div>
-                        </div>
-                        <p class="font-body-md text-on-surface-variant text-sm mt-md">Utilisateurs premium</p>
-                    </div>
-
-                    <!-- Conversion Rate Card -->
-                    <div class="bg-surface rounded-xl p-md border-2 border-error/30 hover:shadow-lg transition-shadow">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="font-label-caps text-label-caps text-on-surface-variant mb-xs">Taux Conv.</p>
-                                <h3 class="font-metric-xl text-metric-xl text-error">
-                                    <?php
-                                        $conversion = $total_users > 0 ? round(($total_gold_users / $total_users) * 100, 1) : 0;
-                                        echo $conversion . '%';
-                                    ?>
-                                </h3>
-                            </div>
-                            <div class="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-error" style="font-size: 28px;">trending_up</span>
-                            </div>
-                        </div>
-                        <p class="font-body-md text-on-surface-variant text-sm mt-md">Utilisateurs Gold / Total</p>
-                    </div>
-                </div>
-
-                <!-- TOP REGIMES TABLE -->
-                <div class="bg-surface rounded-xl p-md border-2 border-outline-variant/30">
-                    <div class="mb-md">
-                        <h2 class="font-headline-sm text-headline-sm text-on-surface">Régimes Populaires</h2>
-                        <p class="font-body-md text-on-surface-variant text-sm">Top 3 régimes les plus vendus</p>
-                    </div>
-
-                    <?php if (!empty($top_regimes)): ?>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead>
-                                    <tr class="border-b-2 border-outline-variant/30">
-                                        <th class="text-left px-md py-sm font-label-caps text-label-caps text-on-surface-variant">Régime</th>
-                                        <th class="text-left px-md py-sm font-label-caps text-label-caps text-on-surface-variant">Prix</th>
-                                        <th class="text-left px-md py-sm font-label-caps text-label-caps text-on-surface-variant">Ventes</th>
-                                        <th class="text-left px-md py-sm font-label-caps text-label-caps text-on-surface-variant">Revenu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($top_regimes as $index => $regime): ?>
-                                        <tr class="border-b border-outline-variant/20 hover:bg-surface-container-low transition-colors">
-                                            <td class="px-md py-md font-body-md text-on-surface">
-                                                <div class="flex items-center gap-md">
-                                                    <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center font-label-caps">
-                                                        #<?= $index + 1 ?>
-                                                    </div>
-                                                    <?= htmlspecialchars($regime['nom_regime']) ?>
-                                                </div>
-                                            </td>
-                                            <td class="px-md py-md font-body-md text-on-surface">
-                                                <?= number_format($regime['prix'], 0) ?> Ar
-                                            </td>
-                                            <td class="px-md py-md">
-                                                <span class="inline-flex items-center gap-xs px-md py-xs rounded-full bg-primary/10 text-primary font-label-caps">
-                                                    <span class="material-symbols-outlined text-sm">shopping_bag</span>
-                                                    <?= $regime['ventes'] ?>
-                                                </span>
-                                            </td>
-                                            <td class="px-md py-md font-headline-sm text-headline-sm text-primary font-bold">
-                                                <?= number_format($regime['prix'] * $regime['ventes'], 0) ?> Ar
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php else: ?>
-                        <div class="text-center py-lg">
-                            <span class="material-symbols-outlined text-on-surface-variant/50" style="font-size: 48px; display: block;">info</span>
-                            <p class="font-body-md text-on-surface-variant mt-md">Pas de régimes vendus pour le moment</p>
-                        </div>
-                    <?php endif; ?>
+                <div class="flex flex-col">
+                    <span class="text-body-md font-bold text-on-surface"><?= htmlspecialchars($admin_name ?? 'Admin') ?></span>
+                    <a href="/admin/logout" class="text-label-caps text-error hover:font-bold transition-all">Déconnexion</a>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+        <div class="md:hidden flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm">
+                <?= strtoupper(substr($admin_name ?? 'A', 0, 1)) ?>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20 px-container-margin md:px-6 pb-6">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="font-display-lg text-display-lg text-on-surface mb-2">Administration Dashboard</h1>
+            <p class="text-body-lg text-on-surface-variant">Bienvenue dans votre espace de gestion</p>
+        </div>
+
+        <!-- Statistics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <!-- Total Users Card -->
+            <div class="bg-surface rounded-xl p-6 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <p class="text-label-caps text-on-surface-variant mb-2">Total Utilisateurs</p>
+                        <h3 class="font-metric-xl text-metric-xl text-primary"><?= number_format($total_users) ?></h3>
+                    </div>
+                    <span class="material-symbols-outlined text-primary" style="font-size: 32px;">people</span>
+                </div>
+                <p class="text-body-md text-on-surface-variant">Utilisateurs actifs dans la plateforme</p>
+            </div>
+
+            <!-- Total Revenue Card -->
+            <div class="bg-surface rounded-xl p-6 border-l-4 border-secondary-container shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <p class="text-label-caps text-on-surface-variant mb-2">Revenu Total</p>
+                        <h3 class="font-metric-xl text-metric-xl text-secondary-container"><?= number_format($total_revenue, 0) ?> Ar</h3>
+                    </div>
+                    <span class="material-symbols-outlined text-secondary-container" style="font-size: 32px;">attach_money</span>
+                </div>
+                <p class="text-body-md text-on-surface-variant">Revenu généré par les ventes</p>
+            </div>
+
+            <!-- Gold Users Card -->
+            <div class="bg-surface rounded-xl p-6 border-l-4 border-tertiary shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <p class="text-label-caps text-on-surface-variant mb-2">Membres Gold</p>
+                        <h3 class="font-metric-xl text-metric-xl text-tertiary"><?= number_format($total_gold_users) ?></h3>
+                    </div>
+                    <span class="material-symbols-outlined text-tertiary" style="font-size: 32px;">star</span>
+                </div>
+                <p class="text-body-md text-on-surface-variant">Utilisateurs premium actifs</p>
+            </div>
+
+            <!-- Conversion Rate Card -->
+            <div class="bg-surface rounded-xl p-6 border-l-4 border-error shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <p class="text-label-caps text-on-surface-variant mb-2">Taux Conversion</p>
+                        <h3 class="font-metric-xl text-metric-xl text-error">
+                            <?php
+                                $conversion = $total_users > 0 ? round(($total_gold_users / $total_users) * 100, 1) : 0;
+                                echo $conversion . '%';
+                            ?>
+                        </h3>
+                    </div>
+                    <span class="material-symbols-outlined text-error" style="font-size: 32px;">trending_up</span>
+                </div>
+                <p class="text-body-md text-on-surface-variant">Gold / Total utilisateurs</p>
+            </div>
+        </div>
+
+        <!-- Top Regimes Section -->
+        <div class="bg-surface rounded-xl p-6 shadow-sm">
+            <div class="mb-6">
+                <h2 class="font-headline-sm text-headline-sm text-on-surface mb-2">Régimes Populaires</h2>
+                <p class="text-body-md text-on-surface-variant">Top 3 régimes les plus vendus</p>
+            </div>
+
+            <?php if (!empty($top_regimes)): ?>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-outline-variant text-left">
+                                <th class="px-4 py-3 text-label-caps text-on-surface-variant">Régime</th>
+                                <th class="px-4 py-3 text-label-caps text-on-surface-variant">Prix</th>
+                                <th class="px-4 py-3 text-label-caps text-on-surface-variant">Ventes</th>
+                                <th class="px-4 py-3 text-label-caps text-on-surface-variant">Revenu Généré</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($top_regimes as $index => $regime): ?>
+                                <tr class="border-b border-outline-variant/20 hover:bg-surface-container-low transition-colors">
+                                    <td class="px-4 py-4 text-body-md text-on-surface font-semibold">
+                                        <div class="flex items-center gap-3">
+                                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary text-label-caps font-bold">
+                                                <?= $index + 1 ?>
+                                            </span>
+                                            <?= htmlspecialchars($regime['nom_regime']) ?>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-body-md text-on-surface">
+                                        <?= number_format($regime['prix'], 0) ?> Ar
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-label-caps font-bold">
+                                            <span class="material-symbols-outlined" style="font-size: 16px;">shopping_bag</span>
+                                            <?= $regime['ventes'] ?>
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 text-headline-sm text-primary font-bold">
+                                        <?= number_format($regime['prix'] * $regime['ventes'], 0) ?> Ar
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php else: ?>
+                <div class="text-center py-12">
+                    <span class="material-symbols-outlined text-on-surface-variant/50 block mb-4" style="font-size: 48px;">info</span>
+                    <p class="text-body-lg text-on-surface-variant">Aucun régime vendu pour le moment</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </main>
 </body>
 
 </html>
