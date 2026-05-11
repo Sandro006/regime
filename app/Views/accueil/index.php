@@ -240,7 +240,7 @@
                     <span class="font-label-caps text-label-caps opacity-80">SOLDE DU PORTEFEUILLE</span>
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl"><?php echo isset($user) ? number_format($user['solde'], 2) : '50.00'; ?>€</div>
+                <div class="font-metric-xl text-metric-xl"><?php echo isset($user) ? number_format($user['solde'], 2) : '50.00'; ?> Ar</div>
                 <a href="<?php echo session()->get('estConnecte') ? '/portefeuille' : '/login'; ?>"
                     class="block mt-md w-full py-base bg-white/20 hover:bg-white/30 rounded-lg font-label-caps transition-colors text-center">
                     AJOUTER DES FONDS

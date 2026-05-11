@@ -4,6 +4,8 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use App\Models\ObjectifModel;
 use App\Models\UtilisateurObjectifModel;
+use App\Models\AbonnementModel;
+use App\Models\ParametreModel;
 
 class Profile extends BaseController{
     
@@ -11,6 +13,8 @@ class Profile extends BaseController{
     protected $objectifModel;
     protected $utilisateurObjectifModel;
     protected $historyModel;
+    protected $abonnementModel;
+    protected $parametreModel;
 
 
     public function __construct(){
@@ -18,6 +22,8 @@ class Profile extends BaseController{
         $this->objectifModel = new ObjectifModel();
         $this->utilisateurObjectifModel = new UtilisateurObjectifModel();
         $this->historyModel = new \App\Models\HistoryModel();
+        $this->abonnementModel = new AbonnementModel();
+        $this->parametreModel = new ParametreModel();
     }
 
     public function index(){
@@ -27,8 +33,19 @@ class Profile extends BaseController{
             return redirect()->to('/login')->with('error', 'Veuillez vous connecter');
         }
         
+        $userId = $session->get('user')['id'];
+        $user = $session->get('user');
+        
+        // Récupérer l'abonnement actif
+        $abonnement = $this->abonnementModel->getAbonnementActif($userId);
+        
+        // Récupérer les options d'abonnement disponibles
+        $abonnementOptions = $this->parametreModel->getFormattedAbonnementOptions();
+        
         return view('profile/user', [
-            'user' => $session->get('user')
+            'user' => $user,
+            'abonnement' => $abonnement,
+            'abonnementOptions' => $abonnementOptions
         ]);
     }
 

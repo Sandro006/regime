@@ -97,8 +97,16 @@
     <main class="max-w-7xl mx-auto px-container-margin py-xl space-y-xl pb-32">
         <!-- Header Section -->
         <div class="flex flex-col gap-xs">
-            <h1 class="font-display-lg text-display-lg text-on-surface">Mes Régimes Actifs</h1>
-            <p class="font-body-lg text-body-lg text-on-surface-variant">Suivez vos régimes en cours et vos objectifs</p>
+            <div class="flex justify-between items-start">
+                <div>
+                    <h1 class="font-display-lg text-display-lg text-on-surface">Mes Régimes Actifs</h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant">Suivez vos régimes en cours et vos objectifs</p>
+                </div>
+                <a href="/achat/exportRegimesPDF" class="bg-primary hover:bg-primary/90 text-white font-bold px-lg py-md rounded-lg inline-flex items-center gap-xs transition-all whitespace-nowrap">
+                    <span class="material-symbols-outlined">picture_as_pdf</span>
+                    Exporter en PDF
+                </a>
+            </div>
         </div>
 
         <!-- Messages Flash -->

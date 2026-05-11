@@ -55,3 +55,9 @@ $routes->post('/portefeuille/validerCode', 'Portefeuille::validerCode');
 $routes->post('/achat/acheterRegime/(:num)', 'Achat::acheterRegime/$1');
 $routes->get('/achat/mesRegimes', 'Achat::mesRegimes');
 $routes->post('/achat/completerRegime/(:num)', 'Achat::completerRegime/$1');
+$routes->get('/achat/exportRegimesPDF', 'Achat::exportRegimesPDF');
+
+// Routes abonnements
+$routes->get('/abonnement/acheter', 'Abonnement::acheter');
+$routes->post('/abonnement/confirmer', 'Abonnement::confirmer');
+$routes->get('/abonnement/detail', 'Abonnement::detail');

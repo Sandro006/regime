@@ -189,15 +189,20 @@ CREATE TABLE IF NOT EXISTS `transactions` (
 -- =========================
 CREATE TABLE IF NOT EXISTS `abonnements` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` INT NOT NULL,
+    `utilisateur_id` INT NOT NULL,
     `date_activation` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `prix` DECIMAL(10,2) DEFAULT NULL,
+    `date_expiration` TIMESTAMP NULL DEFAULT NULL,
+    `prix` DECIMAL(10,2) NOT NULL,
 
     PRIMARY KEY (`id`),
 
-    FOREIGN KEY (`user_id`)
+    FOREIGN KEY (`utilisateur_id`)
         REFERENCES `users`(`id`)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    
+    INDEX `idx_utilisateur_id` (`utilisateur_id`),
+    INDEX `idx_date_activation` (`date_activation`),
+    INDEX `idx_date_expiration` (`date_expiration`)
 );
 
 -- =========================
