@@ -38,19 +38,11 @@ class UserModel extends Model
 
     // ============ CRUD METHODS ============
 
-    /**
-     * CREATE - Créer un utilisateur
-     */
-    public function createUser($data)
-    {
+    public function createUser($data){
         return $this->insert($data);
     }
 
-    /**
-     * READ - Récupérer tous les utilisateurs
-     */
-    public function getAllUsers()
-    {
+    public function getAllUsers(){
         return $this->findAll();
     }
 
@@ -87,14 +79,6 @@ class UserModel extends Model
     }
 
     /**
-     * DELETE (soft) - Marquage comme supprimé (si useSoftDeletes = true)
-     */
-    public function softDeleteUser($id)
-    {
-        return $this->delete($id);
-    }
-
-    /**
      * LOGIN - Authentifier un utilisateur avec email et mot de passe
      */
     public function login($email, $password)
@@ -112,5 +96,35 @@ class UserModel extends Model
         }
         
         return $user; // Authentification réussie
+    }
+
+    /**
+     * Calcule l'IMC (Indice de Masse Corporelle)
+     * Formule: IMC = poids (kg) / (taille (m) * taille (m))
+     * Retourne un tableau avec: ['valeur' => float, 'categorie' => string]
+     */
+    public function calculateIMC($poids, $taille)
+    {
+        if ($taille <= 0 || $poids <= 0) {
+            return ['valeur' => 0, 'categorie' => 'Invalide'];
+        }
+
+        $imc = $poids / ($taille * $taille);
+
+        // Déterminer la catégorie
+        if ($imc < 18.5) {
+            $categorie = 'Maigre';
+        } elseif ($imc < 25) {
+            $categorie = 'Normal';
+        } elseif ($imc < 30) {
+            $categorie = 'Surpoids';
+        } else {
+            $categorie = 'Obésité';
+        }
+
+        return [
+            'valeur' => round($imc, 1),
+            'categorie' => $categorie
+        ];
     }
 }

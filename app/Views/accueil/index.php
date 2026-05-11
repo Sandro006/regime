@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>VitalPath Dashboard</title>
+    <title>VitalFit Tableau de bord</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Montserrat:wght@600;700&amp;family=Lexend:wght@600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
@@ -141,15 +141,25 @@
     <!-- TopAppBar -->
     <header class="bg-surface dark:bg-surface-dim shadow-sm flex justify-between items-center w-full px-container-margin py-md fixed top-0 z-50">
         <div class="flex items-center gap-xs">
-            <span class="font-display-md text-display-md font-bold text-primary dark:text-primary-fixed-dim">VitalPath</span>
+            <span class="font-display-md text-display-md font-bold text-primary dark:text-primary-fixed-dim">VitalFit</span>
         </div>
         <div class="hidden md:flex gap-lg">
-            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Dashboard</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Diets</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Activities</a>
+            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Tableau de bord</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Régimes</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/activite/list">Activités</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/portefeuille">Portefeuille</a>
+
+            <?php if (session()->get('estConnecte')) { ?>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/profile">Profil</a>
+            <?php } ?>
             <div class="flex items-center gap-md">
                 <?php if (!session()->get('estConnecte')) { ?>
-                    <!-- Bouton Inscription pour utilisateur non connecté -->
+                    <!-- Boutons pour utilisateur non connecté -->
+                    <a href="/login"
+                        class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                        <span class="material-symbols-outlined">login</span>
+                        <span class="text-sm font-medium hidden sm:inline">Se connecter</span>
+                    </a>
                     <a href="/register"
                         class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
                         <span class="material-symbols-outlined">app_registration</span>
@@ -160,18 +170,17 @@
                     <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
                         <span class="material-symbols-outlined">notifications</span>
                     </button>
-                    <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
-                        <a href="/logout"
-                            class="flex items-center gap-1">
-                            <span class="material-symbols-outlined">logout</span>
-                        </a>
-                    </button>
+                    <a href="/logout"
+                        class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                        <span class="material-symbols-outlined">logout</span>
+                    </a>
                 <?php } ?>
 
-                <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container">
-                    <img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdFX6Wry1yhOmHFnavxcNs8Czveflefzzn2IxipOguOzlQ4ok0DQOC_2oSdrrdxJ1CWqvqbhsNbN8_mjBxz3N8PmDOMTIeWNP-xQ0JrKLH3_Ovv1Fl3lV-L-UhQLi3y1bTki-izPUuT-63hQMS5XAtj6AeAYRjPZrigI0qCb2E1B9heMgwXPRB_4lgDojrcnnpN-S4ANyklQTCUA64togdAtNZo-dnGPmEsIYhnOHu_zIn91o4LcKuBPvTtDimtslLys0K8eQEpi" />
-                </div>
+                <a href="/profile" class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container hover:shadow-lg transition-shadow" title="My Profil">
+                    <img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdFX6Wry1yhOmHFnavxcNs8Czveflefzzn2IxipOguOzlQ4ok0DQOC_2oSdrrdxJ1CWqvqbhsNbN8_mjBxz3N8PmDOMTIeWNP-xQ0JrKLH3_Ovv1Fl3lV-L-UhQLi3y1bTki-izPUuT-63hQMS5XAtj6AeAYRjPZrigI0qCb2E1B9heMgwXPRB_4lgDojrcnnpN-S4ANyklQTCUA64togdAtNZo-dnGPmEsIYhnOHu_zIn91o4LcKuBPvTtDimtslLys0K8eQEpi" class="w-full h-full object-cover" />
+                </a>
             </div>
+        </div>
     </header>
     <main class="pt-24 px-container-margin max-w-7xl mx-auto space-y-xl pb-12">
         <!-- Hero Health Metrics Section -->
@@ -179,201 +188,274 @@
             <!-- BMI Card -->
             <div class="bg-surface-container-lowest p-lg rounded-xl shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container transition-all hover:-translate-y-1">
                 <div class="flex justify-between items-start mb-sm">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">CURRENT BMI</span>
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">IMC ACTUEL</span>
                     <span class="text-primary material-symbols-outlined">speed</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl text-primary">22.4</div>
+                <div class="font-metric-xl text-metric-xl text-primary"><?php echo isset($user) ? $user['bmi'] : '22.4'; ?></div>
                 <div class="mt-xs inline-flex px-sm py-base rounded-full bg-primary-container/20 text-on-primary-container font-label-caps text-[10px]">NORMAL</div>
             </div>
             <!-- Weight Card -->
             <div class="bg-surface-container-lowest p-lg rounded-xl shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container transition-all hover:-translate-y-1">
                 <div class="flex justify-between items-start mb-sm">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">CURRENT WEIGHT</span>
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">POIDS ACTUEL</span>
                     <span class="text-secondary material-symbols-outlined">monitor_weight</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl text-on-surface">75<span class="text-body-lg ml-1 text-on-surface-variant">kg</span></div>
+                <div class="font-metric-xl text-metric-xl text-on-surface"><?php echo isset($user) ? $user['poids'] : '75'; ?><span class="text-body-lg ml-1 text-on-surface-variant">kg</span></div>
                 <div class="mt-xs flex items-center gap-1 text-on-surface-variant font-body-md italic">
-                    <span class="material-symbols-outlined text-[16px]">trending_down</span> -0.5kg this week
+                    <span class="material-symbols-outlined text-[16px]">trending_down</span> -0.5kg cette semaine
                 </div>
             </div>
             <!-- Goal Card -->
             <div class="bg-surface-container-lowest p-lg rounded-xl shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container transition-all hover:-translate-y-1">
                 <div class="flex justify-between items-start mb-sm">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">SELECTED GOAL</span>
+                    <span class="font-label-caps text-label-caps text-on-surface-variant">OBJECTIF SÉLECTIONNÉ</span>
                     <span class="text-tertiary material-symbols-outlined">flag</span>
                 </div>
-                <div class="font-headline-sm text-headline-sm text-on-surface mb-xs">Lose Weight</div>
+                <div class="font-headline-sm text-headline-sm text-on-surface mb-xs">Perdre du poids</div>
                 <div class="w-full bg-surface-container rounded-full h-2 mt-md">
                     <div class="bg-primary-container h-2 rounded-full" style="width: 65%"></div>
                 </div>
-                <div class="mt-xs text-right font-label-caps text-[10px] text-on-surface-variant">65% OF TARGET</div>
+                <div class="mt-xs text-right font-label-caps text-[10px] text-on-surface-variant">65% DE L'OBJECTIF</div>
             </div>
-            <!-- Wallet Card -->
+            <!-- Portefeuille Card -->
             <div class="bg-primary text-on-primary p-lg rounded-xl shadow-[0_12px_20px_rgba(0,109,55,0.15)] transition-all hover:-translate-y-1">
                 <div class="flex justify-between items-start mb-sm">
-                    <span class="font-label-caps text-label-caps opacity-80">WALLET BALANCE</span>
+                    <span class="font-label-caps text-label-caps opacity-80">SOLDE DU PORTEFEUILLE</span>
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl">50.00€</div>
-                <button class="mt-md w-full py-base bg-white/20 hover:bg-white/30 rounded-lg font-label-caps transition-colors">ADD FUNDS</button>
+                <div class="font-metric-xl text-metric-xl"><?php echo isset($user) ? number_format($user['solde'], 2) : '50.00'; ?>€</div>
+                <button class="mt-md w-full py-base bg-white/20 hover:bg-white/30 rounded-lg font-label-caps transition-colors">AJOUTER DES FONDS</button>
             </div>
         </section>
-        <!-- Active Diets Section (Bento Layout) -->
+        <!-- Active Régimes Section (Carousel) -->
         <section class="space-y-md">
             <div class="flex justify-between items-end">
-                <h2 class="font-display-md text-display-md text-on-surface">Active Diets</h2>
-                <a class="text-primary font-label-caps hover:underline" href="#">VIEW ALL PLANS</a>
+                <h2 class="font-display-md text-display-md text-on-surface">Nos Régimes</h2>
+                <a class="text-primary font-label-caps hover:underline" href="/regime/list">VOIR TOUS LES PLANS</a>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
-                <!-- Keto Plan Card (Wide) -->
-                <div class="lg:col-span-2 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col md:flex-row">
-                    <div class="md:w-1/2 h-48 md:h-full relative">
-                        <img alt="Healthy keto meal" class="absolute inset-0 w-full h-full object-cover" data-alt="A beautifully plated ketogenic meal featuring a grilled salmon fillet, fresh sliced avocado, sautéed green asparagus, and a side of mixed greens. The lighting is bright and airy, highlighting the textures of the fresh ingredients. The image has a clean, minimalist food photography style with subtle shadows on a soft gray surface to match the VitalPath design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3I_fEknSqoISZTyXKTlpmiH0-1Qc0jq4Z0WQcdp2FGCeka_7oK6txeP5ILXwTM0eTUjik7AZWvGIhkFiO1oUOsON2WZXFDTtgwPfUpyjDfowrAdV9lLqgVCgAtQ1DH7zOFWvfYglIXrGsI8L4jt9rp7cK4Wqmech1asfUD_x4LMw_aVVbjmYgDDyoG-6kyHdpHfMJ2JCmvd6NQCwtcvetubBM0VfH0o8QN1ufT_yU-fO7hGKGvnL9YvwClJxiykmPXY9D5Uo6EhMh" />
-                        <div class="absolute top-md left-md bg-primary-container text-on-primary-container font-label-caps px-sm py-base rounded-lg text-[10px] shadow-sm">ACTIVE PLAN</div>
-                    </div>
-                    <div class="md:w-1/2 p-lg flex flex-col justify-between">
-                        <div>
-                            <h3 class="font-display-md text-display-md text-on-surface mb-xs">Keto Plan</h3>
-                            <p class="text-on-surface-variant font-body-md mb-lg leading-relaxed">High-fat, adequate-protein, low-carbohydrate diet designed to burn fats rather than carbohydrates.</p>
-                            <div class="space-y-sm">
-                                <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant">
-                                    <span>PROGRESS</span>
-                                    <span>WEEK 3 OF 12</span>
+            
+            <?php if (isset($regimes) && !empty($regimes)): ?>
+            <div class="relative">
+                <!-- Carousel Container -->
+                <div class="overflow-hidden rounded-xl">
+                    <div id="regimesCarousel" class="flex transition-transform duration-500 ease-out">
+                        <?php foreach ($regimes as $index => $regime): ?>
+                        <!-- Regime Card -->
+                        <div class="min-w-full lg:min-w-[calc(50%-8px)] flex-shrink-0 lg:mr-4 last:lg:mr-0">
+                            <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col md:flex-row h-full">
+                                <div class="md:w-1/2 h-48 md:h-full relative bg-gradient-to-br from-primary/10 to-primary/5">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <img src="<?= base_url('assets/images/' . htmlspecialchars($regime['nom_regime']) . '.png') ?>" 
+                                            alt=""
+                                            class="absolute inset-0 w-full h-full object-cover z-0">
+                                    </div>
+                                    <div class="absolute top-md left-md bg-primary-container text-on-primary-container font-label-caps px-sm py-base rounded-lg text-[10px] shadow-sm">RÉGIME</div>
+                                    <div class="absolute bottom-md left-md bg-secondary text-on-secondary font-label-caps px-md py-base rounded-lg text-[12px] font-bold"><?php echo number_format($regime['prix'], 0); ?> Ar</div>
                                 </div>
-                                <div class="w-full bg-surface-container rounded-full h-3">
-                                    <div class="bg-primary-container h-3 rounded-full" style="width: 25%"></div>
+                                <div class="md:w-1/2 p-lg flex flex-col justify-between">
+                                    <div>
+                                        <h3 class="font-display-md text-display-md text-on-surface mb-xs"><?php echo htmlspecialchars($regime['nom_regime']); ?></h3>
+                                        <p class="text-on-surface-variant font-body-md mb-lg leading-relaxed line-clamp-2"><?php echo htmlspecialchars($regime['description']); ?></p>
+                                        <div class="space-y-sm">
+                                            <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant">
+                                                <span>DURÉE</span>
+                                                <span><?php echo $regime['duree']; ?> JOURS</span>
+                                            </div>
+                                            <div class="w-full bg-surface-container rounded-full h-2">
+                                                <div class="bg-primary-container h-2 rounded-full" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-xl grid grid-cols-3 gap-md pt-lg border-t border-surface-container">
+                                        <div>
+                                            <div class="font-label-caps text-[10px] text-on-surface-variant">VARIATION</div>
+                                            <div class="font-body-lg text-primary font-bold"><?php echo ($regime['variation_poids'] > 0 ? '+' : ''); ?><?php echo $regime['variation_poids']; ?>kg</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-label-caps text-[10px] text-on-surface-variant">VIANDE</div>
+                                            <div class="font-body-lg text-on-surface font-bold"><?php echo $regime['pourcentage_viande']; ?>%</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-label-caps text-[10px] text-on-surface-variant">POISSON</div>
+                                            <div class="font-body-lg text-on-surface font-bold"><?php echo $regime['pourcentage_poisson']; ?>%</div>
+                                        </div>
+                                    </div>
+                                    <a href="/regime/detail/<?php echo $regime['id']; ?>" class="mt-md w-full py-md bg-primary text-on-primary rounded-xl font-label-caps shadow-md active:scale-95 transition-all hover:shadow-lg">
+                                        VOIR DÉTAILS
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-xl grid grid-cols-2 gap-md pt-lg border-t border-surface-container">
-                            <div>
-                                <div class="font-label-caps text-[10px] text-on-surface-variant uppercase">Start Date</div>
-                                <div class="font-body-lg text-on-surface">Oct 12, 2023</div>
-                            </div>
-                            <div>
-                                <div class="font-label-caps text-[10px] text-on-surface-variant uppercase">Variation</div>
-                                <div class="font-body-lg text-primary font-bold">-3.2kg</div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-                <!-- Daily Summary/Next Meal -->
-                <div class="bg-surface-container-high p-lg rounded-xl flex flex-col justify-between border border-outline-variant/30">
-                    <div>
-                        <div class="flex items-center gap-sm mb-lg">
-                            <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
-                            <span class="font-headline-sm text-headline-sm">Next Meal</span>
-                        </div>
-                        <div class="space-y-md">
-                            <div class="bg-surface-container-lowest p-md rounded-lg shadow-sm border border-surface-container">
-                                <div class="font-label-caps text-secondary mb-base">LUNCH • 13:00</div>
-                                <div class="font-display-md text-on-surface text-lg">Zucchini Noodles with Pesto</div>
-                                <div class="mt-sm flex gap-md font-label-caps text-[10px] text-on-surface-variant">
-                                    <span>420 KCAL</span>
-                                    <span>12G CARBS</span>
-                                </div>
-                            </div>
-                            <button class="w-full py-md border-2 border-dashed border-outline text-outline font-label-caps rounded-xl hover:bg-surface-container-highest transition-colors">
-                                + LOG EXTRA SNACK
-                            </button>
-                        </div>
-                    </div>
-                    <button class="w-full py-md bg-secondary text-on-secondary rounded-xl font-label-caps shadow-md active:scale-95 transition-all mt-xl">
-                        VIEW MEAL PLAN
-                    </button>
+
+                <!-- Navigation Buttons -->
+                <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 md:translate-x-0 md:left-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 md:translate-x-0 md:right-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+
+                <!-- Progress Indicators -->
+                <div id="carouselIndicators" class="flex justify-center gap-2 mt-lg">
+                    <?php foreach ($regimes as $i => $regime): ?>
+                    <button class="carousel-indicator w-2 h-2 rounded-full transition-all <?php echo $i === 0 ? 'bg-primary w-8' : 'bg-surface-variant'; ?>" data-index="<?php echo $i; ?>"></button>
+                    <?php endforeach; ?>
                 </div>
             </div>
-        </section>
-        <!-- Recommended Activities Section -->
+
+            <script>
+                let currentIndex = 0;
+                const carousel = document.getElementById('regimesCarousel');
+                const indicators = document.querySelectorAll('.carousel-indicator');
+                const totalItems = <?php echo count($regimes); ?>;
+                const itemsPerView = window.innerWidth >= 1024 ? 2 : 1;
+                let autoplayInterval;
+
+                function updateCarousel() {
+                    const offset = -currentIndex * (100 / itemsPerView);
+                    carousel.style.transform = `translateX(${offset}%)`;
+                    
+                    indicators.forEach((indicator, index) => {
+                        if (index === currentIndex) {
+                            indicator.classList.add('bg-primary', 'w-8');
+                            indicator.classList.remove('bg-surface-variant');
+                        } else {
+                            indicator.classList.remove('bg-primary', 'w-8');
+                            indicator.classList.add('bg-surface-variant');
+                        }
+                    });
+                }
+
+                function nextSlide() {
+                    currentIndex = (currentIndex + 1) % totalItems;
+                    updateCarousel();
+                    resetAutoplay();
+                }
+
+                function prevSlide() {
+                    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                    updateCarousel();
+                    resetAutoplay();
+                }
+
+                function autoplay() {
+                    autoplayInterval = setInterval(nextSlide, 5000);
+                }
+
+                function resetAutoplay() {
+                    clearInterval(autoplayInterval);
+                    autoplay();
+                }
+
+                document.getElementById('nextBtn').addEventListener('click', nextSlide);
+                document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+                indicators.forEach(indicator => {
+                    indicator.addEventListener('click', (e) => {
+                        currentIndex = parseInt(e.target.dataset.index);
+                        updateCarousel();
+                        resetAutoplay();
+                    });
+                });
+
+                // Start autoplay on load
+                autoplay();
+            </script>
+            <?php else: ?>
+            <div class="text-center py-lg text-on-surface-variant bg-surface-container-lowest rounded-xl border border-surface-variant">
+                Aucun régime disponible pour le moment.
+            </div>
+            <?php endif; ?>
+        <!-- Recommended Activités Section -->
         <section class="space-y-md">
             <div class="flex justify-between items-end">
-                <h2 class="font-display-md text-display-md text-on-surface">Recommended Activities</h2>
+                <h2 class="font-display-md text-display-md text-on-surface">Recommended Activités</h2>
                 <div class="flex gap-sm">
-                    <span class="bg-surface-container px-sm py-base rounded-full font-label-caps text-[10px] text-on-surface-variant">GOAL: WEIGHT LOSS</span>
+                    <span class="bg-surface-container px-sm py-base rounded-full font-label-caps text-[10px] text-on-surface-variant">OBJECTIF : PERTE DE POIDS</span>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-                <!-- Activity 1 -->
-                <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
-                    <div class="h-40 overflow-hidden relative">
-                        <img alt="Cardio session" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-energy photograph of a person performing intense cardio in a modern, well-lit fitness studio. The background is minimalist with soft white walls and natural light streaming through large windows. The mood is energetic and motivating, using a fresh green and soft blue color palette to align with the health and vitality theme of VitalPath." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrO5g4Ks84vcAZ2PetS4BEYYjU__DoLdJQeNjdC1vtnwtXDznAYjmhRs0S8hInlv5VD8F231t6cMYS7BmigyPWQmmQymWv8ABI9Ak99zlNte0UmLBTd44bUWAggZiN05rn1q7d2xSXnksseRlbxocr6mhVe9c-IkGidE1uuu9OgvQgAdGE3Z4at06uBOLAMoGOS5jeCe6Vop6nQsT-RX_Whm_SLQ_qF_lkGXdJCXsLyspS_zMW9XSL_fAwT_1-qFItpdlhL4fZSqTV" />
-                        <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]">INTENSE</div>
-                    </div>
-                    <div class="p-md">
-                        <h4 class="font-headline-sm text-on-surface">HIIT Session</h4>
-                        <p class="text-on-surface-variant font-body-md text-xs mt-base">Burn maximum calories in short bursts of high intensity.</p>
-                        <div class="mt-md flex items-center justify-between">
-                            <div class="flex items-center gap-1 text-primary">
-                                <span class="material-symbols-outlined text-sm">schedule</span>
-                                <span class="font-label-caps">30 MIN</span>
+                <?php if (isset($activites) && !empty($activites)): ?>
+                    <?php 
+                    $images = [
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuBrO5g4Ks84vcAZ2PetS4BEYYjU__DoLdJQeNjdC1vtnwtXDznAYjmhRs0S8hInlv5VD8F231t6cMYS7BmigyPWQmmQymWv8ABI9Ak99zlNte0UmLBTd44bUWAggZiN05rn1q7d2xSXnksseRlbxocr6mhVe9c-IkGidE1uuu9OgvQgAdGE3Z4at06uBOLAMoGOS5jeCe6Vop6nQsT-RX_Whm_SLQ_qF_lkGXdJCXsLyspS_zMW9XSL_fAwT_1-qFItpdlhL4fZSqTV',
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuAWUpm1Zjv0SuSPzps7RW8oztqkWmc0P3pnvzC-zJQDzaN8NLDUyHIrBRDNDz4dtvWchZttqLe32C-kZhIcy1Vee5xKWNTYutGweM6knia1neaHkHLytVUC8PdKC3WWPtB8C0_5XVoCcD0ey9jZkdvNwjr3H_61SH57K4iRv4oK0nRC09de_KXyxxCjf_wH2LlePa5Knolb7KR5CDkfYll6hsn8DjsyKc3nXPPERvEcaTDVPvshpRr_-stLY9DcTJ1624b_pwv-aAlL',
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuApsfa1nxamzqeH9o2-lHw4yKeAp0QtL8RKKp8p35mhMmbx2_nP0TwbOtV1GpZUmkMQ336HBS0iS9lP2G8Xre4KstCyp_cc0Hw9hbuRJ3CYBqRIOpPIxwKVr1RpwM4YLxQdCbxFqLZOhxHuB2yrhThE59YEItFTA-4G2rEvKwmdV4BL8TUflCGjt3ZgcALaUmHe4Kxdvm8srn_7e6wSMYHwj2qceSZnrNy8LqCF71Xq67wpCLwZT94TI27-y8F5PyPyzKdLxg-MAMUu'
+                    ];
+                    $niveaux = ['facile' => 'FACILE', 'moyen' => 'MODÉRÉ', 'difficile' => 'INTENSE'];
+                    ?>
+                    <?php foreach ($activites as $index => $activite): ?>
+                    <!-- Activity Card -->
+                    <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
+                        <div class="h-40 overflow-hidden relative">
+                            <img alt="<?php echo htmlspecialchars($activite['nom_activite']); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="<?php echo $images[$index % count($images)]; ?>" />
+                            <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]"><?php echo $niveaux[$activite['niveau_difficulte']] ?? strtoupper($activite['niveau_difficulte']); ?></div>
+                        </div>
+                        <div class="p-md">
+                            <h4 class="font-headline-sm text-on-surface"><?php echo htmlspecialchars($activite['nom_activite']); ?></h4>
+                            <p class="text-on-surface-variant font-body-md text-xs mt-base"><?php echo htmlspecialchars($activite['description']); ?></p>
+                            <div class="mt-md flex items-center justify-between">
+                                <div class="flex items-center gap-xs">
+                                    <span class="material-symbols-outlined text-secondary text-[20px]">local_fire_department</span>
+                                    <span class="font-label-caps text-label-caps text-on-surface"><?php echo $activite['calories_brulees']; ?> cal</span>
+                                </div>
+                                <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
                             </div>
-                            <div class="text-secondary font-bold font-label-caps">500 KCAL</div>
                         </div>
                     </div>
-                </div>
-                <!-- Activity 2 -->
-                <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
-                    <div class="h-40 overflow-hidden relative">
-                        <img alt="Outdoor running" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A serene landscape of a trail runner at sunrise, surrounded by misty green hills. The lighting is warm and ethereal, creating a sense of peace and vitality. The overall aesthetic is clean and high-end, focusing on the freedom of movement and outdoor wellness, matching the VitalPath corporate modern brand style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWUpm1Zjv0SuSPzps7RW8oztqkWmc0P3pnvzC-zJQDzaN8NLDUyHIrBRDNDz4dtvWchZttqLe32C-kZhIcy1Vee5xKWNTYutGweM6knia1neaHkHLytVUC8PdKC3WWPtB8C0_5XVoCcD0ey9jZkdvNwjr3H_61SH57K4iRv4oK0nRC09de_KXyxxCjf_wH2LlePa5Knolb7KR5CDkfYll6hsn8DjsyKc3nXPPERvEcaTDVPvshpRr_-stLY9DcTJ1624b_pwv-aAlL" />
-                        <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]">MODERATE</div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-span-full text-center py-lg text-on-surface-variant">
+                        Aucune activité disponible pour le moment.
                     </div>
-                    <div class="p-md">
-                        <h4 class="font-headline-sm text-on-surface">Morning Run</h4>
-                        <p class="text-on-surface-variant font-body-md text-xs mt-base">Steady state cardio for cardiovascular health and endurance.</p>
-                        <div class="mt-md flex items-center justify-between">
-                            <div class="flex items-center gap-1 text-primary">
-                                <span class="material-symbols-outlined text-sm">schedule</span>
-                                <span class="font-label-caps">45 MIN</span>
-                            </div>
-                            <div class="text-secondary font-bold font-label-caps">350 KCAL</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Activity 3 -->
-                <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
-                    <div class="h-40 overflow-hidden relative">
-                        <img alt="Strength training" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist yoga studio with polished concrete floors and soft indirect lighting. A single person is in a focused stretching pose, emphasizing flexibility and balance. The color palette is composed of muted greens, soft grays, and natural wood tones, embodying the calm and structured philosophy of the VitalPath health app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApsfa1nxamzqeH9o2-lHw4yKeAp0QtL8RKKp8p35mhMmbx2_nP0TwbOtV1GpZUmkMQ336HBS0iS9lP2G8Xre4KstCyp_cc0Hw9hbuRJ3CYBqRIOpPIxwKVr1RpwM4YLxQdCbxFqLZOhxHuB2yrhThE59YEItFTA-4G2rEvKwmdV4BL8TUflCGjt3ZgcALaUmHe4Kxdvm8srn_7e6wSMYHwj2qceSZnrNy8LqCF71Xq67wpCLwZT94TI27-y8F5PyPyzKdLxg-MAMUu" />
-                        <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]">EASY</div>
-                    </div>
-                    <div class="p-md">
-                        <h4 class="font-headline-sm text-on-surface">Yoga Flow</h4>
-                        <p class="text-on-surface-variant font-body-md text-xs mt-base">Active recovery focusing on core strength and flexibility.</p>
-                        <div class="mt-md flex items-center justify-between">
-                            <div class="flex items-center gap-1 text-primary">
-                                <span class="material-symbols-outlined text-sm">schedule</span>
-                                <span class="font-label-caps">60 MIN</span>
-                            </div>
-                            <div class="text-secondary font-bold font-label-caps">180 KCAL</div>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </section>
     </main>
     <!-- BottomNavBar (Mobile) -->
     <nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container dark:bg-surface-container-highest shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex justify-around items-center px-4 py-3">
-        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
-            <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
-            <span class="font-label-caps text-label-caps mt-1">Diets</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
-            <span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
-            <span class="font-label-caps text-label-caps mt-1">Activities</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
-            <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
-            <span class="font-label-caps text-label-caps mt-1">Wallet</span>
-        </a>
-        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="#">
-            <span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
-            <span class="font-label-caps text-label-caps mt-1">Profile</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
-            <span class="material-symbols-outlined" data-icon="logout">logout</span>
-            <span class="font-label-caps text-label-caps mt-1">Logout</span>
-        </a>
+        <?php if (!session()->get('estConnecte')) { ?>
+            <!-- Navigation mobile - Utilisateur non connecté -->
+            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/">
+                <span class="material-symbols-outlined" data-icon="home">home</span>
+                <span class="font-label-caps text-label-caps mt-1">Accueil</span>
+            </a>
+            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/login">
+                <span class="material-symbols-outlined" data-icon="login">login</span>
+                <span class="font-label-caps text-label-caps mt-1">Connexion</span>
+            </a>
+            <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="/register">
+                <span class="material-symbols-outlined" data-icon="app_registration">app_registration</span>
+                <span class="font-label-caps text-label-caps mt-1">S'inscrire</span>
+            </a>
+        <?php } else { ?>
+            <!-- Navigation mobile - Utilisateur connecté -->
+            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
+                <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+                <span class="font-label-caps text-label-caps mt-1">Régimes</span>
+            </a>
+            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
+                <span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+                <span class="font-label-caps text-label-caps mt-1">Activités</span>
+            </a>
+            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="#">
+                <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                <span class="font-label-caps text-label-caps mt-1">Portefeuille</span>
+            </a>
+            <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="/profile">
+                <span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+                <span class="font-label-caps text-label-caps mt-1">Profil</span>
+            </a>
+            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/logout">
+                <span class="material-symbols-outlined" data-icon="logout">logout</span>
+                <span class="font-label-caps text-label-caps mt-1">Déconnexion</span>
+            </a>
+        <?php } ?>
     </nav>
-    <!-- FAB (Contextual for Dashboard) -->
+    <!-- FAB (Contextual for Tableau de bord) -->
     <button class="fixed right-lg bottom-28 md:bottom-lg w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform hover:bg-primary-container hover:text-on-primary-container group z-40">
         <span class="material-symbols-outlined text-[28px] group-hover:rotate-90 transition-transform duration-300">add</span>
     </button>

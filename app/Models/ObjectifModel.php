@@ -13,13 +13,13 @@ class ObjectifModel extends Model
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        'nom', 'description'
+        'objectif', 'description'
     ];
 
     protected $useTimestamps = false;
 
     protected $validationRules = [
-        'nom' => 'required|max_length[255]',
+        'objectif' => 'required|max_length[255]',
         'description' => 'permit_empty'
     ];
 
@@ -54,5 +54,13 @@ class ObjectifModel extends Model
     public function deleteObjectif($id)
     {
         return $this->delete($id);
+    }
+
+    public function getUserObjectif($userId)
+    {
+        return $this->select('objectifs.*')
+                    ->join('utilisateurs_objectifs', 'objectifs.id = utilisateurs_objectifs.objectif_id')
+                    ->where('utilisateurs_objectifs.user_id', $userId)
+                    ->first();
     }
 }
