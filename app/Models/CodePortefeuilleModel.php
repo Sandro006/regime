@@ -31,10 +31,10 @@ class CodePortefeuilleModel extends Model
     protected $validationRules    = [
         'code'              => 'required|string|unique_except[codes_portefeuille.code,id,{id}]',
         'montant'           => 'required|decimal',
-        'utilise'           => 'boolean',
+        'utilise'           => 'in_list[0,1]|permit_empty',
         'utilisateur_id'    => 'permit_empty|integer',
-        'date_creation'     => 'permit_empty|valid_date',
-        'date_utilisation'  => 'permit_empty|valid_date'
+        'date_creation'     => 'permit_empty|valid_date[Y-m-d H:i:s]',
+        'date_utilisation'  => 'permit_empty|valid_date[Y-m-d H:i:s]'
     ];
 
     protected $validationMessages = [
@@ -92,8 +92,8 @@ class CodePortefeuilleModel extends Model
      */
     public function markAsUsed(int $codeId, int $userId, string $dateUtilisation)
     {
-        return $this->update($codeId, [
-            'utilise'           => true,
+        return $this->skipValidation(true)->update($codeId, [
+            'utilise'           => 1,
             'utilisateur_id'    => $userId,
             'date_utilisation'  => $dateUtilisation
         ]);

@@ -4,17 +4,23 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use App\Models\ObjectifModel;
 use App\Models\UtilisateurObjectifModel;
+use App\Models\TransactionModel;
+use App\Models\CodePortefeuilleModel;
 
 class Auth extends BaseController
 {
     protected $userModel;
     protected $objectifModel;
     protected $utilisateurObjectifModel;
+    protected $transactionModel;
+    protected $codePortefeuilleModel;
 
     public function __construct(){
         $this->userModel = new UserModel();
         $this->objectifModel = new ObjectifModel();
         $this->utilisateurObjectifModel = new UtilisateurObjectifModel();
+        $this->transactionModel = new TransactionModel();
+        $this->codePortefeuilleModel = new CodePortefeuilleModel();
     }
     public function Register(): string{
         // Récupérer les objectifs de la base de données
@@ -86,6 +92,15 @@ class Auth extends BaseController
             $this->utilisateurObjectifModel->insert([
                 'user_id' => $userId,
                 'objectif_id' => $objectifId
+            ]);
+            
+            // Créer une transaction d'enregistrement
+            $this->transactionModel->insert([
+                'utilisateur_id' => $userId,
+                'type' => 'Inscription',
+                'montant' => 0,
+                'date_transaction' => date('Y-m-d H:i:s'),
+                'description' => 'Inscription au programme VitalFit'
             ]);
             
             // Calcul du BMI
