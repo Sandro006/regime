@@ -22,6 +22,19 @@ $routes->get('/admin/logout', 'Admin\Auth::logout');
 // Routes admin - Dashboard
 $routes->get('/admin/dashboard', 'Admin\Dashboard::index', ['filter' => 'adminFilter']);
 
+// Routes admin - Régimes
+$routes->get('/admin/regime/list', 'Admin\Regime::list', ['filter' => 'adminFilter']);
+$routes->get('/admin/regime/create', 'Admin\Regime::create', ['filter' => 'adminFilter']);
+$routes->post('/admin/regime/store', 'Admin\Regime::store', ['filter' => 'adminFilter']);
+$routes->get('/admin/regime/edit/(:num)', 'Admin\Regime::edit/$1', ['filter' => 'adminFilter']);
+$routes->post('/admin/regime/update/(:num)', 'Admin\Regime::update/$1', ['filter' => 'adminFilter']);
+$routes->post('/admin/regime/delete/(:num)', 'Admin\Regime::delete/$1', ['filter' => 'adminFilter']);
+
+// Routes admin - Utilisateurs
+$routes->get('/admin/utilisateur/list', 'Admin\Utilisateur::list', ['filter' => 'adminFilter']);
+$routes->get('/admin/utilisateur/detail/(:num)', 'Admin\Utilisateur::detail/$1', ['filter' => 'adminFilter']);
+$routes->post('/admin/utilisateur/toggleGold/(:num)', 'Admin\Utilisateur::toggleGold/$1', ['filter' => 'adminFilter']);
+
 // Routes pour le profil utilisateur
 $routes->get('/profile', 'Profile::index');
 $routes->get('/profile/edit', 'Profile::edit');

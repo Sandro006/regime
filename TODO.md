@@ -734,7 +734,7 @@
 
 ### ✅ Gestion Régimes
 
-- [ ] **12.1** — Créer contrôleur Regime Admin
+- [x] **12.1** — Créer contrôleur Regime Admin
   - **Responsable:** Sandro
   - **Fichier:** `app/Controllers/Admin/Regime.php`
   - **Méthodes:**
@@ -747,14 +747,14 @@
   - **Dépendance:** 11.2 complété
   - **Validation:** Contrôleur chargeable
 
-- [ ] **12.2** — Créer vue liste régimes admin
+- [x] **12.2** — Créer vue liste régimes admin
   - **Responsable:** Bidy
   - **Fichier:** `app/Views/admin/regime/list.php`
   - **Affiche:** Tableau avec colonnes: Nom, Prix, Durée, Actions (Modifier/Supprimer)
   - **Dépendance:** 12.1 complété
   - **Validation:** Vue affichable
 
-- [ ] **12.3** — Créer vue formulaire régime
+- [x] **12.3** — Créer vue formulaire régime
   - **Responsable:** Bidy
   - **Fichier:** `app/Views/admin/regime/form.php`
   - **Champs:**
@@ -764,7 +764,7 @@
   - **Dépendance:** 12.1 complété
   - **Validation:** Vue affichable
 
-- [ ] **12.4** — Implémenter CRUD régimes
+- [x] **12.4** — Implémenter CRUD régimes
   - **Responsable:** Sandro
   - **Comment:**
     - `create()`: Afficher formulaire vide

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Dashboard Admin | VitalFit</title>
+    <title>Détails Utilisateur | VitalFit</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@600;700&family=Lexend:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script id="tailwind-config">
@@ -142,9 +142,9 @@
             <span class="font-display-md text-display-md font-bold text-primary">VitalFit Admin</span>
         </div>
         <div class="hidden md:flex gap-6 items-center">
-            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="/admin/dashboard">Dashboard</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/admin/dashboard">Dashboard</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/admin/regime/list">Régimes</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/admin/utilisateur/list">Utilisateurs</a>
+            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="/admin/utilisateur/list">Utilisateurs</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Codes</a>
             <div class="flex items-center gap-3 pl-6 border-l border-outline-variant">
                 <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
@@ -167,118 +167,118 @@
     <main class="pt-20 px-container-margin md:px-6 pb-6">
         <!-- Page Header -->
         <div class="mb-8">
-            <h1 class="font-display-lg text-display-lg text-on-surface mb-2">Administration Dashboard</h1>
-            <p class="text-body-lg text-on-surface-variant">Bienvenue dans votre espace de gestion</p>
+            <a href="/admin/utilisateur/list" class="text-primary hover:text-primary/80 transition-colors flex items-center gap-1 mb-4">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Retour à la liste
+            </a>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-2xl">
+                    <?= strtoupper(substr($user['username'] ?? 'U', 0, 1)) ?>
+                </div>
+                <div>
+                    <h1 class="font-display-lg text-display-lg text-on-surface"><?= htmlspecialchars($user['username'] ?? '') ?></h1>
+                    <p class="text-body-lg text-on-surface-variant"><?= htmlspecialchars($user['email'] ?? '') ?></p>
+                </div>
+            </div>
         </div>
 
-        <!-- Statistics Grid -->
+        <!-- Info Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <!-- Total Users Card -->
-            <div class="bg-surface rounded-xl p-6 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-start justify-between mb-4">
-                    <div>
-                        <p class="text-label-caps text-on-surface-variant mb-2">Total Utilisateurs</p>
-                        <h3 class="font-metric-xl text-metric-xl text-primary"><?= number_format($total_users) ?></h3>
-                    </div>
-                    <span class="material-symbols-outlined text-primary" style="font-size: 32px;">people</span>
-                </div>
-                <p class="text-body-md text-on-surface-variant">Utilisateurs actifs dans la plateforme</p>
+            <!-- Solde -->
+            <div class="bg-surface rounded-xl p-6 shadow-sm border-l-4 border-primary">
+                <p class="text-label-caps text-on-surface-variant mb-2">Solde Portefeuille</p>
+                <h3 class="text-metric-xl text-primary"><?= number_format($user['solde'], 0) ?> Ar</h3>
             </div>
 
-            <!-- Total Revenue Card -->
-            <div class="bg-surface rounded-xl p-6 border-l-4 border-secondary-container shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-start justify-between mb-4">
-                    <div>
-                        <p class="text-label-caps text-on-surface-variant mb-2">Revenu Total</p>
-                        <h3 class="font-metric-xl text-metric-xl text-secondary-container"><?= number_format($total_revenue, 0) ?> Ar</h3>
-                    </div>
-                    <span class="material-symbols-outlined text-secondary-container" style="font-size: 32px;">attach_money</span>
-                </div>
-                <p class="text-body-md text-on-surface-variant">Revenu généré par les ventes</p>
+            <!-- Genre -->
+            <div class="bg-surface rounded-xl p-6 shadow-sm border-l-4 border-secondary-container">
+                <p class="text-label-caps text-on-surface-variant mb-2">Genre</p>
+                <p class="text-headline-sm text-secondary-container">
+                    <?= isset($user['gender']) && $user['gender'] === 'male' ? '👨 Masculin' : '👩 Féminin' ?>
+                </p>
             </div>
 
-            <!-- Gold Users Card -->
-            <div class="bg-surface rounded-xl p-6 border-l-4 border-tertiary shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-start justify-between mb-4">
-                    <div>
-                        <p class="text-label-caps text-on-surface-variant mb-2">Membres Gold</p>
-                        <h3 class="font-metric-xl text-metric-xl text-tertiary"><?= number_format($total_gold_users) ?></h3>
-                    </div>
-                    <span class="material-symbols-outlined text-tertiary" style="font-size: 32px;">star</span>
-                </div>
-                <p class="text-body-md text-on-surface-variant">Utilisateurs premium actifs</p>
+            <!-- Taille/Poids -->
+            <div class="bg-surface rounded-xl p-6 shadow-sm border-l-4 border-tertiary">
+                <p class="text-label-caps text-on-surface-variant mb-2">Taille / Poids</p>
+                <p class="text-headline-sm text-tertiary"><?= $user['taille'] ?? '?' ?>m / <?= $user['poids'] ?? '?' ?>kg</p>
             </div>
 
-            <!-- Conversion Rate Card -->
-            <div class="bg-surface rounded-xl p-6 border-l-4 border-error shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-start justify-between mb-4">
-                    <div>
-                        <p class="text-label-caps text-on-surface-variant mb-2">Taux Conversion</p>
-                        <h3 class="font-metric-xl text-metric-xl text-error">
-                            <?php
-                                $conversion = $total_users > 0 ? round(($total_gold_users / $total_users) * 100, 1) : 0;
-                                echo $conversion . '%';
-                            ?>
-                        </h3>
-                    </div>
-                    <span class="material-symbols-outlined text-error" style="font-size: 32px;">trending_up</span>
-                </div>
-                <p class="text-body-md text-on-surface-variant">Gold / Total utilisateurs</p>
+            <!-- Statut Gold -->
+            <div class="bg-surface rounded-xl p-6 shadow-sm border-l-4 border-tertiary">
+                <p class="text-label-caps text-on-surface-variant mb-2">Statut</p>
+                <?php if ($user['gold']): ?>
+                    <span class="inline-flex items-center gap-2 px-3 py-1 bg-tertiary/10 text-tertiary rounded-full text-label-caps font-bold">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">star</span>
+                        Gold
+                    </span>
+                <?php else: ?>
+                    <span class="inline-flex items-center px-3 py-1 bg-on-surface-variant/10 text-on-surface-variant rounded-full text-label-caps font-bold">
+                        Standard
+                    </span>
+                <?php endif; ?>
             </div>
         </div>
 
-        <!-- Top Regimes Section -->
-        <div class="bg-surface rounded-xl p-6 shadow-sm">
-            <div class="mb-6">
-                <h2 class="font-headline-sm text-headline-sm text-on-surface mb-2">Régimes Populaires</h2>
-                <p class="text-body-md text-on-surface-variant">Top 3 régimes les plus vendus</p>
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Main Content -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Objectif Section -->
+                <div class="bg-surface rounded-xl p-6 shadow-sm">
+                    <h2 class="text-headline-sm text-on-surface mb-4">Objectif Choisi</h2>
+                    <?php if ($objectif): ?>
+                        <div class="p-4 bg-primary/10 rounded-lg">
+                            <h3 class="text-body-lg font-bold text-primary mb-2"><?= htmlspecialchars($objectif['nom']) ?></h3>
+                            <p class="text-body-md text-on-surface-variant"><?= htmlspecialchars($objectif['description']) ?></p>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-body-md text-on-surface-variant">Aucun objectif défini</p>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Régimes Actifs Section -->
+                <div class="bg-surface rounded-xl p-6 shadow-sm">
+                    <h2 class="text-headline-sm text-on-surface mb-4">Régimes Achetés</h2>
+                    <?php if (!empty($regimes)): ?>
+                        <div class="space-y-3">
+                            <?php foreach ($regimes as $regime): ?>
+                                <div class="p-4 bg-surface-container-low rounded-lg border-l-4 border-primary">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-body-lg font-bold text-on-surface"><?= htmlspecialchars($regime['nom_regime'] ?? 'Régime') ?></h3>
+                                    </div>
+                                    <p class="text-body-md text-on-surface-variant mb-2">
+                                        Durée: <?= $regime['duree'] ?? '?' ?> jours | Prix: <?= number_format($regime['prix'] ?? 0, 0) ?> Ar
+                                    </p>
+                                    <p class="text-body-md text-on-surface-variant">
+                                        Du <?= isset($regime['date_debut']) ? date('d/m/Y', strtotime($regime['date_debut'])) : '?' ?> au <?= isset($regime['date_fin']) ? date('d/m/Y', strtotime($regime['date_fin'])) : '?' ?>
+                                    </p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-body-md text-on-surface-variant">Aucun régime acheté</p>
+                    <?php endif; ?>
+                </div>
             </div>
 
-            <?php if (!empty($top_regimes)): ?>
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b-2 border-outline-variant text-left">
-                                <th class="px-4 py-3 text-label-caps text-on-surface-variant">Régime</th>
-                                <th class="px-4 py-3 text-label-caps text-on-surface-variant">Prix</th>
-                                <th class="px-4 py-3 text-label-caps text-on-surface-variant">Ventes</th>
-                                <th class="px-4 py-3 text-label-caps text-on-surface-variant">Revenu Généré</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($top_regimes as $index => $regime): ?>
-                                <tr class="border-b border-outline-variant/20 hover:bg-surface-container-low transition-colors">
-                                    <td class="px-4 py-4 text-body-md text-on-surface font-semibold">
-                                        <div class="flex items-center gap-3">
-                                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/20 text-primary text-label-caps font-bold">
-                                                <?= $index + 1 ?>
-                                            </span>
-                                            <?= htmlspecialchars($regime['nom_regime']) ?>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-body-md text-on-surface">
-                                        <?= number_format($regime['prix'], 0) ?> Ar
-                                    </td>
-                                    <td class="px-4 py-4">
-                                        <span class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-label-caps font-bold">
-                                            <span class="material-symbols-outlined" style="font-size: 16px;">shopping_bag</span>
-                                            <?= $regime['ventes'] ?>
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-4 text-headline-sm text-primary font-bold">
-                                        <?= number_format($regime['prix'] * $regime['ventes'], 0) ?> Ar
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+            <!-- Sidebar Actions -->
+            <div>
+                <div class="bg-surface rounded-xl p-6 shadow-sm sticky top-24">
+                    <h3 class="text-headline-sm text-on-surface mb-4">Actions</h3>
+                    <form method="POST" action="/admin/utilisateur/toggleGold/<?= $user['id'] ?>">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-tertiary text-on-tertiary rounded-lg font-bold hover:bg-tertiary/90 transition-colors mb-3">
+                            <span class="material-symbols-outlined">star</span>
+                            <?= $user['gold'] ? 'Retirer Gold' : 'Activer Gold' ?>
+                        </button>
+                    </form>
+                    <a href="/admin/utilisateur/list" class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-surface-container text-on-surface rounded-lg font-bold hover:bg-surface-container-high transition-colors">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        Retour à la liste
+                    </a>
                 </div>
-            <?php else: ?>
-                <div class="text-center py-12">
-                    <span class="material-symbols-outlined text-on-surface-variant/50 block mb-4" style="font-size: 48px;">info</span>
-                    <p class="text-body-lg text-on-surface-variant">Aucun régime vendu pour le moment</p>
-                </div>
-            <?php endif; ?>
+            </div>
         </div>
     </main>
 </body>
