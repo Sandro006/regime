@@ -143,33 +143,39 @@
 
 <body class="font-body-md text-on-surface selection:bg-primary-container selection:text-on-primary-container">
     <!-- TopAppBar -->
-    <header class="bg-surface/90 dark:bg-inverse-surface/90 font-display-md text-display-md font-bold text-primary dark:text-primary-fixed docked full-width top-0 sticky z-50 backdrop-blur-md shadow-sm dark:shadow-none border-b border-outline-variant/30">
-        <div class="flex justify-between items-center w-full px-container-margin py-sm max-w-7xl mx-auto">
-            <div class="flex items-center gap-xs">
-                <span class="font-display-md text-display-md font-bold text-primary">VitalFit</span>
-            </div>
-            <nav class="hidden md:flex items-center gap-lg">
-                <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/">Dashboard</a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/regime">Régimes</a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/achat/mesRegimes">Mes régimes</a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/activite/list">Activités</a>
-                <a class="text-primary font-bold border-b-2 border-primary font-body-md text-body-md" href="/portefeuille">Portefeuille</a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/profile">Profile</a>
-            </nav>
-            <div class="flex items-center gap-md">
-                <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high rounded-lg p-2 transition-all active:scale-95" data-icon="notifications">notifications</button>
-                <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high rounded-lg p-2 transition-all active:scale-95" data-icon="settings">settings</button>
-                <div class="flex items-center gap-xs">
-                    <div class="text-right hidden sm:block">
-                        <p class="font-semibold text-on-surface text-body-md"><?php echo isset($user) ? htmlspecialchars($user['username']) : 'Utilisateur'; ?></p>
-                        <p class="text-on-surface-variant text-[12px]">VitalFit</p>
-                    </div>
-                    <div class="h-10 w-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant flex items-center justify-center">
-                        <span class="material-symbols-outlined text-primary">account_circle</span>
-                    </div>
-                </div>
-                <a class="text-on-surface-variant hover:text-primary transition-colors" href="/logout" title="Déconnexion">
-                    <span class="material-symbols-outlined">logout</span>
+    <header class="bg-surface shadow-sm flex justify-between items-center w-full px-6 py-4 fixed top-0 z-50">
+        <div class="flex items-center gap-2">
+            <span class="font-display-md text-display-md font-bold text-primary">VitalFit</span>
+        </div>
+        <div class="hidden md:flex gap-6">
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/">Tableau de bord</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/regime/list">Régimes</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/achat/mesRegimes">Mes régimes</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/activite/list">Activités</a>
+            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="/portefeuille">Portefeuille</a>
+            <?php if (session()->get('estConnecte')) { ?>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/profile">Profil</a>
+            <?php } ?>
+            <div class="flex items-center gap-4">
+                <?php if (!session()->get('estConnecte')) { ?>
+                    <a href="/login" class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                        <span class="material-symbols-outlined">login</span>
+                        <span class="text-sm font-medium hidden sm:inline">Se connecter</span>
+                    </a>
+                    <a href="/register" class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                        <span class="material-symbols-outlined">app_registration</span>
+                        <span class="text-sm font-medium hidden sm:inline">S'inscrire</span>
+                    </a>
+                <?php } else { ?>
+                    <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <a href="/logout" class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                        <span class="material-symbols-outlined">logout</span>
+                    </a>
+                <?php } ?>
+                <a href="/profile" class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container hover:shadow-lg transition-shadow">
+                    <img alt="User profile avatar" class="w-full h-full object-cover" src="https://ui-avatars.com/api/?background=2ecc71&color=fff&bold=true&name=User" />
                 </a>
             </div>
         </div>
