@@ -27,11 +27,16 @@ $routes->post('/profile/doEdit', 'Profile::doEdit');
 $routes->get('/profile/editObjectif', 'Profile::editObjectif');
 $routes->post('/profile/doEditObjectif', 'Profile::doEditObjectif');
 
+// Routes historique
+$routes->get('/profile/getHistory', 'Profile::getHistory');
+$routes->post('/profile/updateMetrics', 'Profile::updateMetrics');
+
 // Routes objectifs
 $routes->get('/objectif/list', 'Objectif::list');
 $routes->post('/objectif/save', 'Objectif::save');
 
 // Routes activites
+$routes->get('/activite', 'Activite::list');  // Add this line
 $routes->get('/activite/list', 'Activite::list');
 $routes->get('/activite/recommended', 'Activite::recommended');
 
