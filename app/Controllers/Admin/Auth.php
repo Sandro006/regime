@@ -2,13 +2,12 @@
 
 namespace App\Controllers\Admin;
 
-use App\Controllers\BaseController;
 use App\Models\AdminModel;
-use CodeIgniter\HTTP\RedirectResponse;
+use App\Controllers\BaseController;
 
 class Auth extends BaseController
 {
-    protected AdminModel $adminModel;
+    protected $adminModel;
 
     public function __construct()
     {
@@ -16,96 +15,81 @@ class Auth extends BaseController
     }
 
     /**
-     * Affiche la page de login admin.
+     * Afficher la page de login admin
      */
     public function login()
     {
-        return view('admin/auth/BackOffice/login');
+        // Vérifier si l'admin est déjà connecté
+        if (session()->has('admin_id')) {
+            return redirect()->to('/admin/dashboard');
+        }
+
+        return view('admin/auth/login');
     }
 
-
     /**
-     * Vérification (POST) - authentification admin.
+     * Traiter l'authentification admin (POST)
      */
     public function authenticate()
     {
-        $email = (string) $this->request->getPost('email');
-        $motdepasse = (string) $this->request->getPost('motdepasse');
+        // Est-ce une requête AJAX ?
+        $isAjax = $this->request->isAJAX();
 
-        // Certains formulaires utilisent 'password' (compat)
-        if ($motdepasse === '') {
-            $motdepasse = (string) $this->request->getPost('password');
+        // Récupérer les champs email et password
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+
+        // Valider les champs
+        if (empty($email) || empty($password)) {
+            if ($isAjax) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'success' => false,
+                    'message' => 'Email et mot de passe requis'
+                ]);
+            }
+            session()->setFlashdata('error', 'Email et mot de passe requis');
+            return redirect()->back()->withInput();
         }
 
-        // Nettoyage éventuel (espaces)
-        $email = trim($email);
-        $motdepasse = trim($motdepasse);
-
-        if ($email === '' || $motdepasse === '') {
-
-            return redirect()->back()->with('error', 'Email et mot de passe requis');
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return redirect()->back()->with('error', 'Email invalide');
-        }
-
-        $admin = $this->adminModel->getAdminByEmail($email);
+        // Vérifier les identifiants
+        $admin = $this->adminModel->verifyCredentials($email, $password);
 
         if (!$admin) {
-            return redirect()->back()->with('error', 'Identifiants admin incorrects');
+            if ($isAjax) {
+                return $this->response->setStatusCode(401)->setJSON([
+                    'success' => false,
+                    'message' => 'Identifiants invalides'
+                ]);
+            }
+            session()->setFlashdata('error', 'Identifiants invalides');
+            return redirect()->back()->withInput();
         }
 
-        // IMPORTANT: selon la structure, le hash est dans 'motdepasse' ou 'password'
-        $hashField = $this->adminModel->getPasswordHashField();
-        $hash = $admin[$hashField] ?? '';
-
-        // Vérifier le mot de passe
-        if ($hash === '' || !password_verify($motdepasse, $hash)) {
-            return redirect()->back()->with('error', 'Identifiants admin incorrects');
-        }
-
-
-
-
-        // Démarre/régénère la session (si supporté)
-        $session = session();
-        if (method_exists($session, 'regenerate')) {
-            $session->regenerate(true);
-        }
-
-        $session->set([
-            'isAdmin' => true,
-            'admin' => [
-                'id' => $admin['id'] ?? null,
-                'nom' => $admin['nom'] ?? null,
-                'email' => $admin['email'] ?? $email,
-            ],
+        // Stocker l'admin en session
+        session()->set([
+            'admin_id' => $admin['id'],
+            'admin_nom' => $admin['nom'],
+            'admin_email' => $admin['email'],
+            'admin_logged_in' => true
         ]);
 
-        return redirect()->to('/admin/authenticate')->with('success', 'Connexion admin réussie');
+        if ($isAjax) {
+            return $this->response->setStatusCode(200)->setJSON([
+                'success' => true,
+                'message' => 'Authentification réussie',
+                'redirect' => '/admin/dashboard'
+            ]);
+        }
 
+        return redirect()->to('/admin/dashboard')->with('success', 'Bienvenue ' . $admin['nom'] . '!');
     }
 
     /**
-     * Déconnexion admin.
+     * Déconnecter l'admin
      */
-    public function logout(): RedirectResponse
+    public function logout()
     {
         session()->destroy();
-        return redirect()->to('/admin/login')->with('success', 'Vous êtes déconnecté');
-    }
-
-    /**
-     * Sécurité: vérifier session admin (à appeler au début des pages admin).
-     */
-    protected function ensureAdmin(): void
-    {
-        $isAdmin = session()->get('isAdmin');
-        if (!$isAdmin) {
-            redirect()->to('/admin/login')->with('error', 'Accès refusé');
-            exit;
-        }
+        return redirect()->to('/admin/login')->with('success', 'Vous avez été déconnecté avec succès');
     }
 }
-

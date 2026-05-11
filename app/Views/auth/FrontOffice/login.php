@@ -202,6 +202,14 @@
                     Don't have an account?
                     <a class="text-secondary font-bold hover:text-secondary-fixed-dim transition-colors" href="/register">Sign up</a>
                 </p>
+
+                <!-- Admin Login Link -->
+                <div class="mt-md text-center">
+                    <a class="inline-flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors font-body-md" href="/admin/login">
+                        <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
+                        Admin Login
+                    </a>
+                </div>
             </div>
         </section>
         <!-- Right Column: Inspiring Imagery (Desktop Only) -->
