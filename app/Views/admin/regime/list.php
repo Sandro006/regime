@@ -144,7 +144,7 @@
         <div class="hidden md:flex gap-6 items-center">
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/admin/dashboard">Dashboard</a>
             <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="/admin/regime/list">Régimes</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Utilisateurs</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/admin/utilisateur/list">Utilisateurs</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Codes</a>
             <div class="flex items-center gap-3 pl-6 border-l border-outline-variant">
                 <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">

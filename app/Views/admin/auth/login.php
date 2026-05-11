@@ -138,6 +138,14 @@
         <!-- Left Column: Branding & Form -->
         <section class="flex-1 flex flex-col justify-center items-center px-container-margin py-xl lg:px-xl bg-surface relative z-10">
             <div class="w-full max-w-md">
+                <!-- Back to Home Link -->
+                <div class="mb-lg">
+                    <a href="/" class="inline-flex items-center gap-sm text-primary hover:text-primary/80 transition-colors font-body-md">
+                        <span class="material-symbols-outlined" style="font-size: 20px;">arrow_back</span>
+                        Retour à l'accueil
+                    </a>
+                </div>
+
                 <!-- Brand Header -->
                 <div class="mb-xl text-center lg:text-left">
                     <h1 class="font-display-lg text-display-lg text-primary tracking-tight">VitalFit Admin</h1>
