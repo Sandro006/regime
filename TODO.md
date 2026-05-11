@@ -687,7 +687,7 @@
   - **Validation:** Vue affichable
 
 
-- [ ] **10.5** — Implémenter authentification admin
+- [x] **10.5** — Implémenter authentification admin
   - **Responsable:** Bidy
   - **Comment:** Même logique que auth utilisateur mais avec AdminModel
   - **Session:** `session()->set(['admin_id' => $admin->id])`
@@ -702,7 +702,7 @@
 
 ### ✅ Dashboard Statistiques
 
-- [ ] **11.1** — Créer contrôleur Dashboard Admin
+- [x] **11.1** — Créer contrôleur Dashboard Admin
   - **Responsable:** Bidy
   - **Fichier:** `app/Controllers/Admin/Dashboard.php`
   - **Méthodes:**
@@ -715,7 +715,7 @@
   - **Dépendance:** 10.5 complété
   - **Validation:** Contrôleur chargeable
 
-- [ ] **11.2** — Créer vue dashboard admin
+- [x] **11.2** — Créer vue dashboard admin
   - **Responsable:** Elisa
   - **Fichier:** `app/Views/admin/dashboard/index.php`
   - **Contenu:**

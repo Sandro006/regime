@@ -19,6 +19,9 @@ $routes->get('/admin/login', 'Admin\Auth::login');
 $routes->post('/admin/auth/authenticate', 'Admin\Auth::authenticate');
 $routes->get('/admin/logout', 'Admin\Auth::logout');
 
+// Routes admin - Dashboard
+$routes->get('/admin/dashboard', 'Admin\Dashboard::index', ['filter' => 'adminFilter']);
+
 // Routes pour le profil utilisateur
 $routes->get('/profile', 'Profile::index');
 $routes->get('/profile/edit', 'Profile::edit');
