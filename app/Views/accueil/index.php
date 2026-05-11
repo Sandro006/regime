@@ -138,46 +138,39 @@
 
 <body class="bg-background font-body-lg text-on-background min-h-screen pb-24 md:pb-0">
     <!-- TopAppBar -->
-    <header class="bg-surface dark:bg-surface-dim shadow-sm flex justify-between items-center w-full px-container-margin py-md fixed top-0 z-50">
-        <div class="flex items-center gap-xs">
-            <span class="font-display-md text-display-md font-bold text-primary dark:text-primary-fixed-dim">VitalFit</span>
+    <header class="bg-surface shadow-sm flex justify-between items-center w-full px-6 py-4 fixed top-0 z-50">
+        <div class="flex items-center gap-2">
+            <span class="font-display-md text-display-md font-bold text-primary">VitalFit</span>
         </div>
-        <div class="hidden md:flex gap-lg">
-            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="#">Tableau de bord</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Régimes</a>
+        <div class="hidden md:flex gap-6">
+            <a class="text-primary font-bold border-b-2 border-primary transition-colors duration-200" href="/">Tableau de bord</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/regime/list">Régimes</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/achat/mesRegimes">Mes régimes</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/activite/list">Activités</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/portefeuille">Portefeuille</a>
-
             <?php if (session()->get('estConnecte')) { ?>
                 <a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="/profile">Profil</a>
             <?php } ?>
-            <div class="flex items-center gap-md">
+            <div class="flex items-center gap-4">
                 <?php if (!session()->get('estConnecte')) { ?>
-                    <!-- Boutons pour utilisateur non connecté -->
-                    <a href="/login"
-                        class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                    <a href="/login" class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
                         <span class="material-symbols-outlined">login</span>
                         <span class="text-sm font-medium hidden sm:inline">Se connecter</span>
                     </a>
-                    <a href="/register"
-                        class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                    <a href="/register" class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
                         <span class="material-symbols-outlined">app_registration</span>
                         <span class="text-sm font-medium hidden sm:inline">S'inscrire</span>
                     </a>
                 <?php } else { ?>
-                    <!-- Boutons pour utilisateur connecté -->
                     <button class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary">
                         <span class="material-symbols-outlined">notifications</span>
                     </button>
-                    <a href="/logout"
-                        class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
+                    <a href="/logout" class="active:scale-95 transition-transform text-on-surface-variant hover:text-primary flex items-center gap-1">
                         <span class="material-symbols-outlined">logout</span>
                     </a>
                 <?php } ?>
-
-                <a href="/profile" class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container hover:shadow-lg transition-shadow" title="My Profil">
-                    <img alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdFX6Wry1yhOmHFnavxcNs8Czveflefzzn2IxipOguOzlQ4ok0DQOC_2oSdrrdxJ1CWqvqbhsNbN8_mjBxz3N8PmDOMTIeWNP-xQ0JrKLH3_Ovv1Fl3lV-L-UhQLi3y1bTki-izPUuT-63hQMS5XAtj6AeAYRjPZrigI0qCb2E1B9heMgwXPRB_4lgDojrcnnpN-S4ANyklQTCUA64togdAtNZo-dnGPmEsIYhnOHu_zIn91o4LcKuBPvTtDimtslLys0K8eQEpi" class="w-full h-full object-cover" />
+                <a href="/profile" class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-highest border-2 border-primary-container hover:shadow-lg transition-shadow">
+                    <img alt="User profile avatar" class="w-full h-full object-cover" src="https://ui-avatars.com/api/?background=2ecc71&color=fff&bold=true&name=User" />
                 </a>
             </div>
         </div>
