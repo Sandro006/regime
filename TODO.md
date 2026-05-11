@@ -569,7 +569,7 @@
 
 - [ ] **8.2** — Créer contrôleur Gold
   - **Responsable:** Sandro
-  - **Fichier:** `app/Controllers/Gold.php`
+  - **Fichier:** `app/Controllers/Abonnement.php`
   - **Méthodes:**
     - `acheter()` - Afficher prix Gold
     - `confirmer()` - Traiter achat (POST)

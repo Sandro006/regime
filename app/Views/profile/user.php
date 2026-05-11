@@ -236,7 +236,7 @@
                             <span class="font-label-caps text-label-caps opacity-80">VitalFit Wallet</span>
                         </div>
                         <p class="font-label-caps text-label-caps uppercase tracking-widest opacity-80 mb-base">Current Balance</p>
-                        <h3 class="font-metric-xl text-metric-xl mb-lg"><?php echo isset($user) ? number_format($user['solde'], 2) : '50.00'; ?>€</h3>
+                        <h3 class="font-metric-xl text-metric-xl mb-lg"><?php echo isset($user) ? number_format($user['solde'], 2) : '50.00'; ?>Ar</h3>
                     </div>
                     <a href="/portefeuille" class="w-full py-md bg-white text-primary rounded-lg font-label-caps text-label-caps font-bold hover:bg-primary-fixed-dim transition-colors flex items-center justify-center gap-sm">
                         <span class="material-symbols-outlined">add_circle</span>
@@ -244,6 +244,48 @@
                     </a>
                 </div>
             </div>
+            <!-- Subscription Card -->
+            <?php if (!isset($abonnement) || !$abonnement): ?>
+            <div class="md:col-span-4 bento-card bg-gradient-to-br from-secondary-container to-tertiary-container text-on-secondary-container p-lg rounded-xl shadow-lg relative overflow-hidden">
+                <!-- Background decoration -->
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full"></div>
+                <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full"></div>
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-md">
+                            <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">card_membership</span>
+                            <span class="font-label-caps text-label-caps opacity-80">Abonnement</span>
+                        </div>
+                        <p class="font-label-caps text-label-caps uppercase tracking-widest opacity-80 mb-base">Pas encore membre</p>
+                        <p class="font-body-lg text-body-lg mb-lg">Rejoignez nos plans premium et profitez de réductions exclusives!</p>
+                    </div>
+                    <a href="#subscription-plans" class="w-full py-md bg-white text-secondary rounded-lg font-label-caps text-label-caps font-bold hover:shadow-lg transition-all flex items-center justify-center gap-sm">
+                        <span class="material-symbols-outlined">upgrade</span>
+                        Découvrir les offres
+                    </a>
+                </div>
+            </div>
+            <?php else: ?>
+            <div class="md:col-span-4 bento-card bg-gradient-to-br from-primary-fixed-dim to-primary text-on-primary p-lg rounded-xl shadow-lg relative overflow-hidden">
+                <!-- Background decoration -->
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full"></div>
+                <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full"></div>
+                <div class="relative z-10 flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-md">
+                            <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">verified</span>
+                            <span class="font-label-caps text-label-caps opacity-80">Actif</span>
+                        </div>
+                        <p class="font-label-caps text-label-caps uppercase tracking-widest opacity-80 mb-base">Abonnement actif</p>
+                        <p class="font-body-lg text-body-lg mb-lg">Expires le: <?php echo date('d/m/Y', strtotime($abonnement['date_expiration'] ?? 'now')); ?></p>
+                    </div>
+                    <button class="w-full py-md bg-white text-primary rounded-lg font-label-caps text-label-caps font-bold hover:shadow-lg cursor-default">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        Abonné
+                    </button>
+                </div>
+            </div>
+            <?php endif; ?>
             <!-- Personal Information Card -->
             <div class="md:col-span-7 bento-card bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-surface-variant/20">
                 <h3 class="font-headline-sm text-headline-sm mb-lg flex items-center gap-sm">
@@ -310,7 +352,7 @@
                         </div>
                         <div>
                             <p class="font-body-md text-body-md font-semibold">Recharge automatique</p>
-                            <p class="text-[12px] text-on-surface-variant">Activée pour les montants inférieurs à 10 €.</p>
+                            <p class="text-[12px] text-on-surface-variant">Activée pour les montants inférieurs à 10 Ar.</p>
                         </div>
                     </li>
                 </ul>
@@ -330,6 +372,112 @@
                 <!-- Calendar -->
                 <div id="historyCalendar" class="mt-lg"></div>
             </div>
+
+            <!-- Subscription Plans Section (if not subscribed) -->
+            <?php if (!isset($abonnement) || !$abonnement): ?>
+            <div class="md:col-span-12">
+                <h3 class="font-headline-sm text-headline-sm mb-lg flex items-center gap-sm" id="subscription-plans">
+                    <span class="material-symbols-outlined text-secondary">card_membership</span>
+                    Nos Plans d'Abonnement
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
+                    <div class="bento-card bg-surface-container-lowest p-lg rounded-xl shadow-md border-2 border-secondary hover:border-secondary-container transition-all">
+                        <!-- Plan Header -->
+                        <div class="mb-lg pb-lg border-b border-surface-variant">
+                            <div class="flex items-center justify-between mb-md">
+                                <h4 class="font-headline-sm text-headline-sm"><?php echo $plan['nom']; ?></h4>
+                                <?php if ($plan_id === 'platine'): ?>
+                                <span class="bg-tertiary-container text-on-tertiary-container font-label-caps text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    Premium
+                                </span>
+                                <?php endif; ?>
+                            </div>
+                            <div class="flex items-baseline gap-base">
+                                <h2 class="font-metric-xl text-metric-xl text-secondary"><?php echo number_format($plan['prix'], 2); ?>Ar</h2>
+                                <span class="text-on-surface-variant font-body-md">/<?php echo $plan['duree']; ?> jours</span>
+                            </div>
+                        </div>
+
+                        <!-- Benefits -->
+                        <div class="mb-lg">
+                            <p class="font-label-caps text-label-caps text-on-surface-variant mb-md uppercase tracking-widest">Avantages</p>
+                            <ul class="space-y-md">
+                                <?php foreach ($plan['benefits'] as $benefit): ?>
+                                <li class="flex items-start gap-md">
+                                    <span class="material-symbols-outlined text-secondary mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                    <span class="font-body-md text-body-md"><?php echo $benefit; ?></span>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+
+                        <!-- Discount Badge -->
+                        <div class="bg-secondary/10 p-md rounded-lg mb-lg border border-secondary/20">
+                            <p class="font-label-caps text-label-caps text-secondary font-bold">Réduction: <span class="font-metric-xl"><?php echo $plan['remise']; ?>%</span></p>
+                            <p class="text-on-surface-variant text-[12px]">Sur tous les plans alimentaires</p>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <a href="/abonnement/acheter?plan=<?php echo $plan_id; ?>" class="w-full py-md bg-secondary text-on-secondary rounded-lg font-label-caps text-label-caps font-bold hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-sm">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                            S'abonner maintenant
+                        </a>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Features Comparison -->
+                <div class="mt-xl bg-surface-container p-lg rounded-xl border border-surface-variant/20">
+                    <h4 class="font-headline-sm text-headline-sm mb-lg flex items-center gap-sm">
+                        <span class="material-symbols-outlined text-primary">table_chart</span>
+                        Comparaison des offres
+                    </h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-surface-variant">
+                                    <th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant">Fonctionnalité</th>
+                                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
+                                    <th class="text-center py-md px-md font-label-caps text-label-caps"><?php echo $plan['nom']; ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-surface-variant">
+                                    <td class="py-md px-md font-body-md">Accès régimes</td>
+                                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
+                                    <td class="text-center py-md px-md">
+                                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+                                    </td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr class="border-b border-surface-variant">
+                                    <td class="py-md px-md font-body-md">Réduction spéciale</td>
+                                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
+                                    <td class="text-center py-md px-md font-body-lg font-bold text-secondary"><?php echo $plan['remise']; ?>%</td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr class="border-b border-surface-variant">
+                                    <td class="py-md px-md font-body-md">Support prioritaire</td>
+                                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
+                                    <td class="text-center py-md px-md">
+                                        <?php if ($plan_id === 'platine'): ?>
+                                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+                                        <?php else: ?>
+                                        <span class="material-symbols-outlined text-on-surface-variant">close</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
 
                     <script>
                         // Récupérer l'historique
