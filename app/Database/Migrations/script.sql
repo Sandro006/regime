@@ -223,6 +223,18 @@ CREATE TABLE IF NOT EXISTS `parametres` (
     PRIMARY KEY (`id`)
 );
 
+-- Migration: create_user_metrics_history_table
+CREATE TABLE IF NOT EXISTS user_metrics_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    poids DECIMAL(5,2) NOT NULL,
+    taille DECIMAL(5,2) NOT NULL,
+    bmi DECIMAL(4,1) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_user_id (user_id),
+    INDEX idx_created_at (created_at)
+);
 
 INSERT INTO objectifs (objectif, description) VALUES
 ('Perdre du poids', 'Objectif pour reduire le poids de facon progressive et durable.'),

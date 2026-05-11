@@ -200,10 +200,22 @@
                     <span class="font-label-caps text-label-caps text-on-surface-variant">POIDS ACTUEL</span>
                     <span class="text-secondary material-symbols-outlined">monitor_weight</span>
                 </div>
-                <div class="font-metric-xl text-metric-xl text-on-surface"><?php echo isset($user) ? $user['poids'] : '75'; ?><span class="text-body-lg ml-1 text-on-surface-variant">kg</span></div>
-                <div class="mt-xs flex items-center gap-1 text-on-surface-variant font-body-md italic">
-                    <span class="material-symbols-outlined text-[16px]">trending_down</span> -0.5kg cette semaine
+                <div class="font-metric-xl text-metric-xl text-on-surface">
+                    <?php echo isset($user) && isset($user['poids']) ? $user['poids'] : '75'; ?>
+                    <span class="text-body-lg ml-1 text-on-surface-variant">kg</span>
                 </div>
+                
+                <?php if (isset($variationTexte) && $variationTexte): ?>
+                <div class="mt-xs flex items-center gap-1 <?= $tendanceCouleur ?? 'text-on-surface-variant' ?> font-body-md italic">
+                    <span class="material-symbols-outlined text-[16px]"><?= $tendanceIcone ?? 'trending_flat' ?></span>
+                    <?= htmlspecialchars($variationTexte) ?>
+                </div>
+                <?php else: ?>
+                <div class="mt-xs flex items-center gap-1 text-on-surface-variant font-body-md italic">
+                    <span class="material-symbols-outlined text-[16px]">info</span>
+                    Aucune donnée d'historique
+                </div>
+                <?php endif; ?>
             </div>
             <!-- Goal Card -->
             <div class="bg-surface-container-lowest p-lg rounded-xl shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container transition-all hover:-translate-y-1">

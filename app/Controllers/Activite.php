@@ -79,18 +79,15 @@ class Activite extends BaseController
         return $this->activiteModel->getAllActivites();
     }
 
-    private function findByKeywords(array $keywords): array
-    {
+    private function findByKeywords(array $keywords): array{
         $builder = $this->activiteModel->builder();
         $builder->groupStart();
 
         foreach ($keywords as $index => $keyword) {
             if ($index === 0) {
-                $builder->like('nom', $keyword);
-                $builder->orLike('nom_activite', $keyword);
+                $builder->like('nom_activite', $keyword); 
             } else {
-                $builder->orLike('nom', $keyword);
-                $builder->orLike('nom_activite', $keyword);
+                $builder->orLike('nom_activite', $keyword); 
             }
         }
 

@@ -152,7 +152,7 @@
                 <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/">Dashboard</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/regime">Régimes</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/achat/mesRegimes">Mes régimes</a>
-                <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/activite">Activités</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/activite/list">Activités</a>
                 <a class="text-primary font-bold border-b-2 border-primary font-body-md text-body-md" href="/portefeuille">Portefeuille</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/profile">Profile</a>
             </nav>

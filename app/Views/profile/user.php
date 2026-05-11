@@ -5,6 +5,9 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@600;700&amp;family=Montserrat:wght@600;700;800&amp;display=swap" rel="stylesheet" />
@@ -156,7 +159,7 @@
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/">Dashboard</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="#">Diets</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/achat/mesRegimes">Mes régimes</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="#">Activities</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/activite/list">Activities</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/portefeuille">Portefeuille</a>
             <a class="text-primary font-bold border-b-2 border-primary font-label-caps text-label-caps" href="#">Profile</a>
         </div>
@@ -198,49 +201,28 @@
         </section>
         <!-- Bento Grid Content -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
-            <!-- Health Metrics BMI Section -->
-            <div class="md:col-span-8 bento-card bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-surface-variant/20">
-                <div class="flex justify-between items-center mb-lg">
-                    <h3 class="font-headline-sm text-headline-sm flex items-center gap-sm">
-                        <span class="material-symbols-outlined text-primary">analytics</span>
-                        Health Metrics
-                    </h3>
-                    <span class="text-primary font-label-caps text-label-caps bg-primary-fixed-dim/20 px-3 py-1 rounded-full">Last updated today</span>
-                </div>
-                <div class="flex flex-col lg:flex-row gap-xl items-center">
-                    <div class="relative w-48 h-48 flex items-center justify-center">
-                        <svg class="w-full h-full transform -rotate-90">
-                            <circle class="text-surface-container" cx="96" cy="96" fill="transparent" r="80" stroke="#e8f0e5" stroke-width="12"></circle>
-                            <circle class="text-primary" cx="96" cy="96" fill="transparent" r="80" stroke="#006d37" stroke-dasharray="502" stroke-dashoffset="150" stroke-linecap="round" stroke-width="12"></circle>
-                        </svg>
-                        <div class="absolute inset-0 flex flex-col items-center justify-center">
-                            <span class="font-metric-xl text-metric-xl text-primary"><?php echo isset($user) ? $user['bmi'] : '22.4'; ?></span>
-                            <span class="font-label-caps text-label-caps text-on-surface-variant">BMI</span>
+            <!-- Quick Update Form -->
+            <div class="md:col-span-4 bento-card bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-surface-variant/20">
+                <h3 class="font-headline-sm text-headline-sm mb-lg flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-primary">update</span>
+                    Quick Update
+                </h3>
+                <form id="quickUpdateForm" class="space-y-md">
+                    <div>
+                        <label class="font-label-caps text-label-caps text-on-surface-variant mb-xs block">Weight (kg)</label>
+                        <div class="flex gap-sm">
+                            <input type="number" id="poids" name="poids" step="0.1" value="<?php echo isset($user) ? $user['poids'] : '74'; ?>" class="flex-1 px-md py-sm border border-outline rounded-lg focus:outline-none focus:border-primary">
+                            <button type="button" onclick="updateMetric('poids')" class="px-md py-sm bg-primary text-on-primary rounded-lg font-label-caps text-label-caps hover:opacity-90">Save</button>
                         </div>
                     </div>
-                    <div class="flex-1 w-full">
-                        <div class="mb-lg">
-                            <div class="flex justify-between mb-xs">
-                                <span class="font-body-md text-body-md font-semibold">Normal Range</span>
-                                <span class="text-primary font-bold">Optimal</span>
-                            </div>
-                            <div class="w-full h-3 bg-surface-container rounded-full overflow-hidden flex">
-                                <div class="h-full w-[18.5%] bg-blue-300"></div>
-                                <div class="h-full w-[25%] bg-primary-container"></div>
-                                <div class="h-full w-[15%] bg-secondary-container"></div>
-                                <div class="h-full w-[41.5%] bg-error"></div>
-                            </div>
-                            <div class="flex justify-between mt-xs font-label-caps text-[10px] text-on-surface-variant">
-                                <span>18.5</span>
-                                <span>25.0</span>
-                                <span>30.0</span>
-                            </div>
+                    <div>
+                        <label class="font-label-caps text-label-caps text-on-surface-variant mb-xs block">Height (cm)</label>
+                        <div class="flex gap-sm">
+                            <input type="number" id="taille" name="taille" step="0.5" value="<?php echo isset($user) ? $user['taille'] * 100 : '182'; ?>" class="flex-1 px-md py-sm border border-outline rounded-lg focus:outline-none focus:border-primary">
+                            <button type="button" onclick="updateMetric('taille')" class="px-md py-sm bg-primary text-on-primary rounded-lg font-label-caps text-label-caps hover:opacity-90">Save</button>
                         </div>
-                        <p class="font-body-md text-body-md text-on-surface-variant italic">
-                            "You're in the healthy BMI range. Maintaining this balance is key to your long-term vitality goals."
-                        </p>
                     </div>
-                </div>
+                </form>
             </div>
             <!-- Wallet Card -->
             <div class="md:col-span-4 bento-card bg-primary text-on-primary p-lg rounded-xl shadow-lg relative overflow-hidden">
@@ -333,7 +315,158 @@
                     </li>
                 </ul>
             </div>
+            <!-- History Calendar & Chart -->
+            <div class="md:col-span-12 bento-card bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-surface-variant/20">
+                <h3 class="font-headline-sm text-headline-sm mb-lg flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-primary">calendar_month</span>
+                    Weight & BMI History
+                </h3>
+
+                <!-- Chart -->
+                <div class="mb-xl">
+                    <canvas id="metricsChart" class="w-full h-64"></canvas>
+                </div>
+
+                <!-- Calendar -->
+                <div id="historyCalendar" class="mt-lg"></div>
+            </div>
+
+                    <script>
+                        // Récupérer l'historique
+                        let historyData = [];
+
+                            fetch('<?= base_url("profile/getHistory") ?>')
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    historyData = data.history;
+
+                                    // Initialiser le graphique
+                                    initChart(historyData);
+
+                                    // Initialiser le calendrier
+                                    initCalendar(historyData);
+                                }
+                            });
+
+                        function initChart(history) {
+                            const ctx = document.getElementById('metricsChart').getContext('2d');
+                            const dates = history.map(h => h.date);
+                            const weights = history.map(h => h.poids);
+                            const bmis = history.map(h => h.bmi);
+
+                            new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: dates,
+                                    datasets: [{
+                                            label: 'Weight (kg)',
+                                            data: weights,
+                                            borderColor: '#006d37',
+                                            backgroundColor: 'rgba(0, 109, 55, 0.1)',
+                                            tension: 0.3,
+                                            yAxisID: 'y'
+                                        },
+                                        {
+                                            label: 'BMI',
+                                            data: bmis,
+                                            borderColor: '#fc8f34',
+                                            backgroundColor: 'rgba(252, 143, 52, 0.1)',
+                                            tension: 0.3,
+                                            yAxisID: 'y1'
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    interaction: {
+                                        mode: 'index',
+                                        intersect: false
+                                    },
+                                    plugins: {
+                                        tooltip: {
+                                            callbacks: {
+                                                label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}`
+                                            }
+                                        }
+                                    },
+                                    scales: {
+                                        y: {
+                                            title: {
+                                                display: true,
+                                                text: 'Weight (kg)'
+                                            },
+                                            beginAtZero: false
+                                        },
+                                        y1: {
+                                            position: 'right',
+                                            title: {
+                                                display: true,
+                                                text: 'BMI'
+                                            },
+                                            beginAtZero: false,
+                                            grid: {
+                                                drawOnChartArea: false
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+
+                        function initCalendar(history) {
+                            const events = history.map(h => ({
+                                title: `Weight: ${h.poids} kg | BMI: ${h.bmi}`,
+                                start: h.date,
+                                allDay: true,
+                                backgroundColor: '#006d37',
+                                borderColor: '#006d37'
+                            }));
+
+                            const calendarEl = document.getElementById('historyCalendar');
+                            const calendar = new FullCalendar.Calendar(calendarEl, {
+                                initialView: 'dayGridMonth',
+                                height: 'auto',
+                                headerToolbar: {
+                                    left: 'prev,next',
+                                    center: 'title',
+                                    right: 'dayGridMonth,dayGridWeek'
+                                },
+                                events: events,
+                                eventDidMount: function(info) {
+                                    info.el.style.fontSize = '10px';
+                                    info.el.style.whiteSpace = 'normal';
+                                    info.el.style.lineHeight = '1.2';
+                                }
+                            });
+                            calendar.render();
+                        }
+
+                        function updateMetric(type) {
+                            const value = document.getElementById(type).value;
+
+                            fetch('<?= base_url("profile/updateMetrics") ?>', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    body: `type=${type}&value=${value}`
+                                })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        alert(data.message);
+                                        location.reload();
+                                    } else {
+                                        alert('Error: ' + (data.message || 'Unknown error'));
+                                    }
+                                })
+                                .catch(err => alert('Error updating: ' + err));
+                        }
+                    </script>
         </div>
+
     </main>
 </body>
 
