@@ -244,7 +244,9 @@
                             <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col md:flex-row h-full">
                                 <div class="md:w-1/2 h-48 md:h-full relative bg-gradient-to-br from-primary/10 to-primary/5">
                                     <div class="absolute inset-0 flex items-center justify-center">
-                                        <span class="material-symbols-outlined text-primary text-[80px] opacity-20">restaurant</span>
+                                        <img src="<?= base_url('assets/images/' . htmlspecialchars($regime['nom_regime']) . '.png') ?>" 
+                                            alt=""
+                                            class="absolute inset-0 w-full h-full object-cover z-0">
                                     </div>
                                     <div class="absolute top-md left-md bg-primary-container text-on-primary-container font-label-caps px-sm py-base rounded-lg text-[10px] shadow-sm">RÉGIME</div>
                                     <div class="absolute bottom-md left-md bg-secondary text-on-secondary font-label-caps px-md py-base rounded-lg text-[12px] font-bold"><?php echo number_format($regime['prix'], 0); ?> Ar</div>
