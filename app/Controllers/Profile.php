@@ -245,4 +245,81 @@ class Profile extends BaseController{
             'history' => $formattedHistory
         ]);
     }
+     public function editObjectif()
+    {
+        $session = session();
+        
+        // Vérifier si l'utilisateur est connecté
+        if (!$session->has('estConnecte') || !$session->get('estConnecte')) {
+            return redirect()->to('/login')->with('error', 'Veuillez vous connecter');
+        }
+        
+        $userId = $session->get('user')['id'];
+        
+        // Récupérer tous les objectifs disponibles
+        $objectifs = $this->objectifModel->findAll();
+        
+        // Récupérer l'objectif actuel de l'utilisateur
+        $currentObjectif = $this->utilisateurObjectifModel
+            ->where('user_id', $userId)
+            ->orderBy('date_choix', 'DESC')
+            ->first();
+        
+        $currentObjectifId = $currentObjectif ? $currentObjectif['objectif_id'] : null;
+        
+        return view('profile/editObjectif', [
+            'objectifs' => $objectifs,
+            'currentObjectif' => $currentObjectifId
+        ]);
+    }
+
+    /**
+     * Traite la modification d'objectif
+     */
+    public function doEditObjectif()
+    {
+        $session = session();
+        
+        // Vérifier si l'utilisateur est connecté
+        if (!$session->has('estConnecte') || !$session->get('estConnecte')) {
+            return redirect()->to('/login')->with('error', 'Veuillez vous connecter');
+        }
+        
+        $userId = $session->get('user')['id'];
+        
+        // Valider l'entrée
+        $rules = [
+            'objectif_id' => 'required|integer|is_not_unique[objectifs.id]'
+        ];
+        
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Veuillez sélectionner un objectif valide');
+        }
+        
+        $objectifId = $this->request->getPost('objectif_id');
+        
+        // Vérifier si l'objectif existe
+        $objectif = $this->objectifModel->find($objectifId);
+        if (!$objectif) {
+            return redirect()->back()
+                ->with('error', 'Objectif non trouvé');
+        }
+        
+        // Insérer le nouvel objectif dans l'historique
+        $data = [
+            'user_id' => $userId,
+            'objectif_id' => $objectifId,
+            'date_choix' => date('Y-m-d H:i:s')
+        ];
+        
+        if ($this->utilisateurObjectifModel->insert($data)) {
+            return redirect()->to('/profile')
+                ->with('success', 'Objectif mis à jour avec succès : ' . $objectif['objectif']);
+        } else {
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la mise à jour de l\'objectif');
+        }
+    }
 }
