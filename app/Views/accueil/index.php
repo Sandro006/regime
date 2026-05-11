@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en">
+<html class="light" lang="fr">
 
 <head>
     <meta charset="utf-8" />
@@ -212,11 +211,23 @@
                     <span class="font-label-caps text-label-caps text-on-surface-variant">OBJECTIF SÉLECTIONNÉ</span>
                     <span class="text-tertiary material-symbols-outlined">flag</span>
                 </div>
-                <div class="font-headline-sm text-headline-sm text-on-surface mb-xs">Perdre du poids</div>
+                <div class="font-headline-sm text-headline-sm text-on-surface mb-xs">
+                    <?php 
+                    if (isset($userObjectif) && $userObjectif) {
+                        echo htmlspecialchars($userObjectif['objectif']);
+                    } elseif (isset($user) && !isset($userObjectif)) {
+                        echo '<a href="/profile/editObjectif" class="text-primary hover:underline">Définir objectif →</a>';
+                    } else {
+                        echo 'Perdre du poids';
+                    }
+                    ?>
+                </div>
+                <?php if (isset($userObjectif) && $userObjectif): ?>
                 <div class="w-full bg-surface-container rounded-full h-2 mt-md">
                     <div class="bg-primary-container h-2 rounded-full" style="width: 65%"></div>
                 </div>
                 <div class="mt-xs text-right font-label-caps text-[10px] text-on-surface-variant">65% DE L'OBJECTIF</div>
+                <?php endif; ?>
             </div>
             <!-- Portefeuille Card -->
             <div class="bg-primary text-on-primary p-lg rounded-xl shadow-[0_12px_20px_rgba(0,109,55,0.15)] transition-all hover:-translate-y-1">
@@ -230,27 +241,28 @@
                     AJOUTER DES FONDS
                 </a>
         </section>
-        <!-- Active Régimes Section (Carousel) -->
+        
+         <!-- Section: Tous les régimes -->
         <section class="space-y-md">
             <div class="flex justify-between items-end">
-                <h2 class="font-display-md text-display-md text-on-surface">Nos Régimes</h2>
+                <div>
+                    <h2 class="font-display-md text-display-md text-on-surface">Tous nos régimes</h2>
+                    <p class="text-on-surface-variant font-body-md text-sm mt-1">Découvrez l'ensemble de nos programmes</p>
+                </div>
                 <a class="text-primary font-label-caps hover:underline" href="/regime/list">VOIR TOUS LES PLANS</a>
             </div>
 
-            <?php if (isset($regimes) && !empty($regimes)): ?>
+            <?php if (isset($allRegimes) && !empty($allRegimes)): ?>
                 <div class="relative">
-                    <!-- Carousel Container -->
                     <div class="overflow-hidden rounded-xl">
-                        <div id="regimesCarousel" class="flex transition-transform duration-500 ease-out">
-                            <?php foreach ($regimes as $index => $regime): ?>
-                                <!-- Regime Card -->
+                        <div id="allRegimesCarousel" class="flex transition-transform duration-500 ease-out">
+                            <?php foreach ($allRegimes as $index => $regime): ?>
                                 <div class="min-w-full lg:min-w-[calc(50%-8px)] flex-shrink-0 lg:mr-4 last:lg:mr-0">
+                                    <!-- Contenu de la carte régime (identique à votre carte existante) -->
                                     <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_20px_rgba(0,0,0,0.04)] border border-surface-container flex flex-col md:flex-row h-full">
                                         <div class="md:w-1/2 h-48 md:h-full relative bg-gradient-to-br from-primary/10 to-primary/5">
                                             <div class="absolute inset-0 flex items-center justify-center">
-                                                <img src="<?= base_url('assets/images/' . htmlspecialchars($regime['nom_regime']) . '.png') ?>"
-                                                    alt=""
-                                                    class="absolute inset-0 w-full h-full object-cover z-0">
+                                                <img src="<?= base_url('assets/images/' . htmlspecialchars($regime['nom_regime']) . '.png') ?>" alt="" class="absolute inset-0 w-full h-full object-cover z-0">
                                             </div>
                                             <div class="absolute top-md left-md bg-primary-container text-on-primary-container font-label-caps px-sm py-base rounded-lg text-[10px] shadow-sm">RÉGIME</div>
                                             <div class="absolute bottom-md left-md bg-secondary text-on-secondary font-label-caps px-md py-base rounded-lg text-[12px] font-bold"><?php echo number_format($regime['prix'], 0); ?> Ar</div>
@@ -272,7 +284,9 @@
                                             <div class="mt-xl grid grid-cols-3 gap-md pt-lg border-t border-surface-container">
                                                 <div>
                                                     <div class="font-label-caps text-[10px] text-on-surface-variant">VARIATION</div>
-                                                    <div class="font-body-lg text-primary font-bold"><?php echo ($regime['variation_poids'] > 0 ? '+' : ''); ?><?php echo $regime['variation_poids']; ?>kg</div>
+                                                    <div class="font-body-lg <?php echo $regime['variation_poids'] < 0 ? 'text-tertiary' : ($regime['variation_poids'] > 0 ? 'text-primary' : 'text-on-surface'); ?> font-bold">
+                                                        <?php echo ($regime['variation_poids'] > 0 ? '+' : ''); ?><?php echo $regime['variation_poids']; ?>kg
+                                                    </div>
                                                 </div>
                                                 <div>
                                                     <div class="font-label-caps text-[10px] text-on-surface-variant">VIANDE</div>
@@ -283,7 +297,7 @@
                                                     <div class="font-body-lg text-on-surface font-bold"><?php echo $regime['pourcentage_poisson']; ?>%</div>
                                                 </div>
                                             </div>
-                                            <a href="/regime/detail/<?php echo $regime['id']; ?>" class="mt-md w-full py-md bg-primary text-on-primary rounded-xl font-label-caps shadow-md active:scale-95 transition-all hover:shadow-lg">
+                                            <a href="/regime/detail/<?php echo $regime['id']; ?>" class="mt-md w-full py-md bg-primary text-on-primary rounded-xl font-label-caps shadow-md active:scale-95 transition-all hover:shadow-lg text-center">
                                                 VOIR DÉTAILS
                                             </a>
                                         </div>
@@ -293,175 +307,328 @@
                         </div>
                     </div>
 
-                    <!-- Navigation Buttons -->
-                    <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 md:translate-x-0 md:left-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
+                    <?php if (count($allRegimes) > 1): ?>
+                    <button id="allPrevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 md:translate-x-0 md:left-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
                         <span class="material-symbols-outlined">chevron_left</span>
                     </button>
-                    <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 md:translate-x-0 md:right-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
+                    <button id="allNextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 md:translate-x-0 md:right-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
                         <span class="material-symbols-outlined">chevron_right</span>
                     </button>
+                    <?php endif; ?>
 
-                    <!-- Progress Indicators -->
-                    <div id="carouselIndicators" class="flex justify-center gap-2 mt-lg">
-                        <?php foreach ($regimes as $i => $regime): ?>
-                            <button class="carousel-indicator w-2 h-2 rounded-full transition-all <?php echo $i === 0 ? 'bg-primary w-8' : 'bg-surface-variant'; ?>" data-index="<?php echo $i; ?>"></button>
+                    <?php if (count($allRegimes) > 1): ?>
+                    <div id="allCarouselIndicators" class="flex justify-center gap-2 mt-lg">
+                        <?php foreach ($allRegimes as $i => $regime): ?>
+                            <button class="all-carousel-indicator w-2 h-2 rounded-full transition-all <?php echo $i === 0 ? 'bg-primary w-8' : 'bg-surface-variant'; ?>" data-index="<?php echo $i; ?>"></button>
                         <?php endforeach; ?>
                     </div>
+                    <?php endif; ?>
                 </div>
-
-                <script>
-                    let currentIndex = 0;
-                    const carousel = document.getElementById('regimesCarousel');
-                    const indicators = document.querySelectorAll('.carousel-indicator');
-                    const totalItems = <?php echo count($regimes); ?>;
-                    const itemsPerView = window.innerWidth >= 1024 ? 2 : 1;
-                    let autoplayInterval;
-
-                    function updateCarousel() {
-                        const offset = -currentIndex * (100 / itemsPerView);
-                        carousel.style.transform = `translateX(${offset}%)`;
-
-                        indicators.forEach((indicator, index) => {
-                            if (index === currentIndex) {
-                                indicator.classList.add('bg-primary', 'w-8');
-                                indicator.classList.remove('bg-surface-variant');
-                            } else {
-                                indicator.classList.remove('bg-primary', 'w-8');
-                                indicator.classList.add('bg-surface-variant');
-                            }
-                        });
-                    }
-
-                    function nextSlide() {
-                        currentIndex = (currentIndex + 1) % totalItems;
-                        updateCarousel();
-                        resetAutoplay();
-                    }
-
-                    function prevSlide() {
-                        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-                        updateCarousel();
-                        resetAutoplay();
-                    }
-
-                    function autoplay() {
-                        autoplayInterval = setInterval(nextSlide, 5000);
-                    }
-
-                    function resetAutoplay() {
-                        clearInterval(autoplayInterval);
-                        autoplay();
-                    }
-
-                    document.getElementById('nextBtn').addEventListener('click', nextSlide);
-                    document.getElementById('prevBtn').addEventListener('click', prevSlide);
-
-                    indicators.forEach(indicator => {
-                        indicator.addEventListener('click', (e) => {
-                            currentIndex = parseInt(e.target.dataset.index);
-                            updateCarousel();
-                            resetAutoplay();
-                        });
-                    });
-
-                    // Start autoplay on load
-                    autoplay();
-                </script>
             <?php else: ?>
                 <div class="text-center py-lg text-on-surface-variant bg-surface-container-lowest rounded-xl border border-surface-variant">
                     Aucun régime disponible pour le moment.
                 </div>
             <?php endif; ?>
-            <!-- Recommended Activités Section -->
-            <section class="space-y-md">
-                <div class="flex justify-between items-end">
-                    <h2 class="font-display-md text-display-md text-on-surface">Recommended Activités</h2>
-                    <div class="flex gap-sm">
-                        <span class="bg-surface-container px-sm py-base rounded-full font-label-caps text-[10px] text-on-surface-variant">OBJECTIF : PERTE DE POIDS</span>
-                    </div>
+        </section>
+        
+        <!-- Section: Régimes recommandés -->
+        <?php if (isset($userObjectif) && $userObjectif && !empty($recommendedRegimes)): ?>
+        <section class="space-y-md mt-xl">
+            <div class="flex justify-between items-end">
+                <div>
+                    <h2 class="font-display-md text-display-md text-on-surface">🍽️ Recommandés pour vous</h2>
+                    <p class="text-on-surface-variant font-body-md text-sm mt-1">
+                        Basés sur votre objectif : <strong class="text-primary"><?php echo htmlspecialchars($userObjectif['objectif']); ?></strong>
+                    </p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-                    <?php if (isset($activites) && !empty($activites)): ?>
-                        <?php
-                        $images = [
-                            'https://lh3.googleusercontent.com/aida-public/AB6AXuBrO5g4Ks84vcAZ2PetS4BEYYjU__DoLdJQeNjdC1vtnwtXDznAYjmhRs0S8hInlv5VD8F231t6cMYS7BmigyPWQmmQymWv8ABI9Ak99zlNte0UmLBTd44bUWAggZiN05rn1q7d2xSXnksseRlbxocr6mhVe9c-IkGidE1uuu9OgvQgAdGE3Z4at06uBOLAMoGOS5jeCe6Vop6nQsT-RX_Whm_SLQ_qF_lkGXdJCXsLyspS_zMW9XSL_fAwT_1-qFItpdlhL4fZSqTV',
-                            'https://lh3.googleusercontent.com/aida-public/AB6AXuAWUpm1Zjv0SuSPzps7RW8oztqkWmc0P3pnvzC-zJQDzaN8NLDUyHIrBRDNDz4dtvWchZttqLe32C-kZhIcy1Vee5xKWNTYutGweM6knia1neaHkHLytVUC8PdKC3WWPtB8C0_5XVoCcD0ey9jZkdvNwjr3H_61SH57K4iRv4oK0nRC09de_KXyxxCjf_wH2LlePa5Knolb7KR5CDkfYll6hsn8DjsyKc3nXPPERvEcaTDVPvshpRr_-stLY9DcTJ1624b_pwv-aAlL',
-                            'https://lh3.googleusercontent.com/aida-public/AB6AXuApsfa1nxamzqeH9o2-lHw4yKeAp0QtL8RKKp8p35mhMmbx2_nP0TwbOtV1GpZUmkMQ336HBS0iS9lP2G8Xre4KstCyp_cc0Hw9hbuRJ3CYBqRIOpPIxwKVr1RpwM4YLxQdCbxFqLZOhxHuB2yrhThE59YEItFTA-4G2rEvKwmdV4BL8TUflCGjt3ZgcALaUmHe4Kxdvm8srn_7e6wSMYHwj2qceSZnrNy8LqCF71Xq67wpCLwZT94TI27-y8F5PyPyzKdLxg-MAMUu'
-                        ];
-                        $niveaux = ['facile' => 'FACILE', 'moyen' => 'MODÉRÉ', 'difficile' => 'INTENSE'];
-                        ?>
-                        <?php foreach ($activites as $index => $activite): ?>
-                            <!-- Activity Card -->
-                            <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
-                                <div class="h-40 overflow-hidden relative">
-                                    <img alt="<?php echo htmlspecialchars($activite['nom_activite']); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="<?php echo $images[$index % count($images)]; ?>" />
-                                    <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]"><?php echo $niveaux[$activite['niveau_difficulte']] ?? strtoupper($activite['niveau_difficulte']); ?></div>
-                                </div>
-                                <div class="p-md">
-                                    <h4 class="font-headline-sm text-on-surface"><?php echo htmlspecialchars($activite['nom_activite']); ?></h4>
-                                    <p class="text-on-surface-variant font-body-md text-xs mt-base"><?php echo htmlspecialchars($activite['description']); ?></p>
-                                    <div class="mt-md flex items-center justify-between">
-                                        <div class="flex items-center gap-xs">
-                                            <span class="material-symbols-outlined text-secondary text-[20px]">local_fire_department</span>
-                                            <span class="font-label-caps text-label-caps text-on-surface"><?php echo $activite['calories_brulees']; ?> cal</span>
+                <a class="text-primary font-label-caps hover:underline" href="/regime/recommended">VOIR TOUS LES RECOMMANDÉS</a>
+            </div>
+
+            <div class="relative">
+                <div class="overflow-hidden rounded-xl">
+                    <div id="recommendedRegimesCarousel" class="flex transition-transform duration-500 ease-out">
+                        <?php foreach ($recommendedRegimes as $index => $regime): ?>
+                            <div class="min-w-full lg:min-w-[calc(50%-8px)] flex-shrink-0 lg:mr-4 last:lg:mr-0">
+                                <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_12px_20px_rgba(0,0,0,0.04)] border-2 border-primary/30 flex flex-col md:flex-row h-full">
+                                    <div class="md:w-1/2 h-48 md:h-full relative bg-gradient-to-br from-primary/10 to-primary/5">
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <img src="<?= base_url('assets/images/' . htmlspecialchars($regime['nom_regime']) . '.png') ?>" alt="" class="absolute inset-0 w-full h-full object-cover z-0">
                                         </div>
-                                        <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+                                        <div class="absolute top-md left-md bg-primary text-on-primary font-label-caps px-sm py-base rounded-lg text-[10px] shadow-sm">⭐ RECOMMANDÉ</div>
+                                        <div class="absolute bottom-md left-md bg-secondary text-on-secondary font-label-caps px-md py-base rounded-lg text-[12px] font-bold"><?php echo number_format($regime['prix'], 0); ?> Ar</div>
+                                    </div>
+                                    <div class="md:w-1/2 p-lg flex flex-col justify-between">
+                                        <div>
+                                            <h3 class="font-display-md text-display-md text-on-surface mb-xs"><?php echo htmlspecialchars($regime['nom_regime']); ?></h3>
+                                            <p class="text-on-surface-variant font-body-md mb-lg leading-relaxed line-clamp-2"><?php echo htmlspecialchars($regime['description']); ?></p>
+                                            <div class="space-y-sm">
+                                                <div class="flex justify-between font-label-caps text-[10px] text-on-surface-variant">
+                                                    <span>DURÉE</span>
+                                                    <span><?php echo $regime['duree']; ?> JOURS</span>
+                                                </div>
+                                                <div class="w-full bg-surface-container rounded-full h-2">
+                                                    <div class="bg-primary-container h-2 rounded-full" style="width: 100%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-xl grid grid-cols-3 gap-md pt-lg border-t border-surface-container">
+                                            <div>
+                                                <div class="font-label-caps text-[10px] text-on-surface-variant">VARIATION</div>
+                                                <div class="font-body-lg <?php echo $regime['variation_poids'] < 0 ? 'text-tertiary' : ($regime['variation_poids'] > 0 ? 'text-primary' : 'text-on-surface'); ?> font-bold">
+                                                    <?php echo ($regime['variation_poids'] > 0 ? '+' : ''); ?><?php echo $regime['variation_poids']; ?>kg
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="font-label-caps text-[10px] text-on-surface-variant">VIANDE</div>
+                                                <div class="font-body-lg text-on-surface font-bold"><?php echo $regime['pourcentage_viande']; ?>%</div>
+                                            </div>
+                                            <div>
+                                                <div class="font-label-caps text-[10px] text-on-surface-variant">POISSON</div>
+                                                <div class="font-body-lg text-on-surface font-bold"><?php echo $regime['pourcentage_poisson']; ?>%</div>
+                                            </div>
+                                        </div>
+                                        <a href="/regime/detail/<?php echo $regime['id']; ?>" class="mt-md w-full py-md bg-primary text-on-primary rounded-xl font-label-caps shadow-md active:scale-95 transition-all hover:shadow-lg text-center">
+                                            VOIR DÉTAILS
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="col-span-full text-center py-lg text-on-surface-variant">
-                            Aucune activité disponible pour le moment.
-                        </div>
-                    <?php endif; ?>
+                    </div>
                 </div>
-            </section>
+
+                <?php if (count($recommendedRegimes) > 1): ?>
+                <button id="recPrevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 md:translate-x-0 md:left-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button id="recNextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 md:translate-x-0 md:right-2 z-10 w-12 h-12 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:shadow-xl active:scale-95 transition-all">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+                <?php endif; ?>
+
+                <?php if (count($recommendedRegimes) > 1): ?>
+                <div id="recCarouselIndicators" class="flex justify-center gap-2 mt-lg">
+                    <?php foreach ($recommendedRegimes as $i => $regime): ?>
+                        <button class="rec-carousel-indicator w-2 h-2 rounded-full transition-all <?php echo $i === 0 ? 'bg-primary w-8' : 'bg-surface-variant'; ?>" data-index="<?php echo $i; ?>"></button>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+        
+        <!-- Recommended Activités Section -->
+        <section class="space-y-md">
+            <div class="flex justify-between items-end">
+                <h2 class="font-display-md text-display-md text-on-surface">Activités recommandées</h2>
+                <?php if (isset($userObjectif) && $userObjectif): ?>
+                <div class="flex gap-sm">
+                    <span class="bg-surface-container px-sm py-base rounded-full font-label-caps text-[10px] text-on-surface-variant">
+                        OBJECTIF : <?php echo strtoupper(htmlspecialchars($userObjectif['objectif'])); ?>
+                    </span>
+                </div>
+                <?php endif; ?>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+                <?php if (isset($activites) && !empty($activites)): ?>
+                    <?php
+                    $images = [
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuBrO5g4Ks84vcAZ2PetS4BEYYjU__DoLdJQeNjdC1vtnwtXDznAYjmhRs0S8hInlv5VD8F231t6cMYS7BmigyPWQmmQymWv8ABI9Ak99zlNte0UmLBTd44bUWAggZiN05rn1q7d2xSXnksseRlbxocr6mhVe9c-IkGidE1uuu9OgvQgAdGE3Z4at06uBOLAMoGOS5jeCe6Vop6nQsT-RX_Whm_SLQ_qF_lkGXdJCXsLyspS_zMW9XSL_fAwT_1-qFItpdlhL4fZSqTV',
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuAWUpm1Zjv0SuSPzps7RW8oztqkWmc0P3pnvzC-zJQDzaN8NLDUyHIrBRDNDz4dtvWchZttqLe32C-kZhIcy1Vee5xKWNTYutGweM6knia1neaHkHLytVUC8PdKC3WWPtB8C0_5XVoCcD0ey9jZkdvNwjr3H_61SH57K4iRv4oK0nRC09de_KXyxxCjf_wH2LlePa5Knolb7KR5CDkfYll6hsn8DjsyKc3nXPPERvEcaTDVPvshpRr_-stLY9DcTJ1624b_pwv-aAlL',
+                        'https://lh3.googleusercontent.com/aida-public/AB6AXuApsfa1nxamzqeH9o2-lHw4yKeAp0QtL8RKKp8p35mhMmbx2_nP0TwbOtV1GpZUmkMQ336HBS0iS9lP2G8Xre4KstCyp_cc0Hw9hbuRJ3CYBqRIOpPIxwKVr1RpwM4YLxQdCbxFqLZOhxHuB2yrhThE59YEItFTA-4G2rEvKwmdV4BL8TUflCGjt3ZgcALaUmHe4Kxdvm8srn_7e6wSMYHwj2qceSZnrNy8LqCF71Xq67wpCLwZT94TI27-y8F5PyPyzKdLxg-MAMUu'
+                    ];
+                    $niveaux = ['facile' => 'FACILE', 'moyen' => 'MODÉRÉ', 'difficile' => 'INTENSE'];
+                    ?>
+                    <?php foreach ($activites as $index => $activite): ?>
+                        <!-- Activity Card -->
+                        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container group cursor-pointer transition-all hover:shadow-lg">
+                            <div class="h-40 overflow-hidden relative">
+                                <img alt="<?php echo htmlspecialchars($activite['nom_activite']); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="<?php echo $images[$index % count($images)]; ?>" />
+                                <div class="absolute bottom-sm right-sm bg-black/50 backdrop-blur-md text-white font-label-caps px-sm py-base rounded text-[10px]"><?php echo $niveaux[$activite['niveau_difficulte']] ?? strtoupper($activite['niveau_difficulte']); ?></div>
+                            </div>
+                            <div class="p-md">
+                                <h4 class="font-headline-sm text-on-surface"><?php echo htmlspecialchars($activite['nom_activite']); ?></h4>
+                                <p class="text-on-surface-variant font-body-md text-xs mt-base"><?php echo htmlspecialchars($activite['description']); ?></p>
+                                <div class="mt-md flex items-center justify-between">
+                                    <div class="flex items-center gap-xs">
+                                        <span class="material-symbols-outlined text-secondary text-[20px]">local_fire_department</span>
+                                        <span class="font-label-caps text-label-caps text-on-surface"><?php echo $activite['calories_brulees']; ?> cal</span>
+                                    </div>
+                                    <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-span-full text-center py-lg text-on-surface-variant">
+                        Aucune activité disponible pour le moment.
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
     </main>
-    <!-- BottomNavBar (Mobile) -->
-    <nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container dark:bg-surface-container-highest shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex justify-around items-center px-4 py-3">
-        <?php if (!session()->get('estConnecte')) { ?>
-            <!-- Navigation mobile - Utilisateur non connecté -->
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/">
-                <span class="material-symbols-outlined" data-icon="home">home</span>
-                <span class="font-label-caps text-label-caps mt-1">Accueil</span>
-            </a>
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/login">
-                <span class="material-symbols-outlined" data-icon="login">login</span>
-                <span class="font-label-caps text-label-caps mt-1">Connexion</span>
-            </a>
-            <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="/register">
-                <span class="material-symbols-outlined" data-icon="app_registration">app_registration</span>
-                <span class="font-label-caps text-label-caps mt-1">S'inscrire</span>
-            </a>
-        <?php } else { ?>
-            <!-- Navigation mobile - Utilisateur connecté -->
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/achat/mesRegimes">
-                <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
-                <span class="font-label-caps text-label-caps mt-1">Régimes</span>
-            </a>
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/activite/list">
-                <span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
-                <span class="font-label-caps text-label-caps mt-1">Activités</span>
-            </a>
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href=\"/portefeuille\">
-                <span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
-                <span class="font-label-caps text-label-caps mt-1\">Portefeuille</span>
-            </a>
-            <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-lg px-3 py-1 active:scale-90 duration-150" href="/profile">
-                <span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
-                <span class="font-label-caps text-label-caps mt-1">Profil</span>
-            </a>
-            <a class="flex flex-col items-center justify-center text-on-surface-variant py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-150" href="/logout">
-                <span class="material-symbols-outlined" data-icon="logout">logout</span>
-                <span class="font-label-caps text-label-caps mt-1">Déconnexion</span>
-            </a>
-        <?php } ?>
-    </nav>
-    <!-- FAB (Contextual for Tableau de bord) -->
-    <button class="fixed right-lg bottom-28 md:bottom-lg w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform hover:bg-primary-container hover:text-on-primary-container group z-40">
-        <span class="material-symbols-outlined text-[28px] group-hover:rotate-90 transition-transform duration-300">add</span>
-    </button>
+    <footer class="bg-surface dark:bg-surface-dim text-on-surface-variant text-center py-md mt-auto">
+        &copy; <?php echo date('Y'); ?> VitalFit. Tous droits réservés.
+    </footer>
+    <script>
+        // ========== CARROUSEL 1 : TOUS LES RÉGIMES ==========
+        let allCurrentIndex = 0;
+        const allCarousel = document.getElementById('allRegimesCarousel');
+        const allIndicators = document.querySelectorAll('.all-carousel-indicator');
+        const allTotalItems = <?php echo count($allRegimes); ?>;
+        let allItemsPerView = 1;
+        let allAutoplayInterval;
+
+        function allUpdateItemsPerView() {
+            allItemsPerView = window.innerWidth >= 1024 ? 2 : 1;
+            allUpdateCarousel();
+        }
+
+        function allUpdateCarousel() {
+            if (!allCarousel) return;
+            const maxIndex = Math.max(0, allTotalItems - allItemsPerView);
+            if (allCurrentIndex > maxIndex) allCurrentIndex = maxIndex;
+            const offset = -allCurrentIndex * (100 / allItemsPerView);
+            allCarousel.style.transform = `translateX(${offset}%)`;
+            
+            if (allIndicators && allIndicators.length) {
+                allIndicators.forEach((indicator, index) => {
+                    if (index === allCurrentIndex) {
+                        indicator.classList.add('bg-primary', 'w-8');
+                        indicator.classList.remove('bg-surface-variant');
+                    } else {
+                        indicator.classList.remove('bg-primary', 'w-8');
+                        indicator.classList.add('bg-surface-variant');
+                    }
+                });
+            }
+        }
+
+        function allNextSlide() {
+            const maxIndex = Math.max(0, allTotalItems - allItemsPerView);
+            allCurrentIndex = allCurrentIndex < maxIndex ? allCurrentIndex + 1 : 0;
+            allUpdateCarousel();
+            allResetAutoplay();
+        }
+
+        function allPrevSlide() {
+            const maxIndex = Math.max(0, allTotalItems - allItemsPerView);
+            allCurrentIndex = allCurrentIndex > 0 ? allCurrentIndex - 1 : maxIndex;
+            allUpdateCarousel();
+            allResetAutoplay();
+        }
+
+        function allAutoplay() {
+            if (allAutoplayInterval) clearInterval(allAutoplayInterval);
+            allAutoplayInterval = setInterval(allNextSlide, 5000);
+        }
+
+        function allResetAutoplay() {
+            clearInterval(allAutoplayInterval);
+            if (allTotalItems > allItemsPerView) allAutoplay();
+        }
+
+        if (allCarousel) {
+            const nextBtn = document.getElementById('allNextBtn');
+            const prevBtn = document.getElementById('allPrevBtn');
+            if (nextBtn) nextBtn.addEventListener('click', allNextSlide);
+            if (prevBtn) prevBtn.addEventListener('click', allPrevSlide);
+            
+            if (allIndicators && allIndicators.length) {
+                allIndicators.forEach(indicator => {
+                    indicator.addEventListener('click', (e) => {
+                        allCurrentIndex = parseInt(e.target.dataset.index);
+                        allUpdateCarousel();
+                        allResetAutoplay();
+                    });
+                });
+            }
+            
+            window.addEventListener('resize', () => allUpdateItemsPerView());
+            allUpdateItemsPerView();
+            if (allTotalItems > allItemsPerView) allAutoplay();
+        }
+
+        // ========== CARROUSEL 2 : RÉGIMES RECOMMANDÉS ==========
+        <?php if (isset($userObjectif) && $userObjectif && !empty($recommendedRegimes)): ?>
+        let recCurrentIndex = 0;
+        const recCarousel = document.getElementById('recommendedRegimesCarousel');
+        const recIndicators = document.querySelectorAll('.rec-carousel-indicator');
+        const recTotalItems = <?php echo count($recommendedRegimes); ?>;
+        let recItemsPerView = 1;
+        let recAutoplayInterval;
+
+        function recUpdateItemsPerView() {
+            recItemsPerView = window.innerWidth >= 1024 ? 2 : 1;
+            recUpdateCarousel();
+        }
+
+        function recUpdateCarousel() {
+            if (!recCarousel) return;
+            const maxIndex = Math.max(0, recTotalItems - recItemsPerView);
+            if (recCurrentIndex > maxIndex) recCurrentIndex = maxIndex;
+            const offset = -recCurrentIndex * (100 / recItemsPerView);
+            recCarousel.style.transform = `translateX(${offset}%)`;
+            
+            if (recIndicators && recIndicators.length) {
+                recIndicators.forEach((indicator, index) => {
+                    if (index === recCurrentIndex) {
+                        indicator.classList.add('bg-primary', 'w-8');
+                        indicator.classList.remove('bg-surface-variant');
+                    } else {
+                        indicator.classList.remove('bg-primary', 'w-8');
+                        indicator.classList.add('bg-surface-variant');
+                    }
+                });
+            }
+        }
+
+        function recNextSlide() {
+            const maxIndex = Math.max(0, recTotalItems - recItemsPerView);
+            recCurrentIndex = recCurrentIndex < maxIndex ? recCurrentIndex + 1 : 0;
+            recUpdateCarousel();
+            recResetAutoplay();
+        }
+
+        function recPrevSlide() {
+            const maxIndex = Math.max(0, recTotalItems - recItemsPerView);
+            recCurrentIndex = recCurrentIndex > 0 ? recCurrentIndex - 1 : maxIndex;
+            recUpdateCarousel();
+            recResetAutoplay();
+        }
+
+        function recAutoplay() {
+            if (recAutoplayInterval) clearInterval(recAutoplayInterval);
+            recAutoplayInterval = setInterval(recNextSlide, 5000);
+        }
+
+        function recResetAutoplay() {
+            clearInterval(recAutoplayInterval);
+            if (recTotalItems > recItemsPerView) recAutoplay();
+        }
+
+        if (recCarousel) {
+            const nextBtn = document.getElementById('recNextBtn');
+            const prevBtn = document.getElementById('recPrevBtn');
+            if (nextBtn) nextBtn.addEventListener('click', recNextSlide);
+            if (prevBtn) prevBtn.addEventListener('click', recPrevSlide);
+            
+            if (recIndicators && recIndicators.length) {
+                recIndicators.forEach(indicator => {
+                    indicator.addEventListener('click', (e) => {
+                        recCurrentIndex = parseInt(e.target.dataset.index);
+                        recUpdateCarousel();
+                        recResetAutoplay();
+                    });
+                });
+            }
+            
+            window.addEventListener('resize', () => recUpdateItemsPerView());
+            recUpdateItemsPerView();
+            if (recTotalItems > recItemsPerView) recAutoplay();
+        }
+        <?php endif; ?>
+    </script>
 </body>
 
 </html>
