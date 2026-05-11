@@ -320,7 +320,7 @@
   - **Dépendance:** 4.1 complété
   - **Validation:** Contrôleur chargeable
 
-- [ ] **4.4** — Créer vue liste régimes
+- [x] **4.4** — Créer vue liste régimes
   - **Responsable:** Bidy
   - **Fichier:** `app/Views/regime/list.php`
   - **Affiche:** Tableau ou cards avec:
@@ -329,7 +329,7 @@
   - **Dépendance:** 4.3 complété
   - **Validation:** Vue affichable
 
-- [ ] **4.5** — Créer vue détails régime
+- [x] **4.5** — Créer vue détails régime
   - **Responsable:** Bidy
   - **Fichier:** `app/Views/regime/detail.php`
   - **Affiche:** Tous les champs + bouton "Acheter"
@@ -460,7 +460,7 @@
   - **Dépendance:** 6.3 complété
   - **Validation:** Vue affichable
 
-- [ ] **6.6** — Implémenter validation code
+- [x] **6.6** — Implémenter validation code
   - **Responsable:** Bidy
   - **Comment:**
     - SELECT * FROM codes_portefeuille WHERE code = ? AND utilise = false
@@ -481,7 +481,7 @@
 
 ### ✅ Système d'Achat
 
-- [ ] **7.1** — Créer modèle AchatRegime
+- [x] **7.1** — Créer modèle AchatRegime
   - **Responsable:** Sandro
   - **Fichier:** `app/Models/AchatRegimeModel.php`
   - **Champs:**
@@ -494,7 +494,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** Modèle chargeable
 
-- [ ] **7.2** — Créer modèle UtilisateurRegime
+- [x] **7.2** — Créer modèle UtilisateurRegime
   - **Responsable:** Sandro
   - **Fichier:** `app/Models/UtilisateurRegimeModel.php`
   - **Champs:**
@@ -507,7 +507,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** Modèle chargeable
 
-- [ ] **7.3** — Créer contrôleur Achat
+- [x] **7.3** — Créer contrôleur Achat
   - **Responsable:** Bidy
   - **Fichier:** `app/Controllers/Achat.php`
   - **Méthodes:**

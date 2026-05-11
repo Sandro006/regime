@@ -155,6 +155,7 @@
         <div class="hidden md:flex gap-lg">
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/">Dashboard</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="#">Diets</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/achat/mesRegimes">Mes régimes</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="#">Activities</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/portefeuille">Portefeuille</a>
             <a class="text-primary font-bold border-b-2 border-primary font-label-caps text-label-caps" href="#">Profile</a>
