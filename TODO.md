@@ -433,7 +433,7 @@
   - **Dépendance:** 0.3 complété
   - **Validation:** Modèle chargeable
 
-- [ ] **6.3** — Créer contrôleur Portefeuille
+- [x] **6.3** — Créer contrôleur Portefeuille
   - **Responsable:** Bidy
   - **Fichier:** `app/Controllers/Portefeuille.php`
   - **Méthodes:**

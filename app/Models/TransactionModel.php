@@ -29,7 +29,7 @@ class TransactionModel extends Model
     // Validation
     protected $validationRules    = [
         'utilisateur_id'    => 'required|integer',
-        'type'              => 'required|in_list[Recharge,Achat,Gold,Remboursement]',
+        'type'              => 'required|in_list[Inscription,Recharge,Achat,Gold,Remboursement]',
         'montant'           => 'required|decimal',
         'date_transaction'  => 'permit_empty|valid_date',
         'description'       => 'permit_empty|string'
@@ -42,7 +42,7 @@ class TransactionModel extends Model
         ],
         'type' => [
             'required'  => 'Le type de transaction est requis',
-            'in_list'   => 'Le type doit être: Recharge, Achat, Gold ou Remboursement'
+            'in_list'   => 'Le type doit être: Inscription, Recharge, Achat, Gold ou Remboursement'
         ],
         'montant' => [
             'required' => 'Le montant est requis',

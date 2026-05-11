@@ -40,3 +40,7 @@ $routes->get('/regime/list', 'Regime::list');
 $routes->get('/regime/detail/(:num)', 'Regime::detail/$1');
 $routes->get('/regime/recommended', 'Regime::recommended');
 
+//Routes portefeuille
+$routes->get('/portefeuille', 'Portefeuille::index');
+$routes->get('/portefeuille/recharger', 'Portefeuille::recharger');
+$routes->post('/portefeuille/validerCode', 'Portefeuille::validerCode');

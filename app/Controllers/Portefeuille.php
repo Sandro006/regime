@@ -25,15 +25,21 @@ class Portefeuille extends BaseController
     public function index()
     {
         // Vérifier session utilisateur
-        $userId = session()->get('user_id');
-        if (!$userId) {
-            return redirect()->to('/auth/login')->with('error', 'Veuillez vous connecter');
+        $session = session();
+        $isLoggedIn = $session->has('estConnecte') && $session->get('estConnecte');
+        $user = $session->get('user');
+        $userId = $user['id'] ?? null;
+
+        if (!$isLoggedIn || !$userId) {
+            return redirect()->to('/login')->with('error', 'Veuillez vous connecter');
         }
 
         // Récupérer utilisateur
         $user = $this->userModel->find($userId);
         if (!$user) {
-            return redirect()->to('/auth/login')->with('error', 'Utilisateur non trouvé');
+            return view('portefeuille/index', [
+                'error' => 'Utilisateur non trouvé'
+            ]);
         }
 
         // Récupérer l'historique des transactions (50 dernières)
@@ -57,19 +63,20 @@ class Portefeuille extends BaseController
     public function recharger()
     {
         // Vérifier session utilisateur
-        $userId = session()->get('user_id');
+        $user = session()->get('user');
+        $userId = $user['id'] ?? null;
         if (!$userId) {
             return redirect()->to('/auth/login')->with('error', 'Veuillez vous connecter');
         }
 
-        // Récupérer utilisateur
-        $user = $this->userModel->find($userId);
-        if (!$user) {
+        // Récupérer utilisateur complet
+        $userData = $this->userModel->find($userId);
+        if (!$userData) {
             return redirect()->to('/auth/login')->with('error', 'Utilisateur non trouvé');
         }
 
         $data = [
-            'user' => $user
+            'user' => $userData
         ];
 
         return view('portefeuille/recharger', $data);
@@ -81,38 +88,40 @@ class Portefeuille extends BaseController
     public function validerCode()
     {
         // Vérifier session utilisateur
-        $userId = session()->get('user_id');
+        $user = session()->get('user');
+        $userId = $user['id'] ?? null;
         if (!$userId) {
-            return redirect()->to('/auth/login')->with('error', 'Veuillez vous connecter');
+            return redirect()->to('/portefeuille')->with('error', 'Veuillez vous connecter');
         }
 
-        // Récupérer utilisateur
-        $user = $this->userModel->find($userId);
-        if (!$user) {
-            return redirect()->to('/auth/login')->with('error', 'Utilisateur non trouvé');
+        // Récupérer utilisateur complet
+        $userData = $this->userModel->find($userId);
+        if (!$userData) {
+            return redirect()->to('/portefeuille')->with('error', 'Utilisateur non trouvé');
         }
 
         // Récupérer le code saisi
-        $code = $this->request->getPost('code');
+        $code = trim($this->request->getPost('code'));
         
         if (empty($code)) {
-            return redirect()->back()->with('error', 'Veuillez saisir un code');
+            return redirect()->to('/portefeuille')->with('error', 'Veuillez saisir un code');
         }
 
         // Chercher le code dans la BD
-        $codePortefeuille = $this->codeModel->findByCode($code);
+        $codePortefeuille = $this->codeModel->findByCode(strtoupper($code));
 
-        // Vérifier si le code existe et n\'est pas utilisé
+        // Vérifier si le code existe
         if (!$codePortefeuille) {
-            return redirect()->back()->with('error', 'Code invalide ou déjà utilisé');
+            return redirect()->to('/portefeuille')->with('error', 'Code invalide');
         }
 
+        // Vérifier si le code a déjà été utilisé
         if ($codePortefeuille['utilise']) {
-            return redirect()->back()->with('error', 'Ce code a déjà été utilisé');
+            return redirect()->to('/portefeuille')->with('error', 'Ce code a déjà été utilisé');
         }
 
         // Tout est ok: mettre à jour le solde utilisateur
-        $newSolde = $user['solde'] + $codePortefeuille['montant'];
+        $newSolde = $userData['solde'] + $codePortefeuille['montant'];
         
         $this->userModel->update($userId, [
             'solde' => $newSolde
@@ -123,15 +132,16 @@ class Portefeuille extends BaseController
         $this->codeModel->markAsUsed($codePortefeuille['id'], $userId, $dateUtilisation);
 
         // Créer une transaction
-        $this->transactionModel->createTransaction(
-            $userId,
-            'Recharge',
-            $codePortefeuille['montant'],
-            'Recharge via code portefeuille: ' . $code
-        );
+        $this->transactionModel->insert([
+            'utilisateur_id' => $userId,
+            'type' => 'Recharge',
+            'montant' => $codePortefeuille['montant'],
+            'date_transaction' => date('Y-m-d H:i:s'),
+            'description' => 'Recharge via code portefeuille: ' . $code
+        ]);
 
-        // Rediriger avec message succès
+        // Rediriger vers portefeuille avec message succès
         return redirect()->to('/portefeuille')
-                        ->with('success', 'Recharge effectuée avec succès! Nouveau solde: ' . number_format($newSolde, 2) . ' €');
+                        ->with('success', 'Recharge effectuée avec succès! Nouveau solde: ' . number_format($newSolde, 2) . ' Ar');
     }
 }

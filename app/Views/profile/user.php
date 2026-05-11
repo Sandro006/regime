@@ -156,7 +156,7 @@
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/">Dashboard</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="#">Diets</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="#">Activities</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="#">Wallet</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-label-caps text-label-caps" href="/portefeuille">Portefeuille</a>
             <a class="text-primary font-bold border-b-2 border-primary font-label-caps text-label-caps" href="#">Profile</a>
         </div>
         <div class="flex items-center gap-md">
@@ -255,10 +255,10 @@
                         <p class="font-label-caps text-label-caps uppercase tracking-widest opacity-80 mb-base">Current Balance</p>
                         <h3 class="font-metric-xl text-metric-xl mb-lg"><?php echo isset($user) ? number_format($user['solde'], 2) : '50.00'; ?>€</h3>
                     </div>
-                    <button class="w-full py-md bg-white text-primary rounded-lg font-label-caps text-label-caps font-bold hover:bg-primary-fixed-dim transition-colors flex items-center justify-center gap-sm">
+                    <a href="/portefeuille" class="w-full py-md bg-white text-primary rounded-lg font-label-caps text-label-caps font-bold hover:bg-primary-fixed-dim transition-colors flex items-center justify-center gap-sm">
                         <span class="material-symbols-outlined">add_circle</span>
                         Recharge Balance
-                    </button>
+                    </a>
                 </div>
             </div>
             <!-- Personal Information Card -->
