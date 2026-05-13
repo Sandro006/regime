@@ -191,7 +191,6 @@ CREATE TABLE IF NOT EXISTS `abonnements` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `utilisateur_id` INT NOT NULL,
     `date_activation` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `date_expiration` TIMESTAMP NULL DEFAULT NULL,
     `prix` DECIMAL(10,2) NOT NULL,
 
     PRIMARY KEY (`id`),
@@ -201,8 +200,7 @@ CREATE TABLE IF NOT EXISTS `abonnements` (
         ON DELETE CASCADE,
     
     INDEX `idx_utilisateur_id` (`utilisateur_id`),
-    INDEX `idx_date_activation` (`date_activation`),
-    INDEX `idx_date_expiration` (`date_expiration`)
+    INDEX `idx_date_activation` (`date_activation`)
 );
 
 -- =========================
