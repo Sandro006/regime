@@ -72,7 +72,8 @@ $routes->get('/achat/mesRegimes', 'Achat::mesRegimes');
 $routes->post('/achat/completerRegime/(:num)', 'Achat::completerRegime/$1');
 $routes->get('/achat/exportRegimesPDF', 'Achat::exportRegimesPDF');
 
-// Routes abonnements
+// Routes abonnement
+$routes->get('/abonnement/plans', 'Abonnement::plans');
 $routes->get('/abonnement/acheter', 'Abonnement::acheter');
-$routes->post('/abonnement/confirmer', 'Abonnement::confirmer');
-$routes->get('/abonnement/detail', 'Abonnement::detail');
+$routes->post('/abonnement/verifierStatut', 'Abonnement::verifierStatut');
+

@@ -13,8 +13,14 @@ class UserModel extends Model
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        'username', 'email', 'password', 'gender', 
-        'taille', 'poids', 'solde', 'gold'
+        'username',
+        'email',
+        'password',
+        'gender',
+        'taille',
+        'poids',
+        'solde',
+        'gold'
     ];
 
     // Dates
@@ -38,11 +44,13 @@ class UserModel extends Model
 
     // ============ CRUD METHODS ============
 
-    public function createUser($data){
+    public function createUser($data)
+    {
         return $this->insert($data);
     }
 
-    public function getAllUsers(){
+    public function getAllUsers()
+    {
         return $this->findAll();
     }
 
@@ -77,7 +85,11 @@ class UserModel extends Model
     {
         return $this->delete($id);
     }
-
+    public function getSolde($userId)
+    {
+        $user = $this->find($userId);
+        return $user->solde ?? 0;
+    }
     /**
      * LOGIN - Authentifier un utilisateur avec email et mot de passe
      */
@@ -85,16 +97,16 @@ class UserModel extends Model
     {
         // Chercher l'utilisateur par email
         $user = $this->getUserByEmail($email);
-        
+
         if (!$user) {
             return null; // Email non trouvé
         }
-        
+
         // Vérifier le mot de passe
         if (!password_verify($password, $user['password'])) {
             return null; // Mot de passe incorrect
         }
-        
+
         return $user; // Authentification réussie
     }
 
@@ -126,5 +138,30 @@ class UserModel extends Model
             'valeur' => round($imc, 1),
             'categorie' => $categorie
         ];
+    }
+
+    public function debiterSolde($userId, $montant)
+    {
+        // Vérifier que le montant est valide
+        if ($montant <= 0) {
+            return false;
+        }
+
+        // Récupérer l'utilisateur
+        $user = $this->find($userId);
+
+        if (!$user) {
+            return false;
+        }
+
+        // Vérifier que le solde est suffisant
+        if ($user['solde'] < $montant) {
+            return false;
+        }
+
+        // Effectuer le débit
+        return $this->update($userId, [
+            'solde' => $user['solde'] - $montant
+        ]);
     }
 }

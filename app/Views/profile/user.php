@@ -259,9 +259,9 @@
                         <p class="font-label-caps text-label-caps uppercase tracking-widest opacity-80 mb-base">Pas encore membre</p>
                         <p class="font-body-lg text-body-lg mb-lg">Rejoignez nos plans premium et profitez de réductions exclusives!</p>
                     </div>
-                    <a href="#subscription-plans" class="w-full py-md bg-white text-secondary rounded-lg font-label-caps text-label-caps font-bold hover:shadow-lg transition-all flex items-center justify-center gap-sm">
+                    <a href="/abonnement/plans" class="w-full py-md bg-white text-secondary rounded-lg font-label-caps text-label-caps font-bold hover:shadow-lg transition-all flex items-center justify-center gap-sm">
                         <span class="material-symbols-outlined">upgrade</span>
-                        Découvrir les offres
+                        Débloquer un plan
                     </a>
                 </div>
             </div>
@@ -276,13 +276,27 @@
                             <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">verified</span>
                             <span class="font-label-caps text-label-caps opacity-80">Actif</span>
                         </div>
-                        <p class="font-label-caps text-label-caps uppercase tracking-widest opacity-80 mb-base">Abonnement actif</p>
-                        <p class="font-body-lg text-body-lg mb-lg">Expires le: <?php echo date('d/m/Y', strtotime($abonnement['date_expiration'] ?? 'now')); ?></p>
+                        <p class="font-label-caps text-label-caps uppercase tracking-widest opacity-80 mb-base">Plan <?php echo ucfirst($abonnement['type']); ?></p>
+                        <div class="flex items-center gap-sm mb-lg">
+                            <span class="text-2xl">
+                                <?php 
+                                    switch($abonnement['type']) {
+                                        case 'gold': echo '🥇'; break;
+                                        case 'premium': echo '🥈'; break;
+                                        case 'platinium': echo '🥉'; break;
+                                        default: echo '✨';
+                                    }
+                                ?>
+                            </span>
+                            <span class="font-body-lg text-body-lg">Remise de <?php echo $abonnement['remise'] ?? 15; ?>% sur les achats</span>
+                        </div>
                     </div>
-                    <button class="w-full py-md bg-white text-primary rounded-lg font-label-caps text-label-caps font-bold hover:shadow-lg cursor-default">
-                        <span class="material-symbols-outlined">check_circle</span>
-                        Abonné
-                    </button>
+                    <div class="space-y-sm">
+                        <div class="flex items-center justify-between bg-white/20 px-md py-sm rounded-lg">
+                            <span class="font-body-md text-body-md">Achat unique illimité</span>
+                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php endif; ?>
@@ -375,106 +389,31 @@
 
             <!-- Subscription Plans Section (if not subscribed) -->
             <?php if (!isset($abonnement) || !$abonnement): ?>
-            <div class="md:col-span-12">
-                <h3 class="font-headline-sm text-headline-sm mb-lg flex items-center gap-sm" id="subscription-plans">
-                    <span class="material-symbols-outlined text-secondary">card_membership</span>
-                    Nos Plans d'Abonnement
-                </h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
-                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
-                    <div class="bento-card bg-surface-container-lowest p-lg rounded-xl shadow-md border-2 border-secondary hover:border-secondary-container transition-all">
-                        <!-- Plan Header -->
-                        <div class="mb-lg pb-lg border-b border-surface-variant">
-                            <div class="flex items-center justify-between mb-md">
-                                <h4 class="font-headline-sm text-headline-sm"><?php echo $plan['nom']; ?></h4>
-                                <?php if ($plan_id === 'platine'): ?>
-                                <span class="bg-tertiary-container text-on-tertiary-container font-label-caps text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                                    Premium
-                                </span>
-                                <?php endif; ?>
-                            </div>
-                            <div class="flex items-baseline gap-base">
-                                <h2 class="font-metric-xl text-metric-xl text-secondary"><?php echo number_format($plan['prix'], 2); ?>Ar</h2>
-                                <span class="text-on-surface-variant font-body-md">/<?php echo $plan['duree']; ?> jours</span>
-                            </div>
+            <div class="md:col-span-12 bento-card bg-gradient-to-r from-secondary-container/30 to-tertiary-container/30 p-lg rounded-xl shadow-sm border-2 border-secondary/50">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-lg">
+                    <div>
+                        <h3 class="font-headline-sm text-headline-sm mb-sm flex items-center gap-sm">
+                            <span class="material-symbols-outlined text-secondary text-2xl">card_membership</span>
+                            Déverrouillez les Avantages Premium
+                        </h3>
+                        <p class="text-body-lg text-on-surface-variant mb-md">
+                            Accédez à des réductions exclusives et des régimes personnalisés avec nos plans Gold, Premium et Platinium.
+                        </p>
+                        <div class="flex gap-sm">
+                            <span class="inline-flex items-center gap-1 text-body-md">
+                                <span class="material-symbols-outlined text-secondary">check</span>
+                                Réductions jusqu'à 30%
+                            </span>
+                            <span class="inline-flex items-center gap-1 text-body-md">
+                                <span class="material-symbols-outlined text-secondary">check</span>
+                                Accès illimité
+                            </span>
                         </div>
-
-                        <!-- Benefits -->
-                        <div class="mb-lg">
-                            <p class="font-label-caps text-label-caps text-on-surface-variant mb-md uppercase tracking-widest">Avantages</p>
-                            <ul class="space-y-md">
-                                <?php foreach ($plan['benefits'] as $benefit): ?>
-                                <li class="flex items-start gap-md">
-                                    <span class="material-symbols-outlined text-secondary mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                                    <span class="font-body-md text-body-md"><?php echo $benefit; ?></span>
-                                </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-
-                        <!-- Discount Badge -->
-                        <div class="bg-secondary/10 p-md rounded-lg mb-lg border border-secondary/20">
-                            <p class="font-label-caps text-label-caps text-secondary font-bold">Réduction: <span class="font-metric-xl"><?php echo $plan['remise']; ?>%</span></p>
-                            <p class="text-on-surface-variant text-[12px]">Sur tous les plans alimentaires</p>
-                        </div>
-
-                        <!-- CTA Button -->
-                        <a href="/abonnement/acheter?plan=<?php echo $plan_id; ?>" class="w-full py-md bg-secondary text-on-secondary rounded-lg font-label-caps text-label-caps font-bold hover:shadow-lg active:scale-95 transition-all flex items-center justify-center gap-sm">
-                            <span class="material-symbols-outlined">shopping_cart</span>
-                            S'abonner maintenant
-                        </a>
                     </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- Features Comparison -->
-                <div class="mt-xl bg-surface-container p-lg rounded-xl border border-surface-variant/20">
-                    <h4 class="font-headline-sm text-headline-sm mb-lg flex items-center gap-sm">
-                        <span class="material-symbols-outlined text-primary">table_chart</span>
-                        Comparaison des offres
-                    </h4>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
-                            <thead>
-                                <tr class="border-b border-surface-variant">
-                                    <th class="text-left py-md px-md font-label-caps text-label-caps text-on-surface-variant">Fonctionnalité</th>
-                                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
-                                    <th class="text-center py-md px-md font-label-caps text-label-caps"><?php echo $plan['nom']; ?></th>
-                                    <?php endforeach; ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b border-surface-variant">
-                                    <td class="py-md px-md font-body-md">Accès régimes</td>
-                                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
-                                    <td class="text-center py-md px-md">
-                                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check</span>
-                                    </td>
-                                    <?php endforeach; ?>
-                                </tr>
-                                <tr class="border-b border-surface-variant">
-                                    <td class="py-md px-md font-body-md">Réduction spéciale</td>
-                                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
-                                    <td class="text-center py-md px-md font-body-lg font-bold text-secondary"><?php echo $plan['remise']; ?>%</td>
-                                    <?php endforeach; ?>
-                                </tr>
-                                <tr class="border-b border-surface-variant">
-                                    <td class="py-md px-md font-body-md">Support prioritaire</td>
-                                    <?php foreach ($abonnementOptions as $plan_id => $plan): ?>
-                                    <td class="text-center py-md px-md">
-                                        <?php if ($plan_id === 'platine'): ?>
-                                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check</span>
-                                        <?php else: ?>
-                                        <span class="material-symbols-outlined text-on-surface-variant">close</span>
-                                        <?php endif; ?>
-                                    </td>
-                                    <?php endforeach; ?>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <a href="/abonnement/plans" class="px-lg py-md bg-secondary text-on-secondary rounded-lg font-label-caps text-label-caps font-bold hover:shadow-lg active:scale-95 transition-all whitespace-nowrap inline-flex items-center gap-sm">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        Voir les Plans
+                    </a>
                 </div>
             </div>
             <?php endif; ?>
